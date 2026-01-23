@@ -224,7 +224,7 @@
             "Containers": [
               {
                 "Type": "Single",
-                "Weight": 40,
+                "Weight": 35,
                 "Item": {
                   "ItemId": "Weapon_Sword_Copper_Common",
                   "QuantityMin": 1,
@@ -233,7 +233,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 25,
+                "Weight": 20,
                 "Item": {
                   "ItemId": "Weapon_Sword_Copper_Poor",
                   "QuantityMin": 1,
@@ -242,7 +242,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 20,
+                "Weight": 25,
                 "Item": {
                   "ItemId": "Weapon_Sword_Copper_Uncommon",
                   "QuantityMin": 1,
@@ -251,7 +251,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 10,
+                "Weight": 15,
                 "Item": {
                   "ItemId": "Weapon_Sword_Copper_Rare",
                   "QuantityMin": 1,
@@ -284,7 +284,7 @@
             "Containers": [
               {
                 "Type": "Single",
-                "Weight": 40,
+                "Weight": 35,
                 "Item": {
                   "ItemId": "Weapon_Daggers_Copper_Common",
                   "QuantityMin": 1,
@@ -293,7 +293,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 25,
+                "Weight": 20,
                 "Item": {
                   "ItemId": "Weapon_Daggers_Copper_Poor",
                   "QuantityMin": 1,
@@ -302,7 +302,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 20,
+                "Weight": 25,
                 "Item": {
                   "ItemId": "Weapon_Daggers_Copper_Uncommon",
                   "QuantityMin": 1,
@@ -311,7 +311,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 10,
+                "Weight": 15,
                 "Item": {
                   "ItemId": "Weapon_Daggers_Copper_Rare",
                   "QuantityMin": 1,
@@ -344,7 +344,7 @@
             "Containers": [
               {
                 "Type": "Single",
-                "Weight": 40,
+                "Weight": 35,
                 "Item": {
                   "ItemId": "Weapon_Battleaxe_Copper_Common",
                   "QuantityMin": 1,
@@ -353,7 +353,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 25,
+                "Weight": 20,
                 "Item": {
                   "ItemId": "Weapon_Battleaxe_Copper_Poor",
                   "QuantityMin": 1,
@@ -362,7 +362,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 20,
+                "Weight": 25,
                 "Item": {
                   "ItemId": "Weapon_Battleaxe_Copper_Uncommon",
                   "QuantityMin": 1,
@@ -371,7 +371,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 10,
+                "Weight": 15,
                 "Item": {
                   "ItemId": "Weapon_Battleaxe_Copper_Rare",
                   "QuantityMin": 1,
@@ -404,7 +404,7 @@
             "Containers": [
               {
                 "Type": "Single",
-                "Weight": 40,
+                "Weight": 35,
                 "Item": {
                   "ItemId": "Weapon_Mace_Copper_Common",
                   "QuantityMin": 1,
@@ -413,7 +413,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 25,
+                "Weight": 20,
                 "Item": {
                   "ItemId": "Weapon_Mace_Copper_Poor",
                   "QuantityMin": 1,
@@ -422,7 +422,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 20,
+                "Weight": 25,
                 "Item": {
                   "ItemId": "Weapon_Mace_Copper_Uncommon",
                   "QuantityMin": 1,
@@ -431,7 +431,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 10,
+                "Weight": 15,
                 "Item": {
                   "ItemId": "Weapon_Mace_Copper_Rare",
                   "QuantityMin": 1,
@@ -464,7 +464,7 @@
             "Containers": [
               {
                 "Type": "Single",
-                "Weight": 40,
+                "Weight": 35,
                 "Item": {
                   "ItemId": "Tool_Hatchet_Copper_Common",
                   "QuantityMin": 1,
@@ -473,7 +473,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 25,
+                "Weight": 20,
                 "Item": {
                   "ItemId": "Tool_Hatchet_Copper_Poor",
                   "QuantityMin": 1,
@@ -482,7 +482,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 20,
+                "Weight": 25,
                 "Item": {
                   "ItemId": "Tool_Hatchet_Copper_Uncommon",
                   "QuantityMin": 1,
@@ -491,7 +491,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 10,
+                "Weight": 15,
                 "Item": {
                   "ItemId": "Tool_Hatchet_Copper_Rare",
                   "QuantityMin": 1,
@@ -524,7 +524,7 @@
             "Containers": [
               {
                 "Type": "Single",
-                "Weight": 40,
+                "Weight": 35,
                 "Item": {
                   "ItemId": "Tool_Pickaxe_Copper_Common",
                   "QuantityMin": 1,
@@ -533,7 +533,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 25,
+                "Weight": 20,
                 "Item": {
                   "ItemId": "Tool_Pickaxe_Copper_Poor",
                   "QuantityMin": 1,
@@ -542,7 +542,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 20,
+                "Weight": 25,
                 "Item": {
                   "ItemId": "Tool_Pickaxe_Copper_Uncommon",
                   "QuantityMin": 1,
@@ -551,7 +551,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 10,
+                "Weight": 15,
                 "Item": {
                   "ItemId": "Tool_Pickaxe_Copper_Rare",
                   "QuantityMin": 1,
@@ -584,7 +584,7 @@
             "Containers": [
               {
                 "Type": "Single",
-                "Weight": 40,
+                "Weight": 35,
                 "Item": {
                   "ItemId": "Armor_Copper_Chest_Common",
                   "QuantityMin": 1,
@@ -593,7 +593,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 25,
+                "Weight": 20,
                 "Item": {
                   "ItemId": "Armor_Copper_Chest_Poor",
                   "QuantityMin": 1,
@@ -602,7 +602,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 20,
+                "Weight": 25,
                 "Item": {
                   "ItemId": "Armor_Copper_Chest_Uncommon",
                   "QuantityMin": 1,
@@ -611,7 +611,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 10,
+                "Weight": 15,
                 "Item": {
                   "ItemId": "Armor_Copper_Chest_Rare",
                   "QuantityMin": 1,
@@ -644,7 +644,7 @@
             "Containers": [
               {
                 "Type": "Single",
-                "Weight": 40,
+                "Weight": 35,
                 "Item": {
                   "ItemId": "Armor_Copper_Hands_Common",
                   "QuantityMin": 1,
@@ -653,7 +653,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 25,
+                "Weight": 20,
                 "Item": {
                   "ItemId": "Armor_Copper_Hands_Poor",
                   "QuantityMin": 1,
@@ -662,7 +662,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 20,
+                "Weight": 25,
                 "Item": {
                   "ItemId": "Armor_Copper_Hands_Uncommon",
                   "QuantityMin": 1,
@@ -671,7 +671,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 10,
+                "Weight": 15,
                 "Item": {
                   "ItemId": "Armor_Copper_Hands_Rare",
                   "QuantityMin": 1,
@@ -704,7 +704,7 @@
             "Containers": [
               {
                 "Type": "Single",
-                "Weight": 40,
+                "Weight": 35,
                 "Item": {
                   "ItemId": "Armor_Copper_Head_Common",
                   "QuantityMin": 1,
@@ -713,7 +713,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 25,
+                "Weight": 20,
                 "Item": {
                   "ItemId": "Armor_Copper_Head_Poor",
                   "QuantityMin": 1,
@@ -722,7 +722,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 20,
+                "Weight": 25,
                 "Item": {
                   "ItemId": "Armor_Copper_Head_Uncommon",
                   "QuantityMin": 1,
@@ -731,7 +731,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 10,
+                "Weight": 15,
                 "Item": {
                   "ItemId": "Armor_Copper_Head_Rare",
                   "QuantityMin": 1,
@@ -764,7 +764,7 @@
             "Containers": [
               {
                 "Type": "Single",
-                "Weight": 40,
+                "Weight": 35,
                 "Item": {
                   "ItemId": "Armor_Copper_Legs_Common",
                   "QuantityMin": 1,
@@ -773,7 +773,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 25,
+                "Weight": 20,
                 "Item": {
                   "ItemId": "Armor_Copper_Legs_Poor",
                   "QuantityMin": 1,
@@ -782,7 +782,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 20,
+                "Weight": 25,
                 "Item": {
                   "ItemId": "Armor_Copper_Legs_Uncommon",
                   "QuantityMin": 1,
@@ -791,7 +791,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 10,
+                "Weight": 15,
                 "Item": {
                   "ItemId": "Armor_Copper_Legs_Rare",
                   "QuantityMin": 1,
@@ -824,7 +824,7 @@
             "Containers": [
               {
                 "Type": "Single",
-                "Weight": 40,
+                "Weight": 35,
                 "Item": {
                   "ItemId": "Weapon_Battleaxe_Crude_Common",
                   "QuantityMin": 1,
@@ -833,7 +833,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 25,
+                "Weight": 20,
                 "Item": {
                   "ItemId": "Weapon_Battleaxe_Crude_Poor",
                   "QuantityMin": 1,
@@ -842,7 +842,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 20,
+                "Weight": 25,
                 "Item": {
                   "ItemId": "Weapon_Battleaxe_Crude_Uncommon",
                   "QuantityMin": 1,
@@ -851,7 +851,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 10,
+                "Weight": 15,
                 "Item": {
                   "ItemId": "Weapon_Battleaxe_Crude_Rare",
                   "QuantityMin": 1,
@@ -884,7 +884,7 @@
             "Containers": [
               {
                 "Type": "Single",
-                "Weight": 40,
+                "Weight": 35,
                 "Item": {
                   "ItemId": "Weapon_Daggers_Crude_Common",
                   "QuantityMin": 1,
@@ -893,7 +893,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 25,
+                "Weight": 20,
                 "Item": {
                   "ItemId": "Weapon_Daggers_Crude_Poor",
                   "QuantityMin": 1,
@@ -902,7 +902,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 20,
+                "Weight": 25,
                 "Item": {
                   "ItemId": "Weapon_Daggers_Crude_Uncommon",
                   "QuantityMin": 1,
@@ -911,7 +911,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 10,
+                "Weight": 15,
                 "Item": {
                   "ItemId": "Weapon_Daggers_Crude_Rare",
                   "QuantityMin": 1,
@@ -944,7 +944,7 @@
             "Containers": [
               {
                 "Type": "Single",
-                "Weight": 40,
+                "Weight": 35,
                 "Item": {
                   "ItemId": "Weapon_Mace_Crude_Common",
                   "QuantityMin": 1,
@@ -953,7 +953,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 25,
+                "Weight": 20,
                 "Item": {
                   "ItemId": "Weapon_Mace_Crude_Poor",
                   "QuantityMin": 1,
@@ -962,7 +962,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 20,
+                "Weight": 25,
                 "Item": {
                   "ItemId": "Weapon_Mace_Crude_Uncommon",
                   "QuantityMin": 1,
@@ -971,7 +971,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 10,
+                "Weight": 15,
                 "Item": {
                   "ItemId": "Weapon_Mace_Crude_Rare",
                   "QuantityMin": 1,
@@ -1004,7 +1004,7 @@
             "Containers": [
               {
                 "Type": "Single",
-                "Weight": 40,
+                "Weight": 35,
                 "Item": {
                   "ItemId": "Weapon_Sword_Crude_Common",
                   "QuantityMin": 1,
@@ -1013,7 +1013,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 25,
+                "Weight": 20,
                 "Item": {
                   "ItemId": "Weapon_Sword_Crude_Poor",
                   "QuantityMin": 1,
@@ -1022,7 +1022,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 20,
+                "Weight": 25,
                 "Item": {
                   "ItemId": "Weapon_Sword_Crude_Uncommon",
                   "QuantityMin": 1,
@@ -1031,7 +1031,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 10,
+                "Weight": 15,
                 "Item": {
                   "ItemId": "Weapon_Sword_Crude_Rare",
                   "QuantityMin": 1,
@@ -1073,7 +1073,7 @@
             "Containers": [
               {
                 "Type": "Single",
-                "Weight": 40,
+                "Weight": 35,
                 "Item": {
                   "ItemId": "Weapon_Shortbow_Crude_Common",
                   "QuantityMin": 1,
@@ -1082,7 +1082,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 25,
+                "Weight": 20,
                 "Item": {
                   "ItemId": "Weapon_Shortbow_Crude_Poor",
                   "QuantityMin": 1,
@@ -1091,7 +1091,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 20,
+                "Weight": 25,
                 "Item": {
                   "ItemId": "Weapon_Shortbow_Crude_Uncommon",
                   "QuantityMin": 1,
@@ -1100,7 +1100,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 10,
+                "Weight": 15,
                 "Item": {
                   "ItemId": "Weapon_Shortbow_Crude_Rare",
                   "QuantityMin": 1,
@@ -1133,7 +1133,7 @@
             "Containers": [
               {
                 "Type": "Single",
-                "Weight": 40,
+                "Weight": 35,
                 "Item": {
                   "ItemId": "Tool_Hatchet_Crude_Common",
                   "QuantityMin": 1,
@@ -1142,7 +1142,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 25,
+                "Weight": 20,
                 "Item": {
                   "ItemId": "Tool_Hatchet_Crude_Poor",
                   "QuantityMin": 1,
@@ -1151,7 +1151,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 20,
+                "Weight": 25,
                 "Item": {
                   "ItemId": "Tool_Hatchet_Crude_Uncommon",
                   "QuantityMin": 1,
@@ -1160,7 +1160,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 10,
+                "Weight": 15,
                 "Item": {
                   "ItemId": "Tool_Hatchet_Crude_Rare",
                   "QuantityMin": 1,
@@ -1193,7 +1193,7 @@
             "Containers": [
               {
                 "Type": "Single",
-                "Weight": 40,
+                "Weight": 35,
                 "Item": {
                   "ItemId": "Tool_Pickaxe_Crude_Common",
                   "QuantityMin": 1,
@@ -1202,7 +1202,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 25,
+                "Weight": 20,
                 "Item": {
                   "ItemId": "Tool_Pickaxe_Crude_Poor",
                   "QuantityMin": 1,
@@ -1211,7 +1211,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 20,
+                "Weight": 25,
                 "Item": {
                   "ItemId": "Tool_Pickaxe_Crude_Uncommon",
                   "QuantityMin": 1,
@@ -1220,7 +1220,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 10,
+                "Weight": 15,
                 "Item": {
                   "ItemId": "Tool_Pickaxe_Crude_Rare",
                   "QuantityMin": 1,

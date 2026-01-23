@@ -350,7 +350,7 @@
             "Containers": [
               {
                 "Type": "Single",
-                "Weight": 40,
+                "Weight": 25,
                 "Item": {
                   "ItemId": "Weapon_Battleaxe_Thorium_Common",
                   "QuantityMin": 1,
@@ -359,7 +359,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 25,
+                "Weight": 10,
                 "Item": {
                   "ItemId": "Weapon_Battleaxe_Thorium_Poor",
                   "QuantityMin": 1,
@@ -368,7 +368,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 20,
+                "Weight": 30,
                 "Item": {
                   "ItemId": "Weapon_Battleaxe_Thorium_Uncommon",
                   "QuantityMin": 1,
@@ -377,7 +377,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 10,
+                "Weight": 25,
                 "Item": {
                   "ItemId": "Weapon_Battleaxe_Thorium_Rare",
                   "QuantityMin": 1,
@@ -386,7 +386,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 4,
+                "Weight": 8,
                 "Item": {
                   "ItemId": "Weapon_Battleaxe_Thorium_Epic",
                   "QuantityMin": 1,
@@ -395,7 +395,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 1,
+                "Weight": 2,
                 "Item": {
                   "ItemId": "Weapon_Battleaxe_Thorium_Legendary",
                   "QuantityMin": 1,
@@ -410,7 +410,7 @@
             "Containers": [
               {
                 "Type": "Single",
-                "Weight": 40,
+                "Weight": 25,
                 "Item": {
                   "ItemId": "Weapon_Daggers_Thorium_Common",
                   "QuantityMin": 1,
@@ -419,7 +419,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 25,
+                "Weight": 10,
                 "Item": {
                   "ItemId": "Weapon_Daggers_Thorium_Poor",
                   "QuantityMin": 1,
@@ -428,7 +428,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 20,
+                "Weight": 30,
                 "Item": {
                   "ItemId": "Weapon_Daggers_Thorium_Uncommon",
                   "QuantityMin": 1,
@@ -437,7 +437,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 10,
+                "Weight": 25,
                 "Item": {
                   "ItemId": "Weapon_Daggers_Thorium_Rare",
                   "QuantityMin": 1,
@@ -446,7 +446,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 4,
+                "Weight": 8,
                 "Item": {
                   "ItemId": "Weapon_Daggers_Thorium_Epic",
                   "QuantityMin": 1,
@@ -455,7 +455,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 1,
+                "Weight": 2,
                 "Item": {
                   "ItemId": "Weapon_Daggers_Thorium_Legendary",
                   "QuantityMin": 1,
@@ -470,7 +470,7 @@
             "Containers": [
               {
                 "Type": "Single",
-                "Weight": 40,
+                "Weight": 25,
                 "Item": {
                   "ItemId": "Weapon_Mace_Thorium_Common",
                   "QuantityMin": 1,
@@ -479,7 +479,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 25,
+                "Weight": 10,
                 "Item": {
                   "ItemId": "Weapon_Mace_Thorium_Poor",
                   "QuantityMin": 1,
@@ -488,7 +488,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 20,
+                "Weight": 30,
                 "Item": {
                   "ItemId": "Weapon_Mace_Thorium_Uncommon",
                   "QuantityMin": 1,
@@ -497,7 +497,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 10,
+                "Weight": 25,
                 "Item": {
                   "ItemId": "Weapon_Mace_Thorium_Rare",
                   "QuantityMin": 1,
@@ -506,7 +506,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 4,
+                "Weight": 8,
                 "Item": {
                   "ItemId": "Weapon_Mace_Thorium_Epic",
                   "QuantityMin": 1,
@@ -515,7 +515,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 1,
+                "Weight": 2,
                 "Item": {
                   "ItemId": "Weapon_Mace_Thorium_Legendary",
                   "QuantityMin": 1,
@@ -530,7 +530,7 @@
             "Containers": [
               {
                 "Type": "Single",
-                "Weight": 40,
+                "Weight": 25,
                 "Item": {
                   "ItemId": "Weapon_Sword_Thorium_Common",
                   "QuantityMin": 1,
@@ -539,7 +539,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 25,
+                "Weight": 10,
                 "Item": {
                   "ItemId": "Weapon_Sword_Thorium_Poor",
                   "QuantityMin": 1,
@@ -548,7 +548,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 20,
+                "Weight": 30,
                 "Item": {
                   "ItemId": "Weapon_Sword_Thorium_Uncommon",
                   "QuantityMin": 1,
@@ -557,7 +557,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 10,
+                "Weight": 25,
                 "Item": {
                   "ItemId": "Weapon_Sword_Thorium_Rare",
                   "QuantityMin": 1,
@@ -566,7 +566,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 4,
+                "Weight": 8,
                 "Item": {
                   "ItemId": "Weapon_Sword_Thorium_Epic",
                   "QuantityMin": 1,
@@ -575,7 +575,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 1,
+                "Weight": 2,
                 "Item": {
                   "ItemId": "Weapon_Sword_Thorium_Legendary",
                   "QuantityMin": 1,
@@ -590,7 +590,7 @@
             "Containers": [
               {
                 "Type": "Single",
-                "Weight": 40,
+                "Weight": 25,
                 "Item": {
                   "ItemId": "Weapon_Shield_Thorium_Common",
                   "QuantityMin": 1,
@@ -599,7 +599,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 25,
+                "Weight": 10,
                 "Item": {
                   "ItemId": "Weapon_Shield_Thorium_Poor",
                   "QuantityMin": 1,
@@ -608,7 +608,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 20,
+                "Weight": 30,
                 "Item": {
                   "ItemId": "Weapon_Shield_Thorium_Uncommon",
                   "QuantityMin": 1,
@@ -617,7 +617,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 10,
+                "Weight": 25,
                 "Item": {
                   "ItemId": "Weapon_Shield_Thorium_Rare",
                   "QuantityMin": 1,
@@ -626,7 +626,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 4,
+                "Weight": 8,
                 "Item": {
                   "ItemId": "Weapon_Shield_Thorium_Epic",
                   "QuantityMin": 1,
@@ -635,7 +635,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 1,
+                "Weight": 2,
                 "Item": {
                   "ItemId": "Weapon_Shield_Thorium_Legendary",
                   "QuantityMin": 1,
@@ -650,7 +650,7 @@
             "Containers": [
               {
                 "Type": "Single",
-                "Weight": 40,
+                "Weight": 25,
                 "Item": {
                   "ItemId": "Weapon_Shortbow_Thorium_Common",
                   "QuantityMin": 1,
@@ -659,7 +659,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 25,
+                "Weight": 10,
                 "Item": {
                   "ItemId": "Weapon_Shortbow_Thorium_Poor",
                   "QuantityMin": 1,
@@ -668,7 +668,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 20,
+                "Weight": 30,
                 "Item": {
                   "ItemId": "Weapon_Shortbow_Thorium_Uncommon",
                   "QuantityMin": 1,
@@ -677,7 +677,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 10,
+                "Weight": 25,
                 "Item": {
                   "ItemId": "Weapon_Shortbow_Thorium_Rare",
                   "QuantityMin": 1,
@@ -686,7 +686,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 4,
+                "Weight": 8,
                 "Item": {
                   "ItemId": "Weapon_Shortbow_Thorium_Epic",
                   "QuantityMin": 1,
@@ -695,7 +695,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 1,
+                "Weight": 2,
                 "Item": {
                   "ItemId": "Weapon_Shortbow_Thorium_Legendary",
                   "QuantityMin": 1,
@@ -710,7 +710,7 @@
             "Containers": [
               {
                 "Type": "Single",
-                "Weight": 40,
+                "Weight": 25,
                 "Item": {
                   "ItemId": "Tool_Hatchet_Thorium_Common",
                   "QuantityMin": 1,
@@ -719,7 +719,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 25,
+                "Weight": 10,
                 "Item": {
                   "ItemId": "Tool_Hatchet_Thorium_Poor",
                   "QuantityMin": 1,
@@ -728,7 +728,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 20,
+                "Weight": 30,
                 "Item": {
                   "ItemId": "Tool_Hatchet_Thorium_Uncommon",
                   "QuantityMin": 1,
@@ -737,7 +737,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 10,
+                "Weight": 25,
                 "Item": {
                   "ItemId": "Tool_Hatchet_Thorium_Rare",
                   "QuantityMin": 1,
@@ -746,7 +746,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 4,
+                "Weight": 8,
                 "Item": {
                   "ItemId": "Tool_Hatchet_Thorium_Epic",
                   "QuantityMin": 1,
@@ -755,7 +755,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 1,
+                "Weight": 2,
                 "Item": {
                   "ItemId": "Tool_Hatchet_Thorium_Legendary",
                   "QuantityMin": 1,
@@ -770,7 +770,7 @@
             "Containers": [
               {
                 "Type": "Single",
-                "Weight": 40,
+                "Weight": 25,
                 "Item": {
                   "ItemId": "Tool_Pickaxe_Thorium_Common",
                   "QuantityMin": 1,
@@ -779,7 +779,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 25,
+                "Weight": 10,
                 "Item": {
                   "ItemId": "Tool_Pickaxe_Thorium_Poor",
                   "QuantityMin": 1,
@@ -788,7 +788,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 20,
+                "Weight": 30,
                 "Item": {
                   "ItemId": "Tool_Pickaxe_Thorium_Uncommon",
                   "QuantityMin": 1,
@@ -797,7 +797,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 10,
+                "Weight": 25,
                 "Item": {
                   "ItemId": "Tool_Pickaxe_Thorium_Rare",
                   "QuantityMin": 1,
@@ -806,7 +806,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 4,
+                "Weight": 8,
                 "Item": {
                   "ItemId": "Tool_Pickaxe_Thorium_Epic",
                   "QuantityMin": 1,
@@ -815,7 +815,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 1,
+                "Weight": 2,
                 "Item": {
                   "ItemId": "Tool_Pickaxe_Thorium_Legendary",
                   "QuantityMin": 1,
@@ -830,7 +830,7 @@
             "Containers": [
               {
                 "Type": "Single",
-                "Weight": 40,
+                "Weight": 25,
                 "Item": {
                   "ItemId": "Armor_Thorium_Chest_Common",
                   "QuantityMin": 1,
@@ -839,7 +839,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 25,
+                "Weight": 10,
                 "Item": {
                   "ItemId": "Armor_Thorium_Chest_Poor",
                   "QuantityMin": 1,
@@ -848,7 +848,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 20,
+                "Weight": 30,
                 "Item": {
                   "ItemId": "Armor_Thorium_Chest_Uncommon",
                   "QuantityMin": 1,
@@ -857,7 +857,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 10,
+                "Weight": 25,
                 "Item": {
                   "ItemId": "Armor_Thorium_Chest_Rare",
                   "QuantityMin": 1,
@@ -866,7 +866,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 4,
+                "Weight": 8,
                 "Item": {
                   "ItemId": "Armor_Thorium_Chest_Epic",
                   "QuantityMin": 1,
@@ -875,7 +875,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 1,
+                "Weight": 2,
                 "Item": {
                   "ItemId": "Armor_Thorium_Chest_Legendary",
                   "QuantityMin": 1,
@@ -890,7 +890,7 @@
             "Containers": [
               {
                 "Type": "Single",
-                "Weight": 40,
+                "Weight": 25,
                 "Item": {
                   "ItemId": "Armor_Thorium_Hands_Common",
                   "QuantityMin": 1,
@@ -899,7 +899,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 25,
+                "Weight": 10,
                 "Item": {
                   "ItemId": "Armor_Thorium_Hands_Poor",
                   "QuantityMin": 1,
@@ -908,7 +908,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 20,
+                "Weight": 30,
                 "Item": {
                   "ItemId": "Armor_Thorium_Hands_Uncommon",
                   "QuantityMin": 1,
@@ -917,7 +917,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 10,
+                "Weight": 25,
                 "Item": {
                   "ItemId": "Armor_Thorium_Hands_Rare",
                   "QuantityMin": 1,
@@ -926,7 +926,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 4,
+                "Weight": 8,
                 "Item": {
                   "ItemId": "Armor_Thorium_Hands_Epic",
                   "QuantityMin": 1,
@@ -935,7 +935,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 1,
+                "Weight": 2,
                 "Item": {
                   "ItemId": "Armor_Thorium_Hands_Legendary",
                   "QuantityMin": 1,
@@ -950,7 +950,7 @@
             "Containers": [
               {
                 "Type": "Single",
-                "Weight": 40,
+                "Weight": 25,
                 "Item": {
                   "ItemId": "Armor_Thorium_Head_Common",
                   "QuantityMin": 1,
@@ -959,7 +959,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 25,
+                "Weight": 10,
                 "Item": {
                   "ItemId": "Armor_Thorium_Head_Poor",
                   "QuantityMin": 1,
@@ -968,7 +968,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 20,
+                "Weight": 30,
                 "Item": {
                   "ItemId": "Armor_Thorium_Head_Uncommon",
                   "QuantityMin": 1,
@@ -977,7 +977,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 10,
+                "Weight": 25,
                 "Item": {
                   "ItemId": "Armor_Thorium_Head_Rare",
                   "QuantityMin": 1,
@@ -986,7 +986,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 4,
+                "Weight": 8,
                 "Item": {
                   "ItemId": "Armor_Thorium_Head_Epic",
                   "QuantityMin": 1,
@@ -995,7 +995,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 1,
+                "Weight": 2,
                 "Item": {
                   "ItemId": "Armor_Thorium_Head_Legendary",
                   "QuantityMin": 1,
@@ -1010,7 +1010,7 @@
             "Containers": [
               {
                 "Type": "Single",
-                "Weight": 40,
+                "Weight": 25,
                 "Item": {
                   "ItemId": "Armor_Thorium_Legs_Common",
                   "QuantityMin": 1,
@@ -1019,7 +1019,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 25,
+                "Weight": 10,
                 "Item": {
                   "ItemId": "Armor_Thorium_Legs_Poor",
                   "QuantityMin": 1,
@@ -1028,7 +1028,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 20,
+                "Weight": 30,
                 "Item": {
                   "ItemId": "Armor_Thorium_Legs_Uncommon",
                   "QuantityMin": 1,
@@ -1037,7 +1037,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 10,
+                "Weight": 25,
                 "Item": {
                   "ItemId": "Armor_Thorium_Legs_Rare",
                   "QuantityMin": 1,
@@ -1046,7 +1046,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 4,
+                "Weight": 8,
                 "Item": {
                   "ItemId": "Armor_Thorium_Legs_Epic",
                   "QuantityMin": 1,
@@ -1055,7 +1055,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 1,
+                "Weight": 2,
                 "Item": {
                   "ItemId": "Armor_Thorium_Legs_Legendary",
                   "QuantityMin": 1,
@@ -1070,7 +1070,7 @@
             "Containers": [
               {
                 "Type": "Single",
-                "Weight": 40,
+                "Weight": 25,
                 "Item": {
                   "ItemId": "Weapon_Battleaxe_Iron_Common",
                   "QuantityMin": 1,
@@ -1079,7 +1079,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 25,
+                "Weight": 10,
                 "Item": {
                   "ItemId": "Weapon_Battleaxe_Iron_Poor",
                   "QuantityMin": 1,
@@ -1088,7 +1088,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 20,
+                "Weight": 30,
                 "Item": {
                   "ItemId": "Weapon_Battleaxe_Iron_Uncommon",
                   "QuantityMin": 1,
@@ -1097,7 +1097,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 10,
+                "Weight": 25,
                 "Item": {
                   "ItemId": "Weapon_Battleaxe_Iron_Rare",
                   "QuantityMin": 1,
@@ -1106,7 +1106,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 4,
+                "Weight": 8,
                 "Item": {
                   "ItemId": "Weapon_Battleaxe_Iron_Epic",
                   "QuantityMin": 1,
@@ -1115,7 +1115,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 1,
+                "Weight": 2,
                 "Item": {
                   "ItemId": "Weapon_Battleaxe_Iron_Legendary",
                   "QuantityMin": 1,
@@ -1130,7 +1130,7 @@
             "Containers": [
               {
                 "Type": "Single",
-                "Weight": 40,
+                "Weight": 25,
                 "Item": {
                   "ItemId": "Weapon_Daggers_Iron_Common",
                   "QuantityMin": 1,
@@ -1139,7 +1139,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 25,
+                "Weight": 10,
                 "Item": {
                   "ItemId": "Weapon_Daggers_Iron_Poor",
                   "QuantityMin": 1,
@@ -1148,7 +1148,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 20,
+                "Weight": 30,
                 "Item": {
                   "ItemId": "Weapon_Daggers_Iron_Uncommon",
                   "QuantityMin": 1,
@@ -1157,7 +1157,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 10,
+                "Weight": 25,
                 "Item": {
                   "ItemId": "Weapon_Daggers_Iron_Rare",
                   "QuantityMin": 1,
@@ -1166,7 +1166,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 4,
+                "Weight": 8,
                 "Item": {
                   "ItemId": "Weapon_Daggers_Iron_Epic",
                   "QuantityMin": 1,
@@ -1175,7 +1175,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 1,
+                "Weight": 2,
                 "Item": {
                   "ItemId": "Weapon_Daggers_Iron_Legendary",
                   "QuantityMin": 1,
@@ -1190,7 +1190,7 @@
             "Containers": [
               {
                 "Type": "Single",
-                "Weight": 40,
+                "Weight": 25,
                 "Item": {
                   "ItemId": "Weapon_Mace_Iron_Common",
                   "QuantityMin": 1,
@@ -1199,7 +1199,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 25,
+                "Weight": 10,
                 "Item": {
                   "ItemId": "Weapon_Mace_Iron_Poor",
                   "QuantityMin": 1,
@@ -1208,7 +1208,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 20,
+                "Weight": 30,
                 "Item": {
                   "ItemId": "Weapon_Mace_Iron_Uncommon",
                   "QuantityMin": 1,
@@ -1217,7 +1217,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 10,
+                "Weight": 25,
                 "Item": {
                   "ItemId": "Weapon_Mace_Iron_Rare",
                   "QuantityMin": 1,
@@ -1226,7 +1226,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 4,
+                "Weight": 8,
                 "Item": {
                   "ItemId": "Weapon_Mace_Iron_Epic",
                   "QuantityMin": 1,
@@ -1235,7 +1235,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 1,
+                "Weight": 2,
                 "Item": {
                   "ItemId": "Weapon_Mace_Iron_Legendary",
                   "QuantityMin": 1,
@@ -1250,7 +1250,7 @@
             "Containers": [
               {
                 "Type": "Single",
-                "Weight": 40,
+                "Weight": 25,
                 "Item": {
                   "ItemId": "Weapon_Sword_Iron_Common",
                   "QuantityMin": 1,
@@ -1259,7 +1259,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 25,
+                "Weight": 10,
                 "Item": {
                   "ItemId": "Weapon_Sword_Iron_Poor",
                   "QuantityMin": 1,
@@ -1268,7 +1268,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 20,
+                "Weight": 30,
                 "Item": {
                   "ItemId": "Weapon_Sword_Iron_Uncommon",
                   "QuantityMin": 1,
@@ -1277,7 +1277,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 10,
+                "Weight": 25,
                 "Item": {
                   "ItemId": "Weapon_Sword_Iron_Rare",
                   "QuantityMin": 1,
@@ -1286,7 +1286,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 4,
+                "Weight": 8,
                 "Item": {
                   "ItemId": "Weapon_Sword_Iron_Epic",
                   "QuantityMin": 1,
@@ -1295,7 +1295,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 1,
+                "Weight": 2,
                 "Item": {
                   "ItemId": "Weapon_Sword_Iron_Legendary",
                   "QuantityMin": 1,
@@ -1310,7 +1310,7 @@
             "Containers": [
               {
                 "Type": "Single",
-                "Weight": 40,
+                "Weight": 25,
                 "Item": {
                   "ItemId": "Weapon_Shield_Iron_Common",
                   "QuantityMin": 1,
@@ -1319,7 +1319,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 25,
+                "Weight": 10,
                 "Item": {
                   "ItemId": "Weapon_Shield_Iron_Poor",
                   "QuantityMin": 1,
@@ -1328,7 +1328,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 20,
+                "Weight": 30,
                 "Item": {
                   "ItemId": "Weapon_Shield_Iron_Uncommon",
                   "QuantityMin": 1,
@@ -1337,7 +1337,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 10,
+                "Weight": 25,
                 "Item": {
                   "ItemId": "Weapon_Shield_Iron_Rare",
                   "QuantityMin": 1,
@@ -1346,7 +1346,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 4,
+                "Weight": 8,
                 "Item": {
                   "ItemId": "Weapon_Shield_Iron_Epic",
                   "QuantityMin": 1,
@@ -1355,7 +1355,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 1,
+                "Weight": 2,
                 "Item": {
                   "ItemId": "Weapon_Shield_Iron_Legendary",
                   "QuantityMin": 1,
@@ -1370,7 +1370,7 @@
             "Containers": [
               {
                 "Type": "Single",
-                "Weight": 40,
+                "Weight": 25,
                 "Item": {
                   "ItemId": "Weapon_Shortbow_Iron_Common",
                   "QuantityMin": 1,
@@ -1379,7 +1379,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 25,
+                "Weight": 10,
                 "Item": {
                   "ItemId": "Weapon_Shortbow_Iron_Poor",
                   "QuantityMin": 1,
@@ -1388,7 +1388,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 20,
+                "Weight": 30,
                 "Item": {
                   "ItemId": "Weapon_Shortbow_Iron_Uncommon",
                   "QuantityMin": 1,
@@ -1397,7 +1397,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 10,
+                "Weight": 25,
                 "Item": {
                   "ItemId": "Weapon_Shortbow_Iron_Rare",
                   "QuantityMin": 1,
@@ -1406,7 +1406,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 4,
+                "Weight": 8,
                 "Item": {
                   "ItemId": "Weapon_Shortbow_Iron_Epic",
                   "QuantityMin": 1,
@@ -1415,7 +1415,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 1,
+                "Weight": 2,
                 "Item": {
                   "ItemId": "Weapon_Shortbow_Iron_Legendary",
                   "QuantityMin": 1,
@@ -1430,7 +1430,7 @@
             "Containers": [
               {
                 "Type": "Single",
-                "Weight": 40,
+                "Weight": 25,
                 "Item": {
                   "ItemId": "Tool_Hatchet_Iron_Common",
                   "QuantityMin": 1,
@@ -1439,7 +1439,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 25,
+                "Weight": 10,
                 "Item": {
                   "ItemId": "Tool_Hatchet_Iron_Poor",
                   "QuantityMin": 1,
@@ -1448,7 +1448,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 20,
+                "Weight": 30,
                 "Item": {
                   "ItemId": "Tool_Hatchet_Iron_Uncommon",
                   "QuantityMin": 1,
@@ -1457,7 +1457,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 10,
+                "Weight": 25,
                 "Item": {
                   "ItemId": "Tool_Hatchet_Iron_Rare",
                   "QuantityMin": 1,
@@ -1466,7 +1466,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 4,
+                "Weight": 8,
                 "Item": {
                   "ItemId": "Tool_Hatchet_Iron_Epic",
                   "QuantityMin": 1,
@@ -1475,7 +1475,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 1,
+                "Weight": 2,
                 "Item": {
                   "ItemId": "Tool_Hatchet_Iron_Legendary",
                   "QuantityMin": 1,
@@ -1490,7 +1490,7 @@
             "Containers": [
               {
                 "Type": "Single",
-                "Weight": 40,
+                "Weight": 25,
                 "Item": {
                   "ItemId": "Tool_Pickaxe_Iron_Common",
                   "QuantityMin": 1,
@@ -1499,7 +1499,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 25,
+                "Weight": 10,
                 "Item": {
                   "ItemId": "Tool_Pickaxe_Iron_Poor",
                   "QuantityMin": 1,
@@ -1508,7 +1508,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 20,
+                "Weight": 30,
                 "Item": {
                   "ItemId": "Tool_Pickaxe_Iron_Uncommon",
                   "QuantityMin": 1,
@@ -1517,7 +1517,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 10,
+                "Weight": 25,
                 "Item": {
                   "ItemId": "Tool_Pickaxe_Iron_Rare",
                   "QuantityMin": 1,
@@ -1526,7 +1526,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 4,
+                "Weight": 8,
                 "Item": {
                   "ItemId": "Tool_Pickaxe_Iron_Epic",
                   "QuantityMin": 1,
@@ -1535,7 +1535,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 1,
+                "Weight": 2,
                 "Item": {
                   "ItemId": "Tool_Pickaxe_Iron_Legendary",
                   "QuantityMin": 1,
@@ -1550,7 +1550,7 @@
             "Containers": [
               {
                 "Type": "Single",
-                "Weight": 40,
+                "Weight": 25,
                 "Item": {
                   "ItemId": "Armor_Iron_Chest_Common",
                   "QuantityMin": 1,
@@ -1559,7 +1559,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 25,
+                "Weight": 10,
                 "Item": {
                   "ItemId": "Armor_Iron_Chest_Poor",
                   "QuantityMin": 1,
@@ -1568,7 +1568,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 20,
+                "Weight": 30,
                 "Item": {
                   "ItemId": "Armor_Iron_Chest_Uncommon",
                   "QuantityMin": 1,
@@ -1577,7 +1577,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 10,
+                "Weight": 25,
                 "Item": {
                   "ItemId": "Armor_Iron_Chest_Rare",
                   "QuantityMin": 1,
@@ -1586,7 +1586,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 4,
+                "Weight": 8,
                 "Item": {
                   "ItemId": "Armor_Iron_Chest_Epic",
                   "QuantityMin": 1,
@@ -1595,7 +1595,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 1,
+                "Weight": 2,
                 "Item": {
                   "ItemId": "Armor_Iron_Chest_Legendary",
                   "QuantityMin": 1,
@@ -1610,7 +1610,7 @@
             "Containers": [
               {
                 "Type": "Single",
-                "Weight": 40,
+                "Weight": 25,
                 "Item": {
                   "ItemId": "Armor_Iron_Hands_Common",
                   "QuantityMin": 1,
@@ -1619,7 +1619,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 25,
+                "Weight": 10,
                 "Item": {
                   "ItemId": "Armor_Iron_Hands_Poor",
                   "QuantityMin": 1,
@@ -1628,7 +1628,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 20,
+                "Weight": 30,
                 "Item": {
                   "ItemId": "Armor_Iron_Hands_Uncommon",
                   "QuantityMin": 1,
@@ -1637,7 +1637,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 10,
+                "Weight": 25,
                 "Item": {
                   "ItemId": "Armor_Iron_Hands_Rare",
                   "QuantityMin": 1,
@@ -1646,7 +1646,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 4,
+                "Weight": 8,
                 "Item": {
                   "ItemId": "Armor_Iron_Hands_Epic",
                   "QuantityMin": 1,
@@ -1655,7 +1655,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 1,
+                "Weight": 2,
                 "Item": {
                   "ItemId": "Armor_Iron_Hands_Legendary",
                   "QuantityMin": 1,
@@ -1670,7 +1670,7 @@
             "Containers": [
               {
                 "Type": "Single",
-                "Weight": 40,
+                "Weight": 25,
                 "Item": {
                   "ItemId": "Armor_Iron_Head_Common",
                   "QuantityMin": 1,
@@ -1679,7 +1679,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 25,
+                "Weight": 10,
                 "Item": {
                   "ItemId": "Armor_Iron_Head_Poor",
                   "QuantityMin": 1,
@@ -1688,7 +1688,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 20,
+                "Weight": 30,
                 "Item": {
                   "ItemId": "Armor_Iron_Head_Uncommon",
                   "QuantityMin": 1,
@@ -1697,7 +1697,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 10,
+                "Weight": 25,
                 "Item": {
                   "ItemId": "Armor_Iron_Head_Rare",
                   "QuantityMin": 1,
@@ -1706,7 +1706,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 4,
+                "Weight": 8,
                 "Item": {
                   "ItemId": "Armor_Iron_Head_Epic",
                   "QuantityMin": 1,
@@ -1715,7 +1715,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 1,
+                "Weight": 2,
                 "Item": {
                   "ItemId": "Armor_Iron_Head_Legendary",
                   "QuantityMin": 1,
@@ -1730,7 +1730,7 @@
             "Containers": [
               {
                 "Type": "Single",
-                "Weight": 40,
+                "Weight": 25,
                 "Item": {
                   "ItemId": "Armor_Iron_Legs_Common",
                   "QuantityMin": 1,
@@ -1739,7 +1739,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 25,
+                "Weight": 10,
                 "Item": {
                   "ItemId": "Armor_Iron_Legs_Poor",
                   "QuantityMin": 1,
@@ -1748,7 +1748,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 20,
+                "Weight": 30,
                 "Item": {
                   "ItemId": "Armor_Iron_Legs_Uncommon",
                   "QuantityMin": 1,
@@ -1757,7 +1757,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 10,
+                "Weight": 25,
                 "Item": {
                   "ItemId": "Armor_Iron_Legs_Rare",
                   "QuantityMin": 1,
@@ -1766,7 +1766,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 4,
+                "Weight": 8,
                 "Item": {
                   "ItemId": "Armor_Iron_Legs_Epic",
                   "QuantityMin": 1,
@@ -1775,7 +1775,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 1,
+                "Weight": 2,
                 "Item": {
                   "ItemId": "Armor_Iron_Legs_Legendary",
                   "QuantityMin": 1,

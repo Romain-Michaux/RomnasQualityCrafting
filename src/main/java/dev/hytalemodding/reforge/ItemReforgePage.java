@@ -20,8 +20,8 @@ import java.util.List;
 public class ItemReforgePage extends ChoiceBasePage {
     private final String material;
     
-    public ItemReforgePage(@Nonnull PlayerRef playerRef, @Nonnull ItemContainer itemContainer, @Nonnull String material, @Nonnull com.hypixel.hytale.server.core.inventory.ItemContext heldItemContext) {
-        super(playerRef, getItemElements(itemContainer, material, heldItemContext), "Pages/ItemReforgePage.ui");
+    public ItemReforgePage(@Nonnull PlayerRef playerRef, @Nonnull ItemContainer[] itemContainers, @Nonnull String material, @Nonnull com.hypixel.hytale.server.core.inventory.ItemContext heldItemContext) {
+        super(playerRef, getItemElements(itemContainers, material, heldItemContext), "Pages/ItemReforgePage.ui");
         this.material = material;
     }
 
@@ -31,25 +31,32 @@ public class ItemReforgePage extends ChoiceBasePage {
         } else {
             commandBuilder.append(this.getPageLayout());
             commandBuilder.clear("#ElementList");
-            commandBuilder.appendInline("#ElementList", "Label { Text: %customUI.itemReforgePage.noItems; Style: (Alignment: Center); }");
+            commandBuilder.appendInline("#ElementList", "Label { Text: %server.customUI.itemReforgePage.noItems; Style: (Alignment: Center); }");
         }
     }
 
     @Nonnull
-    protected static ChoiceElement[] getItemElements(@Nonnull ItemContainer itemContainer, @Nonnull String material, @Nonnull ItemContext heldItemContext) {
+    protected static ChoiceElement[] getItemElements(@Nonnull ItemContainer[] itemContainers, @Nonnull String material, @Nonnull ItemContext heldItemContext) {
         List<ChoiceElement> elements = new ObjectArrayList();
 
-        for (short slot = 0; slot < itemContainer.getCapacity(); ++slot) {
-            ItemStack itemStack = itemContainer.getItemStack(slot);
-            if (!ItemStack.isEmpty(itemStack)) {
-                String itemId = itemStack.getItemId();
-                
-                // Vérifier que l'item a une qualité et peut être reforgé
-                if (QualityManager.hasQualityInId(itemId) && QualityManager.canHaveQuality(itemStack)) {
-                    // Vérifier que l'item correspond au matériau du kit (simplifié)
-                    if (matchesMaterial(itemId, material)) {
-                        ItemContext itemContext = new ItemContext(itemContainer, slot, itemStack);
-                        elements.add(new ItemReforgeElement(itemStack, new ReforgeItemInteraction(itemContext, heldItemContext)));
+        // Scan all containers (main inventory and hotbar)
+        for (ItemContainer itemContainer : itemContainers) {
+            if (itemContainer == null) {
+                continue;
+            }
+            
+            for (short slot = 0; slot < itemContainer.getCapacity(); ++slot) {
+                ItemStack itemStack = itemContainer.getItemStack(slot);
+                if (!ItemStack.isEmpty(itemStack)) {
+                    String itemId = itemStack.getItemId();
+                    
+                    // Vérifier que l'item a une qualité et peut être reforgé
+                    if (QualityManager.hasQualityInId(itemId) && QualityManager.canHaveQuality(itemStack)) {
+                        // Vérifier que l'item correspond au matériau du kit (simplifié)
+                        if (matchesMaterial(itemId, material)) {
+                            ItemContext itemContext = new ItemContext(itemContainer, slot, itemStack);
+                            elements.add(new ItemReforgeElement(itemStack, new ReforgeItemInteraction(itemContext, heldItemContext)));
+                        }
                     }
                 }
             }

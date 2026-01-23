@@ -206,7 +206,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 25,
+                "Weight": 30,
                 "Item": {
                   "ItemId": "Weapon_Battleaxe_Crude_Poor",
                   "QuantityMin": 1,
@@ -224,7 +224,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 10,
+                "Weight": 8,
                 "Item": {
                   "ItemId": "Weapon_Battleaxe_Crude_Rare",
                   "QuantityMin": 1,
@@ -233,7 +233,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 4,
+                "Weight": 2,
                 "Item": {
                   "ItemId": "Weapon_Battleaxe_Crude_Epic",
                   "QuantityMin": 1,
@@ -242,7 +242,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 1,
+                "Weight": 0.5,
                 "Item": {
                   "ItemId": "Weapon_Battleaxe_Crude_Legendary",
                   "QuantityMin": 1,
@@ -266,7 +266,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 25,
+                "Weight": 30,
                 "Item": {
                   "ItemId": "Weapon_Daggers_Crude_Poor",
                   "QuantityMin": 1,
@@ -284,7 +284,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 10,
+                "Weight": 8,
                 "Item": {
                   "ItemId": "Weapon_Daggers_Crude_Rare",
                   "QuantityMin": 1,
@@ -293,7 +293,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 4,
+                "Weight": 2,
                 "Item": {
                   "ItemId": "Weapon_Daggers_Crude_Epic",
                   "QuantityMin": 1,
@@ -302,7 +302,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 1,
+                "Weight": 0.5,
                 "Item": {
                   "ItemId": "Weapon_Daggers_Crude_Legendary",
                   "QuantityMin": 1,
@@ -326,7 +326,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 25,
+                "Weight": 30,
                 "Item": {
                   "ItemId": "Weapon_Mace_Crude_Poor",
                   "QuantityMin": 1,
@@ -344,7 +344,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 10,
+                "Weight": 8,
                 "Item": {
                   "ItemId": "Weapon_Mace_Crude_Rare",
                   "QuantityMin": 1,
@@ -353,7 +353,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 4,
+                "Weight": 2,
                 "Item": {
                   "ItemId": "Weapon_Mace_Crude_Epic",
                   "QuantityMin": 1,
@@ -362,7 +362,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 1,
+                "Weight": 0.5,
                 "Item": {
                   "ItemId": "Weapon_Mace_Crude_Legendary",
                   "QuantityMin": 1,
@@ -386,7 +386,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 25,
+                "Weight": 30,
                 "Item": {
                   "ItemId": "Weapon_Sword_Crude_Poor",
                   "QuantityMin": 1,
@@ -404,7 +404,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 10,
+                "Weight": 8,
                 "Item": {
                   "ItemId": "Weapon_Sword_Crude_Rare",
                   "QuantityMin": 1,
@@ -413,7 +413,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 4,
+                "Weight": 2,
                 "Item": {
                   "ItemId": "Weapon_Sword_Crude_Epic",
                   "QuantityMin": 1,
@@ -422,7 +422,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 1,
+                "Weight": 0.5,
                 "Item": {
                   "ItemId": "Weapon_Sword_Crude_Legendary",
                   "QuantityMin": 1,
@@ -455,7 +455,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 25,
+                "Weight": 30,
                 "Item": {
                   "ItemId": "Weapon_Shortbow_Crude_Poor",
                   "QuantityMin": 1,
@@ -473,7 +473,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 10,
+                "Weight": 8,
                 "Item": {
                   "ItemId": "Weapon_Shortbow_Crude_Rare",
                   "QuantityMin": 1,
@@ -482,7 +482,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 4,
+                "Weight": 2,
                 "Item": {
                   "ItemId": "Weapon_Shortbow_Crude_Epic",
                   "QuantityMin": 1,
@@ -491,7 +491,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 1,
+                "Weight": 0.5,
                 "Item": {
                   "ItemId": "Weapon_Shortbow_Crude_Legendary",
                   "QuantityMin": 1,
@@ -515,7 +515,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 25,
+                "Weight": 30,
                 "Item": {
                   "ItemId": "Tool_Hatchet_Crude_Poor",
                   "QuantityMin": 1,
@@ -533,7 +533,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 10,
+                "Weight": 8,
                 "Item": {
                   "ItemId": "Tool_Hatchet_Crude_Rare",
                   "QuantityMin": 1,
@@ -542,7 +542,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 4,
+                "Weight": 2,
                 "Item": {
                   "ItemId": "Tool_Hatchet_Crude_Epic",
                   "QuantityMin": 1,
@@ -551,7 +551,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 1,
+                "Weight": 0.5,
                 "Item": {
                   "ItemId": "Tool_Hatchet_Crude_Legendary",
                   "QuantityMin": 1,
@@ -575,7 +575,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 25,
+                "Weight": 30,
                 "Item": {
                   "ItemId": "Tool_Pickaxe_Crude_Poor",
                   "QuantityMin": 1,
@@ -593,7 +593,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 10,
+                "Weight": 8,
                 "Item": {
                   "ItemId": "Tool_Pickaxe_Crude_Rare",
                   "QuantityMin": 1,
@@ -602,7 +602,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 4,
+                "Weight": 2,
                 "Item": {
                   "ItemId": "Tool_Pickaxe_Crude_Epic",
                   "QuantityMin": 1,
@@ -611,7 +611,7 @@
               },
               {
                 "Type": "Single",
-                "Weight": 1,
+                "Weight": 0.5,
                 "Item": {
                   "ItemId": "Tool_Pickaxe_Crude_Legendary",
                   "QuantityMin": 1,

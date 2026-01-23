@@ -1261,4 +1261,4 @@ items.Tool_Reforge_Kit_Adamantite.description=Allows you to reforge Adamantite i
 customUI.itemReforgePage.title=Reforge Items
 customUI.itemReforgePage.item=Item
 customUI.itemReforgePage.quality=Quality
-customUI.itemReforgePage.noItems=No items with quality found in inventory
+customUI.itemReforgePage.noItems=No compatibles items found in inventory
