@@ -1,0 +1,29 @@
+{
+  "Input": [
+    {
+      "ItemId": "Armor_Adamantite_Legs_Rare",
+      "Quantity": 1
+    },
+    {
+      "ItemId": "Ingredient_Bar_Adamantite",
+      "Quantity": 1
+    }
+  ],
+  "PrimaryOutput": {
+    "ItemId": "Armor_Adamantite_Legs_Common",
+    "Quantity": 1
+  },
+  "Output": [
+    {
+      "ItemId": "Armor_Adamantite_Legs_Common",
+      "Quantity": 1
+    }
+  ],
+  "BenchRequirement": [
+    {
+      "Type": "Processing",
+      "Id": "Reforgebench"
+    }
+  ],
+  "TimeSeconds": 5
+}

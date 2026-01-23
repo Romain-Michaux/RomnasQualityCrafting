@@ -1,0 +1,20 @@
+{
+  "Group": "dev.hytalemodding",
+  "Name": "RomnasQualityCrafting",
+  "Version": "${version}",
+  "Description": "Adds random quality tiers to crafted and looted items, affecting their damage, protection, and durability stats. Features 6 quality levels (Poor, Common, Uncommon, Rare, Epic, Legendary) with balanced probabilities. Makes every craft unique and exciting!",
+  "Authors": [
+    {
+      "Name": "Romna",
+      "Email": "your.email@example.com",
+      "Url": "https://your-website.com"
+    }
+  ],
+  "Website": "https://your-plugin-website.com",
+  "ServerVersion": "*",
+  "Dependencies": {},
+  "OptionalDependencies": {},
+  "DisabledByDefault": false,
+  "IncludesAssetPack": true,
+  "Main": "dev.hytalemodding.RomnasQualityCrafting"
+}

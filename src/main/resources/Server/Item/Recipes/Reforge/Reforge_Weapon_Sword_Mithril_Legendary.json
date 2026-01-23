@@ -1,0 +1,29 @@
+{
+  "Input": [
+    {
+      "ItemId": "Weapon_Sword_Mithril_Legendary",
+      "Quantity": 1
+    },
+    {
+      "ItemId": "Ingredient_Bar_Mithril",
+      "Quantity": 1
+    }
+  ],
+  "PrimaryOutput": {
+    "ItemId": "Weapon_Sword_Mithril_Common",
+    "Quantity": 1
+  },
+  "Output": [
+    {
+      "ItemId": "Weapon_Sword_Mithril_Common",
+      "Quantity": 1
+    }
+  ],
+  "BenchRequirement": [
+    {
+      "Type": "Processing",
+      "Id": "Reforgebench"
+    }
+  ],
+  "TimeSeconds": 5
+}

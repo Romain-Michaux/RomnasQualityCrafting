@@ -1,0 +1,53 @@
+{
+  "TranslationProperties": {
+    "Name": "server.items.Tool_Pickaxe_Cobalt_Common.name",
+    "Description": "server.items.Tool_Pickaxe_Cobalt_Common.description"
+  },
+  "Parent": "Tool_Pickaxe_Crude",
+  "Icon": "Icons/ItemsGenerated/Tool_Pickaxe_Cobalt.png",
+  "Quality": "Common",
+  "ItemLevel": 35,
+  "Model": "Items/Tools/Pickaxe/Cobalt.blockymodel",
+  "Texture": "Items/Tools/Pickaxe/Cobalt_Texture.png",
+  "Tool": {
+    "Specs": [
+      {
+        "Power": 0.6667,
+        "GatherType": "SoftBlocks"
+      },
+      {
+        "Power": 0.3333,
+        "GatherType": "Soils"
+      },
+      {
+        "Power": 0.0333,
+        "GatherType": "Woods"
+      },
+      {
+        "Power": 0.3333,
+        "GatherType": "Rocks"
+      },
+      {
+        "Power": 0.3333,
+        "GatherType": "Benches"
+      },
+      {
+        "Power": 0.1133,
+        "GatherType": "VolcanicRocks"
+      }
+    ],
+    "DurabilityLossBlockTypes": [
+      {
+        "BlockSets": [
+          "Stone",
+          "Rock",
+          "Ores",
+          "Soil"
+        ],
+        "DurabilityLossOnHit": 0.25
+      }
+    ]
+  },
+  "MaxDurability": 200,
+  "Id": "Tool_Pickaxe_Cobalt_Common"
+}

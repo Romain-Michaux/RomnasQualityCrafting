@@ -1,0 +1,76 @@
+{
+  "TranslationProperties": {
+    "Name": "server.items.Armor_Adamantite_Head_Common.name",
+    "Description": "server.items.Armor_Adamantite_Head_Common.description"
+  },
+  "Parent": "Armor_Iron_Head",
+  "Quality": "Common",
+  "ItemLevel": 40,
+  "Icon": "Icons/ItemsGenerated/Armor_Adamantite_Head.png",
+  "IconProperties": {
+    "Rotation": [
+      23.06,
+      43.315,
+      23.06
+    ],
+    "Scale": 0.45,
+    "Translation": [
+      0,
+      -1.5
+    ]
+  },
+  "Model": "Items/Armors/Adamantite/Head.blockymodel",
+  "Texture": "Items/Armors/Adamantite/Head_Texture.png",
+  "Armor": {
+    "ArmorSlot": "Head",
+    "BaseDamageResistance": 0,
+    "CosmeticsToHide": [
+      "EarAccessory",
+      "Ear",
+      "Haircut",
+      "HeadAccessory"
+    ],
+    "DamageResistance": {
+      "Physical": [
+        {
+          "Amount": 0.0727,
+          "CalculationType": "Multiplicative"
+        }
+      ],
+      "Projectile": [
+        {
+          "Amount": 0.0727,
+          "CalculationType": "Multiplicative"
+        }
+      ]
+    },
+    "StatModifiers": {
+      "Health": [
+        {
+          "Amount": 12,
+          "CalculationType": "Additive"
+        }
+      ]
+    },
+    "DamageClassEnhancement": {
+      "Light": [
+        {
+          "Amount": 0.0273,
+          "CalculationType": "Multiplicative"
+        }
+      ]
+    }
+  },
+  "MaxDurability": 100,
+  "Tags": {
+    "Type": [
+      "Armor"
+    ],
+    "Family": [
+      "Adamantite"
+    ]
+  },
+  "ItemSoundSetId": "ISS_Armor_Heavy",
+  "DurabilityLossOnHit": 0.5,
+  "Id": "Armor_Adamantite_Head_Common"
+}

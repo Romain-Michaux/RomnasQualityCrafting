@@ -1,0 +1,73 @@
+{
+  "TranslationProperties": {
+    "Name": "server.items.Armor_Cobalt_Chest_Uncommon.name",
+    "Description": "server.items.Armor_Cobalt_Chest_Uncommon.description"
+  },
+  "Parent": "Armor_Iron_Chest",
+  "Quality": "Uncommon",
+  "ItemLevel": 35,
+  "Icon": "Icons/ItemsGenerated/Armor_Cobalt_Chest.png",
+  "IconProperties": {
+    "Rotation": [
+      22.5,
+      45,
+      22.5
+    ],
+    "Scale": 0.4,
+    "Translation": [
+      0.3,
+      -6.9
+    ]
+  },
+  "Model": "Items/Armors/Cobalt/Chest.blockymodel",
+  "Texture": "Items/Armors/Cobalt/Chest_Texture.png",
+  "Armor": {
+    "ArmorSlot": "Chest",
+    "BaseDamageResistance": 0,
+    "CosmeticsToHide": [
+      "Overtop"
+    ],
+    "DamageResistance": {
+      "Physical": [
+        {
+          "Amount": 0.1099,
+          "CalculationType": "Multiplicative"
+        }
+      ],
+      "Projectile": [
+        {
+          "Amount": 0.1099,
+          "CalculationType": "Multiplicative"
+        }
+      ]
+    },
+    "StatModifiers": {
+      "Health": [
+        {
+          "Amount": 21,
+          "CalculationType": "Additive"
+        }
+      ]
+    },
+    "DamageClassEnhancement": {
+      "Signature": [
+        {
+          "Amount": 0.0572,
+          "CalculationType": "Multiplicative"
+        }
+      ]
+    }
+  },
+  "MaxDurability": 100,
+  "Tags": {
+    "Type": [
+      "Armor"
+    ],
+    "Family": [
+      "Cobalt"
+    ]
+  },
+  "ItemSoundSetId": "ISS_Armor_Heavy",
+  "DurabilityLossOnHit": 0.5,
+  "Id": "Armor_Cobalt_Chest_Uncommon"
+}

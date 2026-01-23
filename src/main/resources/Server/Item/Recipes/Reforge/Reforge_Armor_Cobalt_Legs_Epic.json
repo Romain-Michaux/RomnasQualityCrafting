@@ -1,0 +1,29 @@
+{
+  "Input": [
+    {
+      "ItemId": "Armor_Cobalt_Legs_Epic",
+      "Quantity": 1
+    },
+    {
+      "ItemId": "Ingredient_Bar_Cobalt",
+      "Quantity": 1
+    }
+  ],
+  "PrimaryOutput": {
+    "ItemId": "Armor_Cobalt_Legs_Common",
+    "Quantity": 1
+  },
+  "Output": [
+    {
+      "ItemId": "Armor_Cobalt_Legs_Common",
+      "Quantity": 1
+    }
+  ],
+  "BenchRequirement": [
+    {
+      "Type": "Processing",
+      "Id": "Reforgebench"
+    }
+  ],
+  "TimeSeconds": 5
+}

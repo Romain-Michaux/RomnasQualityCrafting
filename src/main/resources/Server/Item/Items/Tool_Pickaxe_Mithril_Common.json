@@ -1,0 +1,53 @@
+{
+  "TranslationProperties": {
+    "Name": "server.items.Tool_Pickaxe_Mithril_Common.name",
+    "Description": "server.items.Tool_Pickaxe_Mithril_Common.description"
+  },
+  "Parent": "Tool_Pickaxe_Crude",
+  "Icon": "Icons/ItemsGenerated/Tool_Pickaxe_Mithril.png",
+  "Quality": "Common",
+  "ItemLevel": 50,
+  "Model": "Items/Tools/Pickaxe/Mithril.blockymodel",
+  "Texture": "Items/Tools/Pickaxe/Mithril_Texture.png",
+  "Tool": {
+    "Specs": [
+      {
+        "Power": 0.5714,
+        "GatherType": "SoftBlocks"
+      },
+      {
+        "Power": 0.5714,
+        "GatherType": "Soils"
+      },
+      {
+        "Power": 0.0286,
+        "GatherType": "Woods"
+      },
+      {
+        "Power": 0.5714,
+        "GatherType": "Rocks"
+      },
+      {
+        "Power": 0.2857,
+        "GatherType": "Benches"
+      },
+      {
+        "Power": 0.1943,
+        "GatherType": "VolcanicRocks"
+      }
+    ],
+    "DurabilityLossBlockTypes": [
+      {
+        "BlockSets": [
+          "Stone",
+          "Rock",
+          "Ores",
+          "Soil"
+        ],
+        "DurabilityLossOnHit": 0.25
+      }
+    ]
+  },
+  "MaxDurability": 228,
+  "Id": "Tool_Pickaxe_Mithril_Common"
+}

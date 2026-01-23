@@ -1,0 +1,29 @@
+{
+  "Input": [
+    {
+      "ItemId": "Tool_Hatchet_Adamantite_Rare",
+      "Quantity": 1
+    },
+    {
+      "ItemId": "Ingredient_Bar_Adamantite",
+      "Quantity": 1
+    }
+  ],
+  "PrimaryOutput": {
+    "ItemId": "Tool_Hatchet_Adamantite_Common",
+    "Quantity": 1
+  },
+  "Output": [
+    {
+      "ItemId": "Tool_Hatchet_Adamantite_Common",
+      "Quantity": 1
+    }
+  ],
+  "BenchRequirement": [
+    {
+      "Type": "Processing",
+      "Id": "Reforgebench"
+    }
+  ],
+  "TimeSeconds": 5
+}

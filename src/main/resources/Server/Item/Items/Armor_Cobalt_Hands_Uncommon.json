@@ -1,0 +1,70 @@
+{
+  "TranslationProperties": {
+    "Name": "server.items.Armor_Cobalt_Hands_Uncommon.name",
+    "Description": "server.items.Armor_Cobalt_Hands_Uncommon.description"
+  },
+  "Parent": "Armor_Iron_Hands",
+  "Quality": "Uncommon",
+  "ItemLevel": 35,
+  "Icon": "Icons/ItemsGenerated/Armor_Cobalt_Hands.png",
+  "IconProperties": {
+    "Rotation": [
+      21.94,
+      45.565,
+      22.5
+    ],
+    "Scale": 0.645,
+    "Translation": [
+      0.7,
+      -2.3
+    ]
+  },
+  "Model": "Items/Armors/Cobalt/Hands.blockymodel",
+  "Texture": "Items/Armors/Cobalt/Hands_Texture.png",
+  "Armor": {
+    "ArmorSlot": "Hands",
+    "BaseDamageResistance": 0,
+    "DamageResistance": {
+      "Physical": [
+        {
+          "Amount": 0.0488,
+          "CalculationType": "Multiplicative"
+        }
+      ],
+      "Projectile": [
+        {
+          "Amount": 0.0488,
+          "CalculationType": "Multiplicative"
+        }
+      ]
+    },
+    "StatModifiers": {
+      "Health": [
+        {
+          "Amount": 9,
+          "CalculationType": "Additive"
+        }
+      ]
+    },
+    "DamageClassEnhancement": {
+      "Signature": [
+        {
+          "Amount": 0.0287,
+          "CalculationType": "Multiplicative"
+        }
+      ]
+    }
+  },
+  "MaxDurability": 100,
+  "Tags": {
+    "Type": [
+      "Armor"
+    ],
+    "Family": [
+      "Cobalt"
+    ]
+  },
+  "ItemSoundSetId": "ISS_Armor_Heavy",
+  "DurabilityLossOnHit": 0.5,
+  "Id": "Armor_Cobalt_Hands_Uncommon"
+}

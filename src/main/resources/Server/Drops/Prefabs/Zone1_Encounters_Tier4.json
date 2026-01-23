@@ -1,0 +1,1379 @@
+{
+  "Container": {
+    "Type": "Multiple",
+    "Containers": [
+      {
+        "Type": "Choice",
+        "RollsMin": 2,
+        "RollsMax": 4,
+        "Containers": [
+          {
+            "Type": "Single",
+            "Weight": 10,
+            "Item": {
+              "ItemId": "Ingredient_Fabric_Scrap_Linen",
+              "QuantityMin": 3,
+              "QuantityMax": 8
+            }
+          },
+          {
+            "Type": "Single",
+            "Weight": 10,
+            "Item": {
+              "ItemId": "Ingredient_Life_Essence",
+              "QuantityMin": 3,
+              "QuantityMax": 8
+            }
+          },
+          {
+            "Type": "Single",
+            "Weight": 3,
+            "Item": {
+              "ItemId": "Ingredient_Leather_Light",
+              "QuantityMin": 2,
+              "QuantityMax": 5
+            }
+          },
+          {
+            "Type": "Single",
+            "Weight": 6,
+            "Item": {
+              "ItemId": "Ingredient_Leather_Medium",
+              "QuantityMin": 2,
+              "QuantityMax": 4
+            }
+          },
+          {
+            "Type": "Single",
+            "Weight": 6,
+            "Item": {
+              "ItemId": "Ingredient_Leather_Heavy",
+              "QuantityMin": 1,
+              "QuantityMax": 2
+            }
+          },
+          {
+            "Type": "Single",
+            "Weight": 1,
+            "Item": {
+              "ItemId": "Ingredient_Powder_Boom",
+              "QuantityMin": 2,
+              "QuantityMax": 4
+            }
+          },
+          {
+            "Type": "Single",
+            "Weight": 5,
+            "Item": {
+              "ItemId": "Ingredient_Fibre",
+              "QuantityMin": 5,
+              "QuantityMax": 10
+            }
+          },
+          {
+            "Type": "Single",
+            "Weight": 3,
+            "Item": {
+              "ItemId": "Ingredient_Stick",
+              "QuantityMin": 4,
+              "QuantityMax": 6
+            }
+          },
+          {
+            "Type": "Single",
+            "Weight": 1,
+            "Item": {
+              "ItemId": "Ingredient_Tree_Sap",
+              "QuantityMin": 3,
+              "QuantityMax": 4
+            }
+          },
+          {
+            "Type": "Single",
+            "Weight": 3,
+            "Item": {
+              "ItemId": "Ingredient_Charcoal",
+              "QuantityMin": 3,
+              "QuantityMax": 11
+            }
+          },
+          {
+            "Type": "Single",
+            "Weight": 6,
+            "Item": {
+              "ItemId": "Ore_Silver",
+              "QuantityMin": 3,
+              "QuantityMax": 4
+            }
+          },
+          {
+            "Type": "Single",
+            "Weight": 4,
+            "Item": {
+              "ItemId": "Ore_Gold",
+              "QuantityMin": 2,
+              "QuantityMax": 3
+            }
+          },
+          {
+            "Type": "Single",
+            "Weight": 3,
+            "Item": {
+              "ItemId": "Ingredient_Bar_Silver",
+              "QuantityMin": 1,
+              "QuantityMax": 2
+            }
+          },
+          {
+            "Type": "Single",
+            "Weight": 2,
+            "Item": {
+              "ItemId": "Ingredient_Bar_Gold",
+              "QuantityMin": 1,
+              "QuantityMax": 2
+            }
+          },
+          {
+            "Type": "Single",
+            "Weight": 10,
+            "Item": {
+              "ItemId": "Ingredient_Bar_Copper",
+              "QuantityMin": 2,
+              "QuantityMax": 5
+            }
+          },
+          {
+            "Type": "Single",
+            "Weight": 10,
+            "Item": {
+              "ItemId": "Ingredient_Bar_Iron",
+              "QuantityMin": 2,
+              "QuantityMax": 4
+            }
+          },
+          {
+            "Type": "Single",
+            "Weight": 1,
+            "Item": {
+              "ItemId": "Tool_Repair_Kit_Iron",
+              "QuantityMin": 1,
+              "QuantityMax": 1
+            }
+          }
+        ]
+      },
+      {
+        "Type": "Choice",
+        "RollsMin": 1,
+        "RollsMax": 2,
+        "Containers": [
+          {
+            "Type": "Single",
+            "Weight": 5,
+            "Item": {
+              "ItemId": "Plant_Seeds_Carrot",
+              "QuantityMin": 2,
+              "QuantityMax": 3
+            }
+          },
+          {
+            "Type": "Single",
+            "Weight": 5,
+            "Item": {
+              "ItemId": "Plant_Seeds_Corn",
+              "QuantityMin": 2,
+              "QuantityMax": 3
+            }
+          },
+          {
+            "Type": "Single",
+            "Weight": 5,
+            "Item": {
+              "ItemId": "Potion_Health_Lesser",
+              "QuantityMin": 1,
+              "QuantityMax": 2
+            }
+          },
+          {
+            "Type": "Single",
+            "Weight": 5,
+            "Item": {
+              "ItemId": "Potion_Stamina_Lesser",
+              "QuantityMin": 1,
+              "QuantityMax": 2
+            }
+          }
+        ]
+      },
+      {
+        "Type": "Choice",
+        "RollsMin": 1,
+        "RollsMax": 1,
+        "Containers": [
+          {
+            "Type": "Choice",
+            "Containers": [
+              {
+                "Type": "Single",
+                "Weight": 40,
+                "Item": {
+                  "ItemId": "Weapon_Battleaxe_Copper_Common",
+                  "QuantityMin": 1,
+                  "QuantityMax": 1
+                }
+              },
+              {
+                "Type": "Single",
+                "Weight": 25,
+                "Item": {
+                  "ItemId": "Weapon_Battleaxe_Copper_Poor",
+                  "QuantityMin": 1,
+                  "QuantityMax": 1
+                }
+              },
+              {
+                "Type": "Single",
+                "Weight": 20,
+                "Item": {
+                  "ItemId": "Weapon_Battleaxe_Copper_Uncommon",
+                  "QuantityMin": 1,
+                  "QuantityMax": 1
+                }
+              },
+              {
+                "Type": "Single",
+                "Weight": 10,
+                "Item": {
+                  "ItemId": "Weapon_Battleaxe_Copper_Rare",
+                  "QuantityMin": 1,
+                  "QuantityMax": 1
+                }
+              },
+              {
+                "Type": "Single",
+                "Weight": 4,
+                "Item": {
+                  "ItemId": "Weapon_Battleaxe_Copper_Epic",
+                  "QuantityMin": 1,
+                  "QuantityMax": 1
+                }
+              },
+              {
+                "Type": "Single",
+                "Weight": 1,
+                "Item": {
+                  "ItemId": "Weapon_Battleaxe_Copper_Legendary",
+                  "QuantityMin": 1,
+                  "QuantityMax": 1
+                }
+              }
+            ],
+            "Weight": 3
+          },
+          {
+            "Type": "Choice",
+            "Containers": [
+              {
+                "Type": "Single",
+                "Weight": 40,
+                "Item": {
+                  "ItemId": "Weapon_Daggers_Copper_Common",
+                  "QuantityMin": 1,
+                  "QuantityMax": 1
+                }
+              },
+              {
+                "Type": "Single",
+                "Weight": 25,
+                "Item": {
+                  "ItemId": "Weapon_Daggers_Copper_Poor",
+                  "QuantityMin": 1,
+                  "QuantityMax": 1
+                }
+              },
+              {
+                "Type": "Single",
+                "Weight": 20,
+                "Item": {
+                  "ItemId": "Weapon_Daggers_Copper_Uncommon",
+                  "QuantityMin": 1,
+                  "QuantityMax": 1
+                }
+              },
+              {
+                "Type": "Single",
+                "Weight": 10,
+                "Item": {
+                  "ItemId": "Weapon_Daggers_Copper_Rare",
+                  "QuantityMin": 1,
+                  "QuantityMax": 1
+                }
+              },
+              {
+                "Type": "Single",
+                "Weight": 4,
+                "Item": {
+                  "ItemId": "Weapon_Daggers_Copper_Epic",
+                  "QuantityMin": 1,
+                  "QuantityMax": 1
+                }
+              },
+              {
+                "Type": "Single",
+                "Weight": 1,
+                "Item": {
+                  "ItemId": "Weapon_Daggers_Copper_Legendary",
+                  "QuantityMin": 1,
+                  "QuantityMax": 1
+                }
+              }
+            ],
+            "Weight": 3
+          },
+          {
+            "Type": "Choice",
+            "Containers": [
+              {
+                "Type": "Single",
+                "Weight": 40,
+                "Item": {
+                  "ItemId": "Weapon_Mace_Copper_Common",
+                  "QuantityMin": 1,
+                  "QuantityMax": 1
+                }
+              },
+              {
+                "Type": "Single",
+                "Weight": 25,
+                "Item": {
+                  "ItemId": "Weapon_Mace_Copper_Poor",
+                  "QuantityMin": 1,
+                  "QuantityMax": 1
+                }
+              },
+              {
+                "Type": "Single",
+                "Weight": 20,
+                "Item": {
+                  "ItemId": "Weapon_Mace_Copper_Uncommon",
+                  "QuantityMin": 1,
+                  "QuantityMax": 1
+                }
+              },
+              {
+                "Type": "Single",
+                "Weight": 10,
+                "Item": {
+                  "ItemId": "Weapon_Mace_Copper_Rare",
+                  "QuantityMin": 1,
+                  "QuantityMax": 1
+                }
+              },
+              {
+                "Type": "Single",
+                "Weight": 4,
+                "Item": {
+                  "ItemId": "Weapon_Mace_Copper_Epic",
+                  "QuantityMin": 1,
+                  "QuantityMax": 1
+                }
+              },
+              {
+                "Type": "Single",
+                "Weight": 1,
+                "Item": {
+                  "ItemId": "Weapon_Mace_Copper_Legendary",
+                  "QuantityMin": 1,
+                  "QuantityMax": 1
+                }
+              }
+            ],
+            "Weight": 3
+          },
+          {
+            "Type": "Choice",
+            "Containers": [
+              {
+                "Type": "Single",
+                "Weight": 40,
+                "Item": {
+                  "ItemId": "Weapon_Sword_Copper_Common",
+                  "QuantityMin": 1,
+                  "QuantityMax": 1
+                }
+              },
+              {
+                "Type": "Single",
+                "Weight": 25,
+                "Item": {
+                  "ItemId": "Weapon_Sword_Copper_Poor",
+                  "QuantityMin": 1,
+                  "QuantityMax": 1
+                }
+              },
+              {
+                "Type": "Single",
+                "Weight": 20,
+                "Item": {
+                  "ItemId": "Weapon_Sword_Copper_Uncommon",
+                  "QuantityMin": 1,
+                  "QuantityMax": 1
+                }
+              },
+              {
+                "Type": "Single",
+                "Weight": 10,
+                "Item": {
+                  "ItemId": "Weapon_Sword_Copper_Rare",
+                  "QuantityMin": 1,
+                  "QuantityMax": 1
+                }
+              },
+              {
+                "Type": "Single",
+                "Weight": 4,
+                "Item": {
+                  "ItemId": "Weapon_Sword_Copper_Epic",
+                  "QuantityMin": 1,
+                  "QuantityMax": 1
+                }
+              },
+              {
+                "Type": "Single",
+                "Weight": 1,
+                "Item": {
+                  "ItemId": "Weapon_Sword_Copper_Legendary",
+                  "QuantityMin": 1,
+                  "QuantityMax": 1
+                }
+              }
+            ],
+            "Weight": 3
+          },
+          {
+            "Type": "Choice",
+            "Containers": [
+              {
+                "Type": "Single",
+                "Weight": 40,
+                "Item": {
+                  "ItemId": "Weapon_Shield_Copper_Common",
+                  "QuantityMin": 1,
+                  "QuantityMax": 1
+                }
+              },
+              {
+                "Type": "Single",
+                "Weight": 25,
+                "Item": {
+                  "ItemId": "Weapon_Shield_Copper_Poor",
+                  "QuantityMin": 1,
+                  "QuantityMax": 1
+                }
+              },
+              {
+                "Type": "Single",
+                "Weight": 20,
+                "Item": {
+                  "ItemId": "Weapon_Shield_Copper_Uncommon",
+                  "QuantityMin": 1,
+                  "QuantityMax": 1
+                }
+              },
+              {
+                "Type": "Single",
+                "Weight": 10,
+                "Item": {
+                  "ItemId": "Weapon_Shield_Copper_Rare",
+                  "QuantityMin": 1,
+                  "QuantityMax": 1
+                }
+              },
+              {
+                "Type": "Single",
+                "Weight": 4,
+                "Item": {
+                  "ItemId": "Weapon_Shield_Copper_Epic",
+                  "QuantityMin": 1,
+                  "QuantityMax": 1
+                }
+              },
+              {
+                "Type": "Single",
+                "Weight": 1,
+                "Item": {
+                  "ItemId": "Weapon_Shield_Copper_Legendary",
+                  "QuantityMin": 1,
+                  "QuantityMax": 1
+                }
+              }
+            ],
+            "Weight": 3
+          },
+          {
+            "Type": "Choice",
+            "Containers": [
+              {
+                "Type": "Single",
+                "Weight": 40,
+                "Item": {
+                  "ItemId": "Weapon_Shortbow_Copper_Common",
+                  "QuantityMin": 1,
+                  "QuantityMax": 1
+                }
+              },
+              {
+                "Type": "Single",
+                "Weight": 25,
+                "Item": {
+                  "ItemId": "Weapon_Shortbow_Copper_Poor",
+                  "QuantityMin": 1,
+                  "QuantityMax": 1
+                }
+              },
+              {
+                "Type": "Single",
+                "Weight": 20,
+                "Item": {
+                  "ItemId": "Weapon_Shortbow_Copper_Uncommon",
+                  "QuantityMin": 1,
+                  "QuantityMax": 1
+                }
+              },
+              {
+                "Type": "Single",
+                "Weight": 10,
+                "Item": {
+                  "ItemId": "Weapon_Shortbow_Copper_Rare",
+                  "QuantityMin": 1,
+                  "QuantityMax": 1
+                }
+              },
+              {
+                "Type": "Single",
+                "Weight": 4,
+                "Item": {
+                  "ItemId": "Weapon_Shortbow_Copper_Epic",
+                  "QuantityMin": 1,
+                  "QuantityMax": 1
+                }
+              },
+              {
+                "Type": "Single",
+                "Weight": 1,
+                "Item": {
+                  "ItemId": "Weapon_Shortbow_Copper_Legendary",
+                  "QuantityMin": 1,
+                  "QuantityMax": 1
+                }
+              }
+            ],
+            "Weight": 3
+          },
+          {
+            "Type": "Choice",
+            "Containers": [
+              {
+                "Type": "Single",
+                "Weight": 40,
+                "Item": {
+                  "ItemId": "Tool_Hatchet_Copper_Common",
+                  "QuantityMin": 1,
+                  "QuantityMax": 1
+                }
+              },
+              {
+                "Type": "Single",
+                "Weight": 25,
+                "Item": {
+                  "ItemId": "Tool_Hatchet_Copper_Poor",
+                  "QuantityMin": 1,
+                  "QuantityMax": 1
+                }
+              },
+              {
+                "Type": "Single",
+                "Weight": 20,
+                "Item": {
+                  "ItemId": "Tool_Hatchet_Copper_Uncommon",
+                  "QuantityMin": 1,
+                  "QuantityMax": 1
+                }
+              },
+              {
+                "Type": "Single",
+                "Weight": 10,
+                "Item": {
+                  "ItemId": "Tool_Hatchet_Copper_Rare",
+                  "QuantityMin": 1,
+                  "QuantityMax": 1
+                }
+              },
+              {
+                "Type": "Single",
+                "Weight": 4,
+                "Item": {
+                  "ItemId": "Tool_Hatchet_Copper_Epic",
+                  "QuantityMin": 1,
+                  "QuantityMax": 1
+                }
+              },
+              {
+                "Type": "Single",
+                "Weight": 1,
+                "Item": {
+                  "ItemId": "Tool_Hatchet_Copper_Legendary",
+                  "QuantityMin": 1,
+                  "QuantityMax": 1
+                }
+              }
+            ],
+            "Weight": 5
+          },
+          {
+            "Type": "Choice",
+            "Containers": [
+              {
+                "Type": "Single",
+                "Weight": 40,
+                "Item": {
+                  "ItemId": "Tool_Pickaxe_Copper_Common",
+                  "QuantityMin": 1,
+                  "QuantityMax": 1
+                }
+              },
+              {
+                "Type": "Single",
+                "Weight": 25,
+                "Item": {
+                  "ItemId": "Tool_Pickaxe_Copper_Poor",
+                  "QuantityMin": 1,
+                  "QuantityMax": 1
+                }
+              },
+              {
+                "Type": "Single",
+                "Weight": 20,
+                "Item": {
+                  "ItemId": "Tool_Pickaxe_Copper_Uncommon",
+                  "QuantityMin": 1,
+                  "QuantityMax": 1
+                }
+              },
+              {
+                "Type": "Single",
+                "Weight": 10,
+                "Item": {
+                  "ItemId": "Tool_Pickaxe_Copper_Rare",
+                  "QuantityMin": 1,
+                  "QuantityMax": 1
+                }
+              },
+              {
+                "Type": "Single",
+                "Weight": 4,
+                "Item": {
+                  "ItemId": "Tool_Pickaxe_Copper_Epic",
+                  "QuantityMin": 1,
+                  "QuantityMax": 1
+                }
+              },
+              {
+                "Type": "Single",
+                "Weight": 1,
+                "Item": {
+                  "ItemId": "Tool_Pickaxe_Copper_Legendary",
+                  "QuantityMin": 1,
+                  "QuantityMax": 1
+                }
+              }
+            ],
+            "Weight": 5
+          },
+          {
+            "Type": "Choice",
+            "Containers": [
+              {
+                "Type": "Single",
+                "Weight": 40,
+                "Item": {
+                  "ItemId": "Armor_Copper_Chest_Common",
+                  "QuantityMin": 1,
+                  "QuantityMax": 1
+                }
+              },
+              {
+                "Type": "Single",
+                "Weight": 25,
+                "Item": {
+                  "ItemId": "Armor_Copper_Chest_Poor",
+                  "QuantityMin": 1,
+                  "QuantityMax": 1
+                }
+              },
+              {
+                "Type": "Single",
+                "Weight": 20,
+                "Item": {
+                  "ItemId": "Armor_Copper_Chest_Uncommon",
+                  "QuantityMin": 1,
+                  "QuantityMax": 1
+                }
+              },
+              {
+                "Type": "Single",
+                "Weight": 10,
+                "Item": {
+                  "ItemId": "Armor_Copper_Chest_Rare",
+                  "QuantityMin": 1,
+                  "QuantityMax": 1
+                }
+              },
+              {
+                "Type": "Single",
+                "Weight": 4,
+                "Item": {
+                  "ItemId": "Armor_Copper_Chest_Epic",
+                  "QuantityMin": 1,
+                  "QuantityMax": 1
+                }
+              },
+              {
+                "Type": "Single",
+                "Weight": 1,
+                "Item": {
+                  "ItemId": "Armor_Copper_Chest_Legendary",
+                  "QuantityMin": 1,
+                  "QuantityMax": 1
+                }
+              }
+            ],
+            "Weight": 5
+          },
+          {
+            "Type": "Choice",
+            "Containers": [
+              {
+                "Type": "Single",
+                "Weight": 40,
+                "Item": {
+                  "ItemId": "Armor_Copper_Hands_Common",
+                  "QuantityMin": 1,
+                  "QuantityMax": 1
+                }
+              },
+              {
+                "Type": "Single",
+                "Weight": 25,
+                "Item": {
+                  "ItemId": "Armor_Copper_Hands_Poor",
+                  "QuantityMin": 1,
+                  "QuantityMax": 1
+                }
+              },
+              {
+                "Type": "Single",
+                "Weight": 20,
+                "Item": {
+                  "ItemId": "Armor_Copper_Hands_Uncommon",
+                  "QuantityMin": 1,
+                  "QuantityMax": 1
+                }
+              },
+              {
+                "Type": "Single",
+                "Weight": 10,
+                "Item": {
+                  "ItemId": "Armor_Copper_Hands_Rare",
+                  "QuantityMin": 1,
+                  "QuantityMax": 1
+                }
+              },
+              {
+                "Type": "Single",
+                "Weight": 4,
+                "Item": {
+                  "ItemId": "Armor_Copper_Hands_Epic",
+                  "QuantityMin": 1,
+                  "QuantityMax": 1
+                }
+              },
+              {
+                "Type": "Single",
+                "Weight": 1,
+                "Item": {
+                  "ItemId": "Armor_Copper_Hands_Legendary",
+                  "QuantityMin": 1,
+                  "QuantityMax": 1
+                }
+              }
+            ],
+            "Weight": 5
+          },
+          {
+            "Type": "Choice",
+            "Containers": [
+              {
+                "Type": "Single",
+                "Weight": 40,
+                "Item": {
+                  "ItemId": "Armor_Copper_Head_Common",
+                  "QuantityMin": 1,
+                  "QuantityMax": 1
+                }
+              },
+              {
+                "Type": "Single",
+                "Weight": 25,
+                "Item": {
+                  "ItemId": "Armor_Copper_Head_Poor",
+                  "QuantityMin": 1,
+                  "QuantityMax": 1
+                }
+              },
+              {
+                "Type": "Single",
+                "Weight": 20,
+                "Item": {
+                  "ItemId": "Armor_Copper_Head_Uncommon",
+                  "QuantityMin": 1,
+                  "QuantityMax": 1
+                }
+              },
+              {
+                "Type": "Single",
+                "Weight": 10,
+                "Item": {
+                  "ItemId": "Armor_Copper_Head_Rare",
+                  "QuantityMin": 1,
+                  "QuantityMax": 1
+                }
+              },
+              {
+                "Type": "Single",
+                "Weight": 4,
+                "Item": {
+                  "ItemId": "Armor_Copper_Head_Epic",
+                  "QuantityMin": 1,
+                  "QuantityMax": 1
+                }
+              },
+              {
+                "Type": "Single",
+                "Weight": 1,
+                "Item": {
+                  "ItemId": "Armor_Copper_Head_Legendary",
+                  "QuantityMin": 1,
+                  "QuantityMax": 1
+                }
+              }
+            ],
+            "Weight": 5
+          },
+          {
+            "Type": "Choice",
+            "Containers": [
+              {
+                "Type": "Single",
+                "Weight": 40,
+                "Item": {
+                  "ItemId": "Armor_Copper_Legs_Common",
+                  "QuantityMin": 1,
+                  "QuantityMax": 1
+                }
+              },
+              {
+                "Type": "Single",
+                "Weight": 25,
+                "Item": {
+                  "ItemId": "Armor_Copper_Legs_Poor",
+                  "QuantityMin": 1,
+                  "QuantityMax": 1
+                }
+              },
+              {
+                "Type": "Single",
+                "Weight": 20,
+                "Item": {
+                  "ItemId": "Armor_Copper_Legs_Uncommon",
+                  "QuantityMin": 1,
+                  "QuantityMax": 1
+                }
+              },
+              {
+                "Type": "Single",
+                "Weight": 10,
+                "Item": {
+                  "ItemId": "Armor_Copper_Legs_Rare",
+                  "QuantityMin": 1,
+                  "QuantityMax": 1
+                }
+              },
+              {
+                "Type": "Single",
+                "Weight": 4,
+                "Item": {
+                  "ItemId": "Armor_Copper_Legs_Epic",
+                  "QuantityMin": 1,
+                  "QuantityMax": 1
+                }
+              },
+              {
+                "Type": "Single",
+                "Weight": 1,
+                "Item": {
+                  "ItemId": "Armor_Copper_Legs_Legendary",
+                  "QuantityMin": 1,
+                  "QuantityMax": 1
+                }
+              }
+            ],
+            "Weight": 5
+          },
+          {
+            "Type": "Choice",
+            "Containers": [
+              {
+                "Type": "Single",
+                "Weight": 40,
+                "Item": {
+                  "ItemId": "Weapon_Battleaxe_Crude_Common",
+                  "QuantityMin": 1,
+                  "QuantityMax": 1
+                }
+              },
+              {
+                "Type": "Single",
+                "Weight": 25,
+                "Item": {
+                  "ItemId": "Weapon_Battleaxe_Crude_Poor",
+                  "QuantityMin": 1,
+                  "QuantityMax": 1
+                }
+              },
+              {
+                "Type": "Single",
+                "Weight": 20,
+                "Item": {
+                  "ItemId": "Weapon_Battleaxe_Crude_Uncommon",
+                  "QuantityMin": 1,
+                  "QuantityMax": 1
+                }
+              },
+              {
+                "Type": "Single",
+                "Weight": 10,
+                "Item": {
+                  "ItemId": "Weapon_Battleaxe_Crude_Rare",
+                  "QuantityMin": 1,
+                  "QuantityMax": 1
+                }
+              },
+              {
+                "Type": "Single",
+                "Weight": 4,
+                "Item": {
+                  "ItemId": "Weapon_Battleaxe_Crude_Epic",
+                  "QuantityMin": 1,
+                  "QuantityMax": 1
+                }
+              },
+              {
+                "Type": "Single",
+                "Weight": 1,
+                "Item": {
+                  "ItemId": "Weapon_Battleaxe_Crude_Legendary",
+                  "QuantityMin": 1,
+                  "QuantityMax": 1
+                }
+              }
+            ],
+            "Weight": 10
+          },
+          {
+            "Type": "Choice",
+            "Containers": [
+              {
+                "Type": "Single",
+                "Weight": 40,
+                "Item": {
+                  "ItemId": "Weapon_Daggers_Crude_Common",
+                  "QuantityMin": 1,
+                  "QuantityMax": 1
+                }
+              },
+              {
+                "Type": "Single",
+                "Weight": 25,
+                "Item": {
+                  "ItemId": "Weapon_Daggers_Crude_Poor",
+                  "QuantityMin": 1,
+                  "QuantityMax": 1
+                }
+              },
+              {
+                "Type": "Single",
+                "Weight": 20,
+                "Item": {
+                  "ItemId": "Weapon_Daggers_Crude_Uncommon",
+                  "QuantityMin": 1,
+                  "QuantityMax": 1
+                }
+              },
+              {
+                "Type": "Single",
+                "Weight": 10,
+                "Item": {
+                  "ItemId": "Weapon_Daggers_Crude_Rare",
+                  "QuantityMin": 1,
+                  "QuantityMax": 1
+                }
+              },
+              {
+                "Type": "Single",
+                "Weight": 4,
+                "Item": {
+                  "ItemId": "Weapon_Daggers_Crude_Epic",
+                  "QuantityMin": 1,
+                  "QuantityMax": 1
+                }
+              },
+              {
+                "Type": "Single",
+                "Weight": 1,
+                "Item": {
+                  "ItemId": "Weapon_Daggers_Crude_Legendary",
+                  "QuantityMin": 1,
+                  "QuantityMax": 1
+                }
+              }
+            ],
+            "Weight": 10
+          },
+          {
+            "Type": "Choice",
+            "Containers": [
+              {
+                "Type": "Single",
+                "Weight": 40,
+                "Item": {
+                  "ItemId": "Weapon_Mace_Crude_Common",
+                  "QuantityMin": 1,
+                  "QuantityMax": 1
+                }
+              },
+              {
+                "Type": "Single",
+                "Weight": 25,
+                "Item": {
+                  "ItemId": "Weapon_Mace_Crude_Poor",
+                  "QuantityMin": 1,
+                  "QuantityMax": 1
+                }
+              },
+              {
+                "Type": "Single",
+                "Weight": 20,
+                "Item": {
+                  "ItemId": "Weapon_Mace_Crude_Uncommon",
+                  "QuantityMin": 1,
+                  "QuantityMax": 1
+                }
+              },
+              {
+                "Type": "Single",
+                "Weight": 10,
+                "Item": {
+                  "ItemId": "Weapon_Mace_Crude_Rare",
+                  "QuantityMin": 1,
+                  "QuantityMax": 1
+                }
+              },
+              {
+                "Type": "Single",
+                "Weight": 4,
+                "Item": {
+                  "ItemId": "Weapon_Mace_Crude_Epic",
+                  "QuantityMin": 1,
+                  "QuantityMax": 1
+                }
+              },
+              {
+                "Type": "Single",
+                "Weight": 1,
+                "Item": {
+                  "ItemId": "Weapon_Mace_Crude_Legendary",
+                  "QuantityMin": 1,
+                  "QuantityMax": 1
+                }
+              }
+            ],
+            "Weight": 10
+          },
+          {
+            "Type": "Choice",
+            "Containers": [
+              {
+                "Type": "Single",
+                "Weight": 40,
+                "Item": {
+                  "ItemId": "Weapon_Sword_Crude_Common",
+                  "QuantityMin": 1,
+                  "QuantityMax": 1
+                }
+              },
+              {
+                "Type": "Single",
+                "Weight": 25,
+                "Item": {
+                  "ItemId": "Weapon_Sword_Crude_Poor",
+                  "QuantityMin": 1,
+                  "QuantityMax": 1
+                }
+              },
+              {
+                "Type": "Single",
+                "Weight": 20,
+                "Item": {
+                  "ItemId": "Weapon_Sword_Crude_Uncommon",
+                  "QuantityMin": 1,
+                  "QuantityMax": 1
+                }
+              },
+              {
+                "Type": "Single",
+                "Weight": 10,
+                "Item": {
+                  "ItemId": "Weapon_Sword_Crude_Rare",
+                  "QuantityMin": 1,
+                  "QuantityMax": 1
+                }
+              },
+              {
+                "Type": "Single",
+                "Weight": 4,
+                "Item": {
+                  "ItemId": "Weapon_Sword_Crude_Epic",
+                  "QuantityMin": 1,
+                  "QuantityMax": 1
+                }
+              },
+              {
+                "Type": "Single",
+                "Weight": 1,
+                "Item": {
+                  "ItemId": "Weapon_Sword_Crude_Legendary",
+                  "QuantityMin": 1,
+                  "QuantityMax": 1
+                }
+              }
+            ],
+            "Weight": 10
+          },
+          {
+            "Type": "Single",
+            "Weight": 10,
+            "Item": {
+              "ItemId": "Weapon_Shield_Wood",
+              "QuantityMin": 1,
+              "QuantityMax": 1
+            }
+          },
+          {
+            "Type": "Choice",
+            "Containers": [
+              {
+                "Type": "Single",
+                "Weight": 40,
+                "Item": {
+                  "ItemId": "Weapon_Shortbow_Crude_Common",
+                  "QuantityMin": 1,
+                  "QuantityMax": 1
+                }
+              },
+              {
+                "Type": "Single",
+                "Weight": 25,
+                "Item": {
+                  "ItemId": "Weapon_Shortbow_Crude_Poor",
+                  "QuantityMin": 1,
+                  "QuantityMax": 1
+                }
+              },
+              {
+                "Type": "Single",
+                "Weight": 20,
+                "Item": {
+                  "ItemId": "Weapon_Shortbow_Crude_Uncommon",
+                  "QuantityMin": 1,
+                  "QuantityMax": 1
+                }
+              },
+              {
+                "Type": "Single",
+                "Weight": 10,
+                "Item": {
+                  "ItemId": "Weapon_Shortbow_Crude_Rare",
+                  "QuantityMin": 1,
+                  "QuantityMax": 1
+                }
+              },
+              {
+                "Type": "Single",
+                "Weight": 4,
+                "Item": {
+                  "ItemId": "Weapon_Shortbow_Crude_Epic",
+                  "QuantityMin": 1,
+                  "QuantityMax": 1
+                }
+              },
+              {
+                "Type": "Single",
+                "Weight": 1,
+                "Item": {
+                  "ItemId": "Weapon_Shortbow_Crude_Legendary",
+                  "QuantityMin": 1,
+                  "QuantityMax": 1
+                }
+              }
+            ],
+            "Weight": 10
+          },
+          {
+            "Type": "Choice",
+            "Containers": [
+              {
+                "Type": "Single",
+                "Weight": 40,
+                "Item": {
+                  "ItemId": "Tool_Hatchet_Crude_Common",
+                  "QuantityMin": 1,
+                  "QuantityMax": 1
+                }
+              },
+              {
+                "Type": "Single",
+                "Weight": 25,
+                "Item": {
+                  "ItemId": "Tool_Hatchet_Crude_Poor",
+                  "QuantityMin": 1,
+                  "QuantityMax": 1
+                }
+              },
+              {
+                "Type": "Single",
+                "Weight": 20,
+                "Item": {
+                  "ItemId": "Tool_Hatchet_Crude_Uncommon",
+                  "QuantityMin": 1,
+                  "QuantityMax": 1
+                }
+              },
+              {
+                "Type": "Single",
+                "Weight": 10,
+                "Item": {
+                  "ItemId": "Tool_Hatchet_Crude_Rare",
+                  "QuantityMin": 1,
+                  "QuantityMax": 1
+                }
+              },
+              {
+                "Type": "Single",
+                "Weight": 4,
+                "Item": {
+                  "ItemId": "Tool_Hatchet_Crude_Epic",
+                  "QuantityMin": 1,
+                  "QuantityMax": 1
+                }
+              },
+              {
+                "Type": "Single",
+                "Weight": 1,
+                "Item": {
+                  "ItemId": "Tool_Hatchet_Crude_Legendary",
+                  "QuantityMin": 1,
+                  "QuantityMax": 1
+                }
+              }
+            ],
+            "Weight": 25
+          },
+          {
+            "Type": "Choice",
+            "Containers": [
+              {
+                "Type": "Single",
+                "Weight": 40,
+                "Item": {
+                  "ItemId": "Tool_Pickaxe_Crude_Common",
+                  "QuantityMin": 1,
+                  "QuantityMax": 1
+                }
+              },
+              {
+                "Type": "Single",
+                "Weight": 25,
+                "Item": {
+                  "ItemId": "Tool_Pickaxe_Crude_Poor",
+                  "QuantityMin": 1,
+                  "QuantityMax": 1
+                }
+              },
+              {
+                "Type": "Single",
+                "Weight": 20,
+                "Item": {
+                  "ItemId": "Tool_Pickaxe_Crude_Uncommon",
+                  "QuantityMin": 1,
+                  "QuantityMax": 1
+                }
+              },
+              {
+                "Type": "Single",
+                "Weight": 10,
+                "Item": {
+                  "ItemId": "Tool_Pickaxe_Crude_Rare",
+                  "QuantityMin": 1,
+                  "QuantityMax": 1
+                }
+              },
+              {
+                "Type": "Single",
+                "Weight": 4,
+                "Item": {
+                  "ItemId": "Tool_Pickaxe_Crude_Epic",
+                  "QuantityMin": 1,
+                  "QuantityMax": 1
+                }
+              },
+              {
+                "Type": "Single",
+                "Weight": 1,
+                "Item": {
+                  "ItemId": "Tool_Pickaxe_Crude_Legendary",
+                  "QuantityMin": 1,
+                  "QuantityMax": 1
+                }
+              }
+            ],
+            "Weight": 25
+          },
+          {
+            "Type": "Single",
+            "Weight": 75,
+            "Item": {
+              "ItemId": "Weapon_Arrow_Crude",
+              "QuantityMin": 6,
+              "QuantityMax": 15
+            }
+          },
+          {
+            "Type": "Empty",
+            "Weight": 100
+          }
+        ]
+      }
+    ]
+  }
+}

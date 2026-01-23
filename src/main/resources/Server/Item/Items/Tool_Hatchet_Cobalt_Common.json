@@ -1,0 +1,53 @@
+{
+  "TranslationProperties": {
+    "Name": "server.items.Tool_Hatchet_Cobalt_Common.name",
+    "Description": "server.items.Tool_Hatchet_Cobalt_Common.description"
+  },
+  "Parent": "Tool_Hatchet_Crude",
+  "Icon": "Icons/ItemsGenerated/Tool_Hatchet_Cobalt.png",
+  "Quality": "Common",
+  "Model": "Items/Tools/Hatchet/Cobalt.blockymodel",
+  "Texture": "Items/Tools/Hatchet/Cobalt_Texture.png",
+  "ItemLevel": 35,
+  "Tool": {
+    "Specs": [
+      {
+        "Power": 0.6667,
+        "GatherType": "SoftBlocks"
+      },
+      {
+        "Power": 0.0333,
+        "GatherType": "Soils"
+      },
+      {
+        "Power": 0.3333,
+        "GatherType": "Woods"
+      },
+      {
+        "Power": 0.0333,
+        "GatherType": "Rocks"
+      },
+      {
+        "Power": 0.3333,
+        "GatherType": "Benches"
+      },
+      {
+        "Power": 0.0113,
+        "GatherType": "VolcanicRocks"
+      }
+    ],
+    "DurabilityLossBlockTypes": [
+      {
+        "BlockSets": [
+          "Stone",
+          "Rock",
+          "Ores",
+          "Soil"
+        ],
+        "DurabilityLossOnHit": 0.25
+      }
+    ]
+  },
+  "MaxDurability": 200,
+  "Id": "Tool_Hatchet_Cobalt_Common"
+}

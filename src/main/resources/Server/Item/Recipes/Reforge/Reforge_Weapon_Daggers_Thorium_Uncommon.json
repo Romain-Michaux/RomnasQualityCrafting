@@ -1,0 +1,29 @@
+{
+  "Input": [
+    {
+      "ItemId": "Weapon_Daggers_Thorium_Uncommon",
+      "Quantity": 1
+    },
+    {
+      "ItemId": "Ingredient_Bar_Thorium",
+      "Quantity": 1
+    }
+  ],
+  "PrimaryOutput": {
+    "ItemId": "Weapon_Daggers_Thorium_Common",
+    "Quantity": 1
+  },
+  "Output": [
+    {
+      "ItemId": "Weapon_Daggers_Thorium_Common",
+      "Quantity": 1
+    }
+  ],
+  "BenchRequirement": [
+    {
+      "Type": "Processing",
+      "Id": "Reforgebench"
+    }
+  ],
+  "TimeSeconds": 5
+}

@@ -1,0 +1,1264 @@
+    # Item Qualities
+qualities.Poor.name=Poor
+qualities.Common.name=Common
+qualities.Uncommon.name=Uncommon
+qualities.Rare.name=Rare
+qualities.Epic.name=Epic
+qualities.Legendary.name=Legendary
+
+# ============================================
+# SWORDS
+# ============================================
+
+# Crude Sword
+items.Weapon_Sword_Crude_Poor.name=Crude Sword
+items.Weapon_Sword_Crude_Poor.description=A poorly crafted crude sword with reduced effectiveness. Deals 10% less damage and has 50% less durability than a common sword. This weapon shows signs of poor craftsmanship and will break quickly in combat.
+items.Weapon_Sword_Crude_Common.name=Crude Sword
+items.Weapon_Sword_Crude_Common.description=A standard crude sword with balanced stats. This is the baseline quality for this weapon type, providing reliable performance in combat.
+items.Weapon_Sword_Crude_Uncommon.name=Crude Sword
+items.Weapon_Sword_Crude_Uncommon.description=A well-made crude sword with enhanced durability. Deals 5% more damage and has 25% more durability than a common sword. The improved craftsmanship makes it more reliable in extended battles.
+items.Weapon_Sword_Crude_Rare.name=Crude Sword
+items.Weapon_Sword_Crude_Rare.description=A finely crafted crude sword with superior stats. Deals 10% more damage and has 50% more durability than a common sword. This weapon shows exceptional quality and will serve you well.
+items.Weapon_Sword_Crude_Epic.name=Crude Sword
+items.Weapon_Sword_Crude_Epic.description=An expertly forged crude sword with exceptional power. Deals 15% more damage and has 75% more durability than a common sword. The masterful craftsmanship is evident in every strike.
+items.Weapon_Sword_Crude_Legendary.name=Crude Sword
+items.Weapon_Sword_Crude_Legendary.description=A legendary crude sword of unparalleled quality. Deals 20% more damage and has 100% more durability than a common sword. This weapon is a masterpiece of craftsmanship, capable of legendary feats.
+
+# Copper Sword
+items.Weapon_Sword_Copper_Poor.name=Copper Sword
+items.Weapon_Sword_Copper_Poor.description=A poorly forged copper sword with reduced effectiveness. Deals 10% less damage and has 50% less durability than a common sword. The inferior craftsmanship is evident in its weakened blade.
+items.Weapon_Sword_Copper_Common.name=Copper Sword
+items.Weapon_Sword_Copper_Common.description=A standard copper sword with balanced stats. This is the baseline quality for this weapon type, providing reliable performance in combat.
+items.Weapon_Sword_Copper_Uncommon.name=Copper Sword
+items.Weapon_Sword_Copper_Uncommon.description=A well-forged copper sword with enhanced durability. Deals 5% more damage and has 25% more durability than a common sword. The superior craftsmanship makes it more effective in battle.
+items.Weapon_Sword_Copper_Rare.name=Copper Sword
+items.Weapon_Sword_Copper_Rare.description=A finely crafted copper sword with superior stats. Deals 10% more damage and has 50% more durability than a common sword. This weapon demonstrates exceptional quality and reliability.
+items.Weapon_Sword_Copper_Epic.name=Copper Sword
+items.Weapon_Sword_Copper_Epic.description=An expertly forged copper sword with exceptional power. Deals 15% more damage and has 75% more durability than a common sword. The masterful workmanship is evident in its superior performance.
+items.Weapon_Sword_Copper_Legendary.name=Copper Sword
+items.Weapon_Sword_Copper_Legendary.description=A legendary copper sword of unparalleled quality. Deals 20% more damage and has 100% more durability than a common sword. This weapon is a true masterpiece, capable of legendary combat prowess.
+
+# Iron Sword
+items.Weapon_Sword_Iron_Poor.name=Iron Sword
+items.Weapon_Sword_Iron_Poor.description=A poorly forged iron sword with reduced effectiveness. Deals 10% less damage and has 50% less durability than a common sword. The subpar quality is evident in its weakened structure.
+items.Weapon_Sword_Iron_Common.name=Iron Sword
+items.Weapon_Sword_Iron_Common.description=A standard iron sword with balanced stats. This is the baseline quality for this weapon type, providing reliable performance in combat.
+items.Weapon_Sword_Iron_Uncommon.name=Iron Sword
+items.Weapon_Sword_Iron_Uncommon.description=A well-forged iron sword with enhanced durability. Deals 5% more damage and has 25% more durability than a common sword. The superior craftsmanship makes it more effective in battle.
+items.Weapon_Sword_Iron_Rare.name=Iron Sword
+items.Weapon_Sword_Iron_Rare.description=A finely crafted iron sword with superior stats. Deals 10% more damage and has 50% more durability than a common sword. This weapon demonstrates exceptional quality and reliability.
+items.Weapon_Sword_Iron_Epic.name=Iron Sword
+items.Weapon_Sword_Iron_Epic.description=An expertly forged iron sword with exceptional power. Deals 15% more damage and has 75% more durability than a common sword. The masterful workmanship is evident in its superior performance.
+items.Weapon_Sword_Iron_Legendary.name=Iron Sword
+items.Weapon_Sword_Iron_Legendary.description=A legendary iron sword of unparalleled quality. Deals 20% more damage and has 100% more durability than a common sword. This weapon is a true masterpiece, capable of legendary combat prowess.
+
+# Cobalt Sword
+items.Weapon_Sword_Cobalt_Poor.name=Cobalt Sword
+items.Weapon_Sword_Cobalt_Poor.description=A poorly forged cobalt sword with reduced effectiveness. Deals 10% less damage and has 50% less durability than a common sword. The inferior craftsmanship is evident in its weakened blade.
+items.Weapon_Sword_Cobalt_Common.name=Cobalt Sword
+items.Weapon_Sword_Cobalt_Common.description=A standard cobalt sword with balanced stats. This is the baseline quality for this weapon type, providing reliable performance in combat.
+items.Weapon_Sword_Cobalt_Uncommon.name=Cobalt Sword
+items.Weapon_Sword_Cobalt_Uncommon.description=A well-forged cobalt sword with enhanced durability. Deals 5% more damage and has 25% more durability than a common sword. The superior craftsmanship makes it more effective in battle.
+items.Weapon_Sword_Cobalt_Rare.name=Cobalt Sword
+items.Weapon_Sword_Cobalt_Rare.description=A finely crafted cobalt sword with superior stats. Deals 10% more damage and has 50% more durability than a common sword. This weapon demonstrates exceptional quality and reliability.
+items.Weapon_Sword_Cobalt_Epic.name=Cobalt Sword
+items.Weapon_Sword_Cobalt_Epic.description=An expertly forged cobalt sword with exceptional power. Deals 15% more damage and has 75% more durability than a common sword. The masterful workmanship is evident in its superior performance.
+items.Weapon_Sword_Cobalt_Legendary.name=Cobalt Sword
+items.Weapon_Sword_Cobalt_Legendary.description=A legendary cobalt sword of unparalleled quality. Deals 20% more damage and has 100% more durability than a common sword. This weapon is a true masterpiece, capable of legendary combat prowess.
+
+# Thorium Sword
+items.Weapon_Sword_Thorium_Poor.name=Thorium Sword
+items.Weapon_Sword_Thorium_Poor.description=A poorly forged thorium sword with reduced effectiveness. Deals 10% less damage and has 50% less durability than a common sword. The inferior craftsmanship is evident in its weakened blade.
+items.Weapon_Sword_Thorium_Common.name=Thorium Sword
+items.Weapon_Sword_Thorium_Common.description=A standard thorium sword with balanced stats. This is the baseline quality for this weapon type, providing reliable performance in combat.
+items.Weapon_Sword_Thorium_Uncommon.name=Thorium Sword
+items.Weapon_Sword_Thorium_Uncommon.description=A well-forged thorium sword with enhanced durability. Deals 5% more damage and has 25% more durability than a common sword. The superior craftsmanship makes it more effective in battle.
+items.Weapon_Sword_Thorium_Rare.name=Thorium Sword
+items.Weapon_Sword_Thorium_Rare.description=A finely crafted thorium sword with superior stats. Deals 10% more damage and has 50% more durability than a common sword. This weapon demonstrates exceptional quality and reliability.
+items.Weapon_Sword_Thorium_Epic.name=Thorium Sword
+items.Weapon_Sword_Thorium_Epic.description=An expertly forged thorium sword with exceptional power. Deals 15% more damage and has 75% more durability than a common sword. The masterful workmanship is evident in its superior performance.
+items.Weapon_Sword_Thorium_Legendary.name=Thorium Sword
+items.Weapon_Sword_Thorium_Legendary.description=A legendary thorium sword of unparalleled quality. Deals 20% more damage and has 100% more durability than a common sword. This weapon is a true masterpiece, capable of legendary combat prowess.
+
+# Mithril Sword
+items.Weapon_Sword_Mithril_Poor.name=Mithril Sword
+items.Weapon_Sword_Mithril_Poor.description=A poorly forged mithril sword with reduced effectiveness. Deals 10% less damage and has 50% less durability than a common sword. The inferior craftsmanship is evident in its weakened structure.
+items.Weapon_Sword_Mithril_Common.name=Mithril Sword
+items.Weapon_Sword_Mithril_Common.description=A standard mithril sword with balanced stats. This is the baseline quality for this weapon type, providing reliable performance in combat.
+items.Weapon_Sword_Mithril_Uncommon.name=Mithril Sword
+items.Weapon_Sword_Mithril_Uncommon.description=A well-forged mithril sword with enhanced durability. Deals 5% more damage and has 25% more durability than a common sword. The superior craftsmanship makes it more effective in battle.
+items.Weapon_Sword_Mithril_Rare.name=Mithril Sword
+items.Weapon_Sword_Mithril_Rare.description=A finely crafted mithril sword with superior stats. Deals 10% more damage and has 50% more durability than a common sword. This weapon demonstrates exceptional quality and reliability.
+items.Weapon_Sword_Mithril_Epic.name=Mithril Sword
+items.Weapon_Sword_Mithril_Epic.description=An expertly forged mithril sword with exceptional power. Deals 15% more damage and has 75% more durability than a common sword. The masterful workmanship is evident in its superior performance.
+items.Weapon_Sword_Mithril_Legendary.name=Mithril Sword
+items.Weapon_Sword_Mithril_Legendary.description=A legendary mithril sword of unparalleled quality. Deals 20% more damage and has 100% more durability than a common sword. This weapon is a true masterpiece, capable of legendary combat prowess.
+
+# Adamantite Sword
+items.Weapon_Sword_Adamantite_Poor.name=Adamantite Sword
+items.Weapon_Sword_Adamantite_Poor.description=A poorly forged adamantite sword with reduced effectiveness. Deals 10% less damage and has 50% less durability than a common sword. The inferior craftsmanship is evident in its weakened structure.
+items.Weapon_Sword_Adamantite_Common.name=Adamantite Sword
+items.Weapon_Sword_Adamantite_Common.description=A standard adamantite sword with balanced stats. This is the baseline quality for this weapon type, providing reliable performance in combat.
+items.Weapon_Sword_Adamantite_Uncommon.name=Adamantite Sword
+items.Weapon_Sword_Adamantite_Uncommon.description=A well-forged adamantite sword with enhanced durability. Deals 5% more damage and has 25% more durability than a common sword. The superior craftsmanship makes it more effective in battle.
+items.Weapon_Sword_Adamantite_Rare.name=Adamantite Sword
+items.Weapon_Sword_Adamantite_Rare.description=A finely crafted adamantite sword with superior stats. Deals 10% more damage and has 50% more durability than a common sword. This weapon demonstrates exceptional quality and reliability.
+items.Weapon_Sword_Adamantite_Epic.name=Adamantite Sword
+items.Weapon_Sword_Adamantite_Epic.description=An expertly forged adamantite sword with exceptional power. Deals 15% more damage and has 75% more durability than a common sword. The masterful workmanship is evident in its superior performance.
+items.Weapon_Sword_Adamantite_Legendary.name=Adamantite Sword
+items.Weapon_Sword_Adamantite_Legendary.description=A legendary adamantite sword of unparalleled quality. Deals 20% more damage and has 100% more durability than a common sword. This weapon is a true masterpiece, capable of legendary combat prowess.
+
+# ============================================
+# DAGGERS
+# ============================================
+
+# Crude Daggers
+items.Weapon_Daggers_Crude_Poor.name=Crude Daggers
+items.Weapon_Daggers_Crude_Poor.description=A poorly crafted pair of crude daggers with reduced effectiveness. Deals 10% less damage and has 50% less durability than common daggers. This weapon shows signs of poor craftsmanship and will break quickly in combat.
+items.Weapon_Daggers_Crude_Common.name=Crude Daggers
+items.Weapon_Daggers_Crude_Common.description=A standard pair of crude daggers with balanced stats. This is the baseline quality for this weapon type, providing reliable performance in combat.
+items.Weapon_Daggers_Crude_Uncommon.name=Crude Daggers
+items.Weapon_Daggers_Crude_Uncommon.description=A well-made pair of crude daggers with enhanced durability. Deals 5% more damage and has 25% more durability than common daggers. The improved craftsmanship makes them more reliable in extended battles.
+items.Weapon_Daggers_Crude_Rare.name=Crude Daggers
+items.Weapon_Daggers_Crude_Rare.description=A finely crafted pair of crude daggers with superior stats. Deals 10% more damage and has 50% more durability than common daggers. These weapons show exceptional quality and will serve you well.
+items.Weapon_Daggers_Crude_Epic.name=Crude Daggers
+items.Weapon_Daggers_Crude_Epic.description=An expertly forged pair of crude daggers with exceptional power. Deals 15% more damage and has 75% more durability than common daggers. The masterful craftsmanship is evident in every strike.
+items.Weapon_Daggers_Crude_Legendary.name=Crude Daggers
+items.Weapon_Daggers_Crude_Legendary.description=A legendary pair of crude daggers of unparalleled quality. Deals 20% more damage and has 100% more durability than common daggers. These weapons are masterpieces of craftsmanship, capable of legendary feats.
+
+# Copper Daggers
+items.Weapon_Daggers_Copper_Poor.name=Copper Daggers
+items.Weapon_Daggers_Copper_Poor.description=A poorly forged pair of copper daggers with reduced effectiveness. Deals 10% less damage and has 50% less durability than common daggers. The inferior craftsmanship is evident in their weakened blades.
+items.Weapon_Daggers_Copper_Common.name=Copper Daggers
+items.Weapon_Daggers_Copper_Common.description=A standard pair of copper daggers with balanced stats. This is the baseline quality for this weapon type, providing reliable performance in combat.
+items.Weapon_Daggers_Copper_Uncommon.name=Copper Daggers
+items.Weapon_Daggers_Copper_Uncommon.description=A well-forged pair of copper daggers with enhanced durability. Deals 5% more damage and has 25% more durability than common daggers. The superior craftsmanship makes them more effective in battle.
+items.Weapon_Daggers_Copper_Rare.name=Copper Daggers
+items.Weapon_Daggers_Copper_Rare.description=A finely crafted pair of copper daggers with superior stats. Deals 10% more damage and has 50% more durability than common daggers. These weapons demonstrate exceptional quality and reliability.
+items.Weapon_Daggers_Copper_Epic.name=Copper Daggers
+items.Weapon_Daggers_Copper_Epic.description=An expertly forged pair of copper daggers with exceptional power. Deals 15% more damage and has 75% more durability than common daggers. The masterful workmanship is evident in their superior performance.
+items.Weapon_Daggers_Copper_Legendary.name=Copper Daggers
+items.Weapon_Daggers_Copper_Legendary.description=A legendary pair of copper daggers of unparalleled quality. Deals 20% more damage and has 100% more durability than common daggers. These weapons are true masterpieces, capable of legendary combat prowess.
+
+# Iron Daggers
+items.Weapon_Daggers_Iron_Poor.name=Iron Daggers
+items.Weapon_Daggers_Iron_Poor.description=A poorly forged pair of iron daggers with reduced effectiveness. Deals 10% less damage and has 50% less durability than common daggers. The subpar quality is evident in their weakened structure.
+items.Weapon_Daggers_Iron_Common.name=Iron Daggers
+items.Weapon_Daggers_Iron_Common.description=A standard pair of iron daggers with balanced stats. This is the baseline quality for this weapon type, providing reliable performance in combat.
+items.Weapon_Daggers_Iron_Uncommon.name=Iron Daggers
+items.Weapon_Daggers_Iron_Uncommon.description=A well-forged pair of iron daggers with enhanced durability. Deals 5% more damage and has 25% more durability than common daggers. The superior craftsmanship makes them more effective in battle.
+items.Weapon_Daggers_Iron_Rare.name=Iron Daggers
+items.Weapon_Daggers_Iron_Rare.description=A finely crafted pair of iron daggers with superior stats. Deals 10% more damage and has 50% more durability than common daggers. These weapons demonstrate exceptional quality and reliability.
+items.Weapon_Daggers_Iron_Epic.name=Iron Daggers
+items.Weapon_Daggers_Iron_Epic.description=An expertly forged pair of iron daggers with exceptional power. Deals 15% more damage and has 75% more durability than common daggers. The masterful workmanship is evident in their superior performance.
+items.Weapon_Daggers_Iron_Legendary.name=Iron Daggers
+items.Weapon_Daggers_Iron_Legendary.description=A legendary pair of iron daggers of unparalleled quality. Deals 20% more damage and has 100% more durability than common daggers. These weapons are true masterpieces, capable of legendary combat prowess.
+
+# Cobalt Daggers
+items.Weapon_Daggers_Cobalt_Poor.name=Cobalt Daggers
+items.Weapon_Daggers_Cobalt_Poor.description=A poorly forged pair of cobalt daggers with reduced effectiveness. Deals 10% less damage and has 50% less durability than common daggers. The inferior craftsmanship is evident in their weakened blades.
+items.Weapon_Daggers_Cobalt_Common.name=Cobalt Daggers
+items.Weapon_Daggers_Cobalt_Common.description=A standard pair of cobalt daggers with balanced stats. This is the baseline quality for this weapon type, providing reliable performance in combat.
+items.Weapon_Daggers_Cobalt_Uncommon.name=Cobalt Daggers
+items.Weapon_Daggers_Cobalt_Uncommon.description=A well-forged pair of cobalt daggers with enhanced durability. Deals 5% more damage and has 25% more durability than common daggers. The superior craftsmanship makes them more effective in battle.
+items.Weapon_Daggers_Cobalt_Rare.name=Cobalt Daggers
+items.Weapon_Daggers_Cobalt_Rare.description=A finely crafted pair of cobalt daggers with superior stats. Deals 10% more damage and has 50% more durability than common daggers. These weapons demonstrate exceptional quality and reliability.
+items.Weapon_Daggers_Cobalt_Epic.name=Cobalt Daggers
+items.Weapon_Daggers_Cobalt_Epic.description=An expertly forged pair of cobalt daggers with exceptional power. Deals 15% more damage and has 75% more durability than common daggers. The masterful workmanship is evident in their superior performance.
+items.Weapon_Daggers_Cobalt_Legendary.name=Cobalt Daggers
+items.Weapon_Daggers_Cobalt_Legendary.description=A legendary pair of cobalt daggers of unparalleled quality. Deals 20% more damage and has 100% more durability than common daggers. These weapons are true masterpieces, capable of legendary combat prowess.
+
+# Thorium Daggers
+items.Weapon_Daggers_Thorium_Poor.name=Thorium Daggers
+items.Weapon_Daggers_Thorium_Poor.description=A poorly forged pair of thorium daggers with reduced effectiveness. Deals 10% less damage and has 50% less durability than common daggers. The inferior craftsmanship is evident in their weakened blades.
+items.Weapon_Daggers_Thorium_Common.name=Thorium Daggers
+items.Weapon_Daggers_Thorium_Common.description=A standard pair of thorium daggers with balanced stats. This is the baseline quality for this weapon type, providing reliable performance in combat.
+items.Weapon_Daggers_Thorium_Uncommon.name=Thorium Daggers
+items.Weapon_Daggers_Thorium_Uncommon.description=A well-forged pair of thorium daggers with enhanced durability. Deals 5% more damage and has 25% more durability than common daggers. The superior craftsmanship makes them more effective in battle.
+items.Weapon_Daggers_Thorium_Rare.name=Thorium Daggers
+items.Weapon_Daggers_Thorium_Rare.description=A finely crafted pair of thorium daggers with superior stats. Deals 10% more damage and has 50% more durability than common daggers. These weapons demonstrate exceptional quality and reliability.
+items.Weapon_Daggers_Thorium_Epic.name=Thorium Daggers
+items.Weapon_Daggers_Thorium_Epic.description=An expertly forged pair of thorium daggers with exceptional power. Deals 15% more damage and has 75% more durability than common daggers. The masterful workmanship is evident in their superior performance.
+items.Weapon_Daggers_Thorium_Legendary.name=Thorium Daggers
+items.Weapon_Daggers_Thorium_Legendary.description=A legendary pair of thorium daggers of unparalleled quality. Deals 20% more damage and has 100% more durability than common daggers. These weapons are true masterpieces, capable of legendary combat prowess.
+
+# Mithril Daggers
+items.Weapon_Daggers_Mithril_Poor.name=Mithril Daggers
+items.Weapon_Daggers_Mithril_Poor.description=A poorly forged pair of mithril daggers with reduced effectiveness. Deals 10% less damage and has 50% less durability than common daggers. The inferior craftsmanship is evident in their weakened blades.
+items.Weapon_Daggers_Mithril_Common.name=Mithril Daggers
+items.Weapon_Daggers_Mithril_Common.description=A standard pair of mithril daggers with balanced stats. This is the baseline quality for this weapon type, providing reliable performance in combat.
+items.Weapon_Daggers_Mithril_Uncommon.name=Mithril Daggers
+items.Weapon_Daggers_Mithril_Uncommon.description=A well-forged pair of mithril daggers with enhanced durability. Deals 5% more damage and has 25% more durability than common daggers. The superior craftsmanship makes them more effective in battle.
+items.Weapon_Daggers_Mithril_Rare.name=Mithril Daggers
+items.Weapon_Daggers_Mithril_Rare.description=A finely crafted pair of mithril daggers with superior stats. Deals 10% more damage and has 50% more durability than common daggers. These weapons demonstrate exceptional quality and reliability.
+items.Weapon_Daggers_Mithril_Epic.name=Mithril Daggers
+items.Weapon_Daggers_Mithril_Epic.description=An expertly forged pair of mithril daggers with exceptional power. Deals 15% more damage and has 75% more durability than common daggers. The masterful workmanship is evident in their superior performance.
+items.Weapon_Daggers_Mithril_Legendary.name=Mithril Daggers
+items.Weapon_Daggers_Mithril_Legendary.description=A legendary pair of mithril daggers of unparalleled quality. Deals 20% more damage and has 100% more durability than common daggers. These weapons are true masterpieces, capable of legendary combat prowess.
+
+# Adamantite Daggers
+items.Weapon_Daggers_Adamantite_Poor.name=Adamantite Daggers
+items.Weapon_Daggers_Adamantite_Poor.description=A poorly forged pair of adamantite daggers with reduced effectiveness. Deals 10% less damage and has 50% less durability than common daggers. The inferior craftsmanship is evident in their weakened blades.
+items.Weapon_Daggers_Adamantite_Common.name=Adamantite Daggers
+items.Weapon_Daggers_Adamantite_Common.description=A standard pair of adamantite daggers with balanced stats. This is the baseline quality for this weapon type, providing reliable performance in combat.
+items.Weapon_Daggers_Adamantite_Uncommon.name=Adamantite Daggers
+items.Weapon_Daggers_Adamantite_Uncommon.description=A well-forged pair of adamantite daggers with enhanced durability. Deals 5% more damage and has 25% more durability than common daggers. The superior craftsmanship makes them more effective in battle.
+items.Weapon_Daggers_Adamantite_Rare.name=Adamantite Daggers
+items.Weapon_Daggers_Adamantite_Rare.description=A finely crafted pair of adamantite daggers with superior stats. Deals 10% more damage and has 50% more durability than common daggers. These weapons demonstrate exceptional quality and reliability.
+items.Weapon_Daggers_Adamantite_Epic.name=Adamantite Daggers
+items.Weapon_Daggers_Adamantite_Epic.description=An expertly forged pair of adamantite daggers with exceptional power. Deals 15% more damage and has 75% more durability than common daggers. The masterful workmanship is evident in their superior performance.
+items.Weapon_Daggers_Adamantite_Legendary.name=Adamantite Daggers
+items.Weapon_Daggers_Adamantite_Legendary.description=A legendary pair of adamantite daggers of unparalleled quality. Deals 20% more damage and has 100% more durability than common daggers. These weapons are true masterpieces, capable of legendary combat prowess.
+
+
+# ============================================
+# AXES
+# ============================================
+
+# Crude Axe
+items.Weapon_Axe_Crude_Poor.name=Crude Axe
+items.Weapon_Axe_Crude_Poor.description=A poorly forged crude axe with reduced effectiveness. Deals 10% less damage and has 50% less durability than a common axe. The inferior craftsmanship is evident in its weakened structure.
+items.Weapon_Axe_Crude_Common.name=Crude Axe
+items.Weapon_Axe_Crude_Common.description=A standard crude axe with balanced stats. This is the baseline quality for this weapon type, providing reliable performance in combat.
+items.Weapon_Axe_Crude_Uncommon.name=Crude Axe
+items.Weapon_Axe_Crude_Uncommon.description=A well-forged crude axe with enhanced durability. Deals 5% more damage and has 25% more durability than a common axe. The superior craftsmanship makes it more effective in battle.
+items.Weapon_Axe_Crude_Rare.name=Crude Axe
+items.Weapon_Axe_Crude_Rare.description=A finely crafted crude axe with superior stats. Deals 10% more damage and has 50% more durability than a common axe. This weapon demonstrates exceptional quality and reliability.
+items.Weapon_Axe_Crude_Epic.name=Crude Axe
+items.Weapon_Axe_Crude_Epic.description=An expertly forged crude axe with exceptional power. Deals 15% more damage and has 75% more durability than a common axe. The masterful workmanship is evident in its superior performance.
+items.Weapon_Axe_Crude_Legendary.name=Crude Axe
+items.Weapon_Axe_Crude_Legendary.description=A legendary crude axe of unparalleled quality. Deals 20% more damage and has 100% more durability than a common axe. This weapon is a true masterpiece, capable of legendary combat prowess.
+
+# Copper Axe
+items.Weapon_Axe_Copper_Poor.name=Copper Axe
+items.Weapon_Axe_Copper_Poor.description=A poorly forged copper axe with reduced effectiveness. Deals 10% less damage and has 50% less durability than a common axe. The inferior craftsmanship is evident in its weakened structure.
+items.Weapon_Axe_Copper_Common.name=Copper Axe
+items.Weapon_Axe_Copper_Common.description=A standard copper axe with balanced stats. This is the baseline quality for this weapon type, providing reliable performance in combat.
+items.Weapon_Axe_Copper_Uncommon.name=Copper Axe
+items.Weapon_Axe_Copper_Uncommon.description=A well-forged copper axe with enhanced durability. Deals 5% more damage and has 25% more durability than a common axe. The superior craftsmanship makes it more effective in battle.
+items.Weapon_Axe_Copper_Rare.name=Copper Axe
+items.Weapon_Axe_Copper_Rare.description=A finely crafted copper axe with superior stats. Deals 10% more damage and has 50% more durability than a common axe. This weapon demonstrates exceptional quality and reliability.
+items.Weapon_Axe_Copper_Epic.name=Copper Axe
+items.Weapon_Axe_Copper_Epic.description=An expertly forged copper axe with exceptional power. Deals 15% more damage and has 75% more durability than a common axe. The masterful workmanship is evident in its superior performance.
+items.Weapon_Axe_Copper_Legendary.name=Copper Axe
+items.Weapon_Axe_Copper_Legendary.description=A legendary copper axe of unparalleled quality. Deals 20% more damage and has 100% more durability than a common axe. This weapon is a true masterpiece, capable of legendary combat prowess.
+
+# Iron Axe
+items.Weapon_Axe_Iron_Poor.name=Iron Axe
+items.Weapon_Axe_Iron_Poor.description=A poorly forged iron axe with reduced effectiveness. Deals 10% less damage and has 50% less durability than a common axe. The inferior craftsmanship is evident in its weakened structure.
+items.Weapon_Axe_Iron_Common.name=Iron Axe
+items.Weapon_Axe_Iron_Common.description=A standard iron axe with balanced stats. This is the baseline quality for this weapon type, providing reliable performance in combat.
+items.Weapon_Axe_Iron_Uncommon.name=Iron Axe
+items.Weapon_Axe_Iron_Uncommon.description=A well-forged iron axe with enhanced durability. Deals 5% more damage and has 25% more durability than a common axe. The superior craftsmanship makes it more effective in battle.
+items.Weapon_Axe_Iron_Rare.name=Iron Axe
+items.Weapon_Axe_Iron_Rare.description=A finely crafted iron axe with superior stats. Deals 10% more damage and has 50% more durability than a common axe. This weapon demonstrates exceptional quality and reliability.
+items.Weapon_Axe_Iron_Epic.name=Iron Axe
+items.Weapon_Axe_Iron_Epic.description=An expertly forged iron axe with exceptional power. Deals 15% more damage and has 75% more durability than a common axe. The masterful workmanship is evident in its superior performance.
+items.Weapon_Axe_Iron_Legendary.name=Iron Axe
+items.Weapon_Axe_Iron_Legendary.description=A legendary iron axe of unparalleled quality. Deals 20% more damage and has 100% more durability than a common axe. This weapon is a true masterpiece, capable of legendary combat prowess.
+
+# Cobalt Axe
+items.Weapon_Axe_Cobalt_Poor.name=Cobalt Axe
+items.Weapon_Axe_Cobalt_Poor.description=A poorly forged cobalt axe with reduced effectiveness. Deals 10% less damage and has 50% less durability than a common axe. The inferior craftsmanship is evident in its weakened structure.
+items.Weapon_Axe_Cobalt_Common.name=Cobalt Axe
+items.Weapon_Axe_Cobalt_Common.description=A standard cobalt axe with balanced stats. This is the baseline quality for this weapon type, providing reliable performance in combat.
+items.Weapon_Axe_Cobalt_Uncommon.name=Cobalt Axe
+items.Weapon_Axe_Cobalt_Uncommon.description=A well-forged cobalt axe with enhanced durability. Deals 5% more damage and has 25% more durability than a common axe. The superior craftsmanship makes it more effective in battle.
+items.Weapon_Axe_Cobalt_Rare.name=Cobalt Axe
+items.Weapon_Axe_Cobalt_Rare.description=A finely crafted cobalt axe with superior stats. Deals 10% more damage and has 50% more durability than a common axe. This weapon demonstrates exceptional quality and reliability.
+items.Weapon_Axe_Cobalt_Epic.name=Cobalt Axe
+items.Weapon_Axe_Cobalt_Epic.description=An expertly forged cobalt axe with exceptional power. Deals 15% more damage and has 75% more durability than a common axe. The masterful workmanship is evident in its superior performance.
+items.Weapon_Axe_Cobalt_Legendary.name=Cobalt Axe
+items.Weapon_Axe_Cobalt_Legendary.description=A legendary cobalt axe of unparalleled quality. Deals 20% more damage and has 100% more durability than a common axe. This weapon is a true masterpiece, capable of legendary combat prowess.
+
+# Thorium Axe
+items.Weapon_Axe_Thorium_Poor.name=Thorium Axe
+items.Weapon_Axe_Thorium_Poor.description=A poorly forged thorium axe with reduced effectiveness. Deals 10% less damage and has 50% less durability than a common axe. The inferior craftsmanship is evident in its weakened structure.
+items.Weapon_Axe_Thorium_Common.name=Thorium Axe
+items.Weapon_Axe_Thorium_Common.description=A standard thorium axe with balanced stats. This is the baseline quality for this weapon type, providing reliable performance in combat.
+items.Weapon_Axe_Thorium_Uncommon.name=Thorium Axe
+items.Weapon_Axe_Thorium_Uncommon.description=A well-forged thorium axe with enhanced durability. Deals 5% more damage and has 25% more durability than a common axe. The superior craftsmanship makes it more effective in battle.
+items.Weapon_Axe_Thorium_Rare.name=Thorium Axe
+items.Weapon_Axe_Thorium_Rare.description=A finely crafted thorium axe with superior stats. Deals 10% more damage and has 50% more durability than a common axe. This weapon demonstrates exceptional quality and reliability.
+items.Weapon_Axe_Thorium_Epic.name=Thorium Axe
+items.Weapon_Axe_Thorium_Epic.description=An expertly forged thorium axe with exceptional power. Deals 15% more damage and has 75% more durability than a common axe. The masterful workmanship is evident in its superior performance.
+items.Weapon_Axe_Thorium_Legendary.name=Thorium Axe
+items.Weapon_Axe_Thorium_Legendary.description=A legendary thorium axe of unparalleled quality. Deals 20% more damage and has 100% more durability than a common axe. This weapon is a true masterpiece, capable of legendary combat prowess.
+
+# Mithril Axe
+items.Weapon_Axe_Mithril_Poor.name=Mithril Axe
+items.Weapon_Axe_Mithril_Poor.description=A poorly forged mithril axe with reduced effectiveness. Deals 10% less damage and has 50% less durability than a common axe. The inferior craftsmanship is evident in its weakened structure.
+items.Weapon_Axe_Mithril_Common.name=Mithril Axe
+items.Weapon_Axe_Mithril_Common.description=A standard mithril axe with balanced stats. This is the baseline quality for this weapon type, providing reliable performance in combat.
+items.Weapon_Axe_Mithril_Uncommon.name=Mithril Axe
+items.Weapon_Axe_Mithril_Uncommon.description=A well-forged mithril axe with enhanced durability. Deals 5% more damage and has 25% more durability than a common axe. The superior craftsmanship makes it more effective in battle.
+items.Weapon_Axe_Mithril_Rare.name=Mithril Axe
+items.Weapon_Axe_Mithril_Rare.description=A finely crafted mithril axe with superior stats. Deals 10% more damage and has 50% more durability than a common axe. This weapon demonstrates exceptional quality and reliability.
+items.Weapon_Axe_Mithril_Epic.name=Mithril Axe
+items.Weapon_Axe_Mithril_Epic.description=An expertly forged mithril axe with exceptional power. Deals 15% more damage and has 75% more durability than a common axe. The masterful workmanship is evident in its superior performance.
+items.Weapon_Axe_Mithril_Legendary.name=Mithril Axe
+items.Weapon_Axe_Mithril_Legendary.description=A legendary mithril axe of unparalleled quality. Deals 20% more damage and has 100% more durability than a common axe. This weapon is a true masterpiece, capable of legendary combat prowess.
+
+# Adamantite Axe
+items.Weapon_Axe_Adamantite_Poor.name=Adamantite Axe
+items.Weapon_Axe_Adamantite_Poor.description=A poorly forged adamantite axe with reduced effectiveness. Deals 10% less damage and has 50% less durability than a common axe. The inferior craftsmanship is evident in its weakened structure.
+items.Weapon_Axe_Adamantite_Common.name=Adamantite Axe
+items.Weapon_Axe_Adamantite_Common.description=A standard adamantite axe with balanced stats. This is the baseline quality for this weapon type, providing reliable performance in combat.
+items.Weapon_Axe_Adamantite_Uncommon.name=Adamantite Axe
+items.Weapon_Axe_Adamantite_Uncommon.description=A well-forged adamantite axe with enhanced durability. Deals 5% more damage and has 25% more durability than a common axe. The superior craftsmanship makes it more effective in battle.
+items.Weapon_Axe_Adamantite_Rare.name=Adamantite Axe
+items.Weapon_Axe_Adamantite_Rare.description=A finely crafted adamantite axe with superior stats. Deals 10% more damage and has 50% more durability than a common axe. This weapon demonstrates exceptional quality and reliability.
+items.Weapon_Axe_Adamantite_Epic.name=Adamantite Axe
+items.Weapon_Axe_Adamantite_Epic.description=An expertly forged adamantite axe with exceptional power. Deals 15% more damage and has 75% more durability than a common axe. The masterful workmanship is evident in its superior performance.
+items.Weapon_Axe_Adamantite_Legendary.name=Adamantite Axe
+items.Weapon_Axe_Adamantite_Legendary.description=A legendary adamantite axe of unparalleled quality. Deals 20% more damage and has 100% more durability than a common axe. This weapon is a true masterpiece, capable of legendary combat prowess.
+
+
+# ============================================
+# BATTLEAXES
+# ============================================
+
+# Crude Battleaxe
+items.Weapon_Battleaxe_Crude_Poor.name=Crude Battleaxe
+items.Weapon_Battleaxe_Crude_Poor.description=A poorly forged crude battleaxe with reduced effectiveness. Deals 10% less damage and has 50% less durability than a common battleaxe. The inferior craftsmanship is evident in its weakened structure.
+items.Weapon_Battleaxe_Crude_Common.name=Crude Battleaxe
+items.Weapon_Battleaxe_Crude_Common.description=A standard crude battleaxe with balanced stats. This is the baseline quality for this weapon type, providing reliable performance in combat.
+items.Weapon_Battleaxe_Crude_Uncommon.name=Crude Battleaxe
+items.Weapon_Battleaxe_Crude_Uncommon.description=A well-forged crude battleaxe with enhanced durability. Deals 5% more damage and has 25% more durability than a common battleaxe. The superior craftsmanship makes it more effective in battle.
+items.Weapon_Battleaxe_Crude_Rare.name=Crude Battleaxe
+items.Weapon_Battleaxe_Crude_Rare.description=A finely crafted crude battleaxe with superior stats. Deals 10% more damage and has 50% more durability than a common battleaxe. This weapon demonstrates exceptional quality and reliability.
+items.Weapon_Battleaxe_Crude_Epic.name=Crude Battleaxe
+items.Weapon_Battleaxe_Crude_Epic.description=An expertly forged crude battleaxe with exceptional power. Deals 15% more damage and has 75% more durability than a common battleaxe. The masterful workmanship is evident in its superior performance.
+items.Weapon_Battleaxe_Crude_Legendary.name=Crude Battleaxe
+items.Weapon_Battleaxe_Crude_Legendary.description=A legendary crude battleaxe of unparalleled quality. Deals 20% more damage and has 100% more durability than a common battleaxe. This weapon is a true masterpiece, capable of legendary combat prowess.
+
+# Copper Battleaxe
+items.Weapon_Battleaxe_Copper_Poor.name=Copper Battleaxe
+items.Weapon_Battleaxe_Copper_Poor.description=A poorly forged copper battleaxe with reduced effectiveness. Deals 10% less damage and has 50% less durability than a common battleaxe. The inferior craftsmanship is evident in its weakened structure.
+items.Weapon_Battleaxe_Copper_Common.name=Copper Battleaxe
+items.Weapon_Battleaxe_Copper_Common.description=A standard copper battleaxe with balanced stats. This is the baseline quality for this weapon type, providing reliable performance in combat.
+items.Weapon_Battleaxe_Copper_Uncommon.name=Copper Battleaxe
+items.Weapon_Battleaxe_Copper_Uncommon.description=A well-forged copper battleaxe with enhanced durability. Deals 5% more damage and has 25% more durability than a common battleaxe. The superior craftsmanship makes it more effective in battle.
+items.Weapon_Battleaxe_Copper_Rare.name=Copper Battleaxe
+items.Weapon_Battleaxe_Copper_Rare.description=A finely crafted copper battleaxe with superior stats. Deals 10% more damage and has 50% more durability than a common battleaxe. This weapon demonstrates exceptional quality and reliability.
+items.Weapon_Battleaxe_Copper_Epic.name=Copper Battleaxe
+items.Weapon_Battleaxe_Copper_Epic.description=An expertly forged copper battleaxe with exceptional power. Deals 15% more damage and has 75% more durability than a common battleaxe. The masterful workmanship is evident in its superior performance.
+items.Weapon_Battleaxe_Copper_Legendary.name=Copper Battleaxe
+items.Weapon_Battleaxe_Copper_Legendary.description=A legendary copper battleaxe of unparalleled quality. Deals 20% more damage and has 100% more durability than a common battleaxe. This weapon is a true masterpiece, capable of legendary combat prowess.
+
+# Iron Battleaxe
+items.Weapon_Battleaxe_Iron_Poor.name=Iron Battleaxe
+items.Weapon_Battleaxe_Iron_Poor.description=A poorly forged iron battleaxe with reduced effectiveness. Deals 10% less damage and has 50% less durability than a common battleaxe. The inferior craftsmanship is evident in its weakened structure.
+items.Weapon_Battleaxe_Iron_Common.name=Iron Battleaxe
+items.Weapon_Battleaxe_Iron_Common.description=A standard iron battleaxe with balanced stats. This is the baseline quality for this weapon type, providing reliable performance in combat.
+items.Weapon_Battleaxe_Iron_Uncommon.name=Iron Battleaxe
+items.Weapon_Battleaxe_Iron_Uncommon.description=A well-forged iron battleaxe with enhanced durability. Deals 5% more damage and has 25% more durability than a common battleaxe. The superior craftsmanship makes it more effective in battle.
+items.Weapon_Battleaxe_Iron_Rare.name=Iron Battleaxe
+items.Weapon_Battleaxe_Iron_Rare.description=A finely crafted iron battleaxe with superior stats. Deals 10% more damage and has 50% more durability than a common battleaxe. This weapon demonstrates exceptional quality and reliability.
+items.Weapon_Battleaxe_Iron_Epic.name=Iron Battleaxe
+items.Weapon_Battleaxe_Iron_Epic.description=An expertly forged iron battleaxe with exceptional power. Deals 15% more damage and has 75% more durability than a common battleaxe. The masterful workmanship is evident in its superior performance.
+items.Weapon_Battleaxe_Iron_Legendary.name=Iron Battleaxe
+items.Weapon_Battleaxe_Iron_Legendary.description=A legendary iron battleaxe of unparalleled quality. Deals 20% more damage and has 100% more durability than a common battleaxe. This weapon is a true masterpiece, capable of legendary combat prowess.
+
+# Cobalt Battleaxe
+items.Weapon_Battleaxe_Cobalt_Poor.name=Cobalt Battleaxe
+items.Weapon_Battleaxe_Cobalt_Poor.description=A poorly forged cobalt battleaxe with reduced effectiveness. Deals 10% less damage and has 50% less durability than a common battleaxe. The inferior craftsmanship is evident in its weakened structure.
+items.Weapon_Battleaxe_Cobalt_Common.name=Cobalt Battleaxe
+items.Weapon_Battleaxe_Cobalt_Common.description=A standard cobalt battleaxe with balanced stats. This is the baseline quality for this weapon type, providing reliable performance in combat.
+items.Weapon_Battleaxe_Cobalt_Uncommon.name=Cobalt Battleaxe
+items.Weapon_Battleaxe_Cobalt_Uncommon.description=A well-forged cobalt battleaxe with enhanced durability. Deals 5% more damage and has 25% more durability than a common battleaxe. The superior craftsmanship makes it more effective in battle.
+items.Weapon_Battleaxe_Cobalt_Rare.name=Cobalt Battleaxe
+items.Weapon_Battleaxe_Cobalt_Rare.description=A finely crafted cobalt battleaxe with superior stats. Deals 10% more damage and has 50% more durability than a common battleaxe. This weapon demonstrates exceptional quality and reliability.
+items.Weapon_Battleaxe_Cobalt_Epic.name=Cobalt Battleaxe
+items.Weapon_Battleaxe_Cobalt_Epic.description=An expertly forged cobalt battleaxe with exceptional power. Deals 15% more damage and has 75% more durability than a common battleaxe. The masterful workmanship is evident in its superior performance.
+items.Weapon_Battleaxe_Cobalt_Legendary.name=Cobalt Battleaxe
+items.Weapon_Battleaxe_Cobalt_Legendary.description=A legendary cobalt battleaxe of unparalleled quality. Deals 20% more damage and has 100% more durability than a common battleaxe. This weapon is a true masterpiece, capable of legendary combat prowess.
+
+# Thorium Battleaxe
+items.Weapon_Battleaxe_Thorium_Poor.name=Thorium Battleaxe
+items.Weapon_Battleaxe_Thorium_Poor.description=A poorly forged thorium battleaxe with reduced effectiveness. Deals 10% less damage and has 50% less durability than a common battleaxe. The inferior craftsmanship is evident in its weakened structure.
+items.Weapon_Battleaxe_Thorium_Common.name=Thorium Battleaxe
+items.Weapon_Battleaxe_Thorium_Common.description=A standard thorium battleaxe with balanced stats. This is the baseline quality for this weapon type, providing reliable performance in combat.
+items.Weapon_Battleaxe_Thorium_Uncommon.name=Thorium Battleaxe
+items.Weapon_Battleaxe_Thorium_Uncommon.description=A well-forged thorium battleaxe with enhanced durability. Deals 5% more damage and has 25% more durability than a common battleaxe. The superior craftsmanship makes it more effective in battle.
+items.Weapon_Battleaxe_Thorium_Rare.name=Thorium Battleaxe
+items.Weapon_Battleaxe_Thorium_Rare.description=A finely crafted thorium battleaxe with superior stats. Deals 10% more damage and has 50% more durability than a common battleaxe. This weapon demonstrates exceptional quality and reliability.
+items.Weapon_Battleaxe_Thorium_Epic.name=Thorium Battleaxe
+items.Weapon_Battleaxe_Thorium_Epic.description=An expertly forged thorium battleaxe with exceptional power. Deals 15% more damage and has 75% more durability than a common battleaxe. The masterful workmanship is evident in its superior performance.
+items.Weapon_Battleaxe_Thorium_Legendary.name=Thorium Battleaxe
+items.Weapon_Battleaxe_Thorium_Legendary.description=A legendary thorium battleaxe of unparalleled quality. Deals 20% more damage and has 100% more durability than a common battleaxe. This weapon is a true masterpiece, capable of legendary combat prowess.
+
+# Mithril Battleaxe
+items.Weapon_Battleaxe_Mithril_Poor.name=Mithril Battleaxe
+items.Weapon_Battleaxe_Mithril_Poor.description=A poorly forged mithril battleaxe with reduced effectiveness. Deals 10% less damage and has 50% less durability than a common battleaxe. The inferior craftsmanship is evident in its weakened structure.
+items.Weapon_Battleaxe_Mithril_Common.name=Mithril Battleaxe
+items.Weapon_Battleaxe_Mithril_Common.description=A standard mithril battleaxe with balanced stats. This is the baseline quality for this weapon type, providing reliable performance in combat.
+items.Weapon_Battleaxe_Mithril_Uncommon.name=Mithril Battleaxe
+items.Weapon_Battleaxe_Mithril_Uncommon.description=A well-forged mithril battleaxe with enhanced durability. Deals 5% more damage and has 25% more durability than a common battleaxe. The superior craftsmanship makes it more effective in battle.
+items.Weapon_Battleaxe_Mithril_Rare.name=Mithril Battleaxe
+items.Weapon_Battleaxe_Mithril_Rare.description=A finely crafted mithril battleaxe with superior stats. Deals 10% more damage and has 50% more durability than a common battleaxe. This weapon demonstrates exceptional quality and reliability.
+items.Weapon_Battleaxe_Mithril_Epic.name=Mithril Battleaxe
+items.Weapon_Battleaxe_Mithril_Epic.description=An expertly forged mithril battleaxe with exceptional power. Deals 15% more damage and has 75% more durability than a common battleaxe. The masterful workmanship is evident in its superior performance.
+items.Weapon_Battleaxe_Mithril_Legendary.name=Mithril Battleaxe
+items.Weapon_Battleaxe_Mithril_Legendary.description=A legendary mithril battleaxe of unparalleled quality. Deals 20% more damage and has 100% more durability than a common battleaxe. This weapon is a true masterpiece, capable of legendary combat prowess.
+
+# Adamantite Battleaxe
+items.Weapon_Battleaxe_Adamantite_Poor.name=Adamantite Battleaxe
+items.Weapon_Battleaxe_Adamantite_Poor.description=A poorly forged adamantite battleaxe with reduced effectiveness. Deals 10% less damage and has 50% less durability than a common battleaxe. The inferior craftsmanship is evident in its weakened structure.
+items.Weapon_Battleaxe_Adamantite_Common.name=Adamantite Battleaxe
+items.Weapon_Battleaxe_Adamantite_Common.description=A standard adamantite battleaxe with balanced stats. This is the baseline quality for this weapon type, providing reliable performance in combat.
+items.Weapon_Battleaxe_Adamantite_Uncommon.name=Adamantite Battleaxe
+items.Weapon_Battleaxe_Adamantite_Uncommon.description=A well-forged adamantite battleaxe with enhanced durability. Deals 5% more damage and has 25% more durability than a common battleaxe. The superior craftsmanship makes it more effective in battle.
+items.Weapon_Battleaxe_Adamantite_Rare.name=Adamantite Battleaxe
+items.Weapon_Battleaxe_Adamantite_Rare.description=A finely crafted adamantite battleaxe with superior stats. Deals 10% more damage and has 50% more durability than a common battleaxe. This weapon demonstrates exceptional quality and reliability.
+items.Weapon_Battleaxe_Adamantite_Epic.name=Adamantite Battleaxe
+items.Weapon_Battleaxe_Adamantite_Epic.description=An expertly forged adamantite battleaxe with exceptional power. Deals 15% more damage and has 75% more durability than a common battleaxe. The masterful workmanship is evident in its superior performance.
+items.Weapon_Battleaxe_Adamantite_Legendary.name=Adamantite Battleaxe
+items.Weapon_Battleaxe_Adamantite_Legendary.description=A legendary adamantite battleaxe of unparalleled quality. Deals 20% more damage and has 100% more durability than a common battleaxe. This weapon is a true masterpiece, capable of legendary combat prowess.
+
+
+# ============================================
+# MACES
+# ============================================
+
+# Crude Mace
+items.Weapon_Mace_Crude_Poor.name=Crude Mace
+items.Weapon_Mace_Crude_Poor.description=A poorly forged crude mace with reduced effectiveness. Deals 10% less damage and has 50% less durability than a common mace. The inferior craftsmanship is evident in its weakened structure.
+items.Weapon_Mace_Crude_Common.name=Crude Mace
+items.Weapon_Mace_Crude_Common.description=A standard crude mace with balanced stats. This is the baseline quality for this weapon type, providing reliable performance in combat.
+items.Weapon_Mace_Crude_Uncommon.name=Crude Mace
+items.Weapon_Mace_Crude_Uncommon.description=A well-forged crude mace with enhanced durability. Deals 5% more damage and has 25% more durability than a common mace. The superior craftsmanship makes it more effective in battle.
+items.Weapon_Mace_Crude_Rare.name=Crude Mace
+items.Weapon_Mace_Crude_Rare.description=A finely crafted crude mace with superior stats. Deals 10% more damage and has 50% more durability than a common mace. This weapon demonstrates exceptional quality and reliability.
+items.Weapon_Mace_Crude_Epic.name=Crude Mace
+items.Weapon_Mace_Crude_Epic.description=An expertly forged crude mace with exceptional power. Deals 15% more damage and has 75% more durability than a common mace. The masterful workmanship is evident in its superior performance.
+items.Weapon_Mace_Crude_Legendary.name=Crude Mace
+items.Weapon_Mace_Crude_Legendary.description=A legendary crude mace of unparalleled quality. Deals 20% more damage and has 100% more durability than a common mace. This weapon is a true masterpiece, capable of legendary combat prowess.
+
+# Copper Mace
+items.Weapon_Mace_Copper_Poor.name=Copper Mace
+items.Weapon_Mace_Copper_Poor.description=A poorly forged copper mace with reduced effectiveness. Deals 10% less damage and has 50% less durability than a common mace. The inferior craftsmanship is evident in its weakened structure.
+items.Weapon_Mace_Copper_Common.name=Copper Mace
+items.Weapon_Mace_Copper_Common.description=A standard copper mace with balanced stats. This is the baseline quality for this weapon type, providing reliable performance in combat.
+items.Weapon_Mace_Copper_Uncommon.name=Copper Mace
+items.Weapon_Mace_Copper_Uncommon.description=A well-forged copper mace with enhanced durability. Deals 5% more damage and has 25% more durability than a common mace. The superior craftsmanship makes it more effective in battle.
+items.Weapon_Mace_Copper_Rare.name=Copper Mace
+items.Weapon_Mace_Copper_Rare.description=A finely crafted copper mace with superior stats. Deals 10% more damage and has 50% more durability than a common mace. This weapon demonstrates exceptional quality and reliability.
+items.Weapon_Mace_Copper_Epic.name=Copper Mace
+items.Weapon_Mace_Copper_Epic.description=An expertly forged copper mace with exceptional power. Deals 15% more damage and has 75% more durability than a common mace. The masterful workmanship is evident in its superior performance.
+items.Weapon_Mace_Copper_Legendary.name=Copper Mace
+items.Weapon_Mace_Copper_Legendary.description=A legendary copper mace of unparalleled quality. Deals 20% more damage and has 100% more durability than a common mace. This weapon is a true masterpiece, capable of legendary combat prowess.
+
+# Iron Mace
+items.Weapon_Mace_Iron_Poor.name=Iron Mace
+items.Weapon_Mace_Iron_Poor.description=A poorly forged iron mace with reduced effectiveness. Deals 10% less damage and has 50% less durability than a common mace. The inferior craftsmanship is evident in its weakened structure.
+items.Weapon_Mace_Iron_Common.name=Iron Mace
+items.Weapon_Mace_Iron_Common.description=A standard iron mace with balanced stats. This is the baseline quality for this weapon type, providing reliable performance in combat.
+items.Weapon_Mace_Iron_Uncommon.name=Iron Mace
+items.Weapon_Mace_Iron_Uncommon.description=A well-forged iron mace with enhanced durability. Deals 5% more damage and has 25% more durability than a common mace. The superior craftsmanship makes it more effective in battle.
+items.Weapon_Mace_Iron_Rare.name=Iron Mace
+items.Weapon_Mace_Iron_Rare.description=A finely crafted iron mace with superior stats. Deals 10% more damage and has 50% more durability than a common mace. This weapon demonstrates exceptional quality and reliability.
+items.Weapon_Mace_Iron_Epic.name=Iron Mace
+items.Weapon_Mace_Iron_Epic.description=An expertly forged iron mace with exceptional power. Deals 15% more damage and has 75% more durability than a common mace. The masterful workmanship is evident in its superior performance.
+items.Weapon_Mace_Iron_Legendary.name=Iron Mace
+items.Weapon_Mace_Iron_Legendary.description=A legendary iron mace of unparalleled quality. Deals 20% more damage and has 100% more durability than a common mace. This weapon is a true masterpiece, capable of legendary combat prowess.
+
+# Cobalt Mace
+items.Weapon_Mace_Cobalt_Poor.name=Cobalt Mace
+items.Weapon_Mace_Cobalt_Poor.description=A poorly forged cobalt mace with reduced effectiveness. Deals 10% less damage and has 50% less durability than a common mace. The inferior craftsmanship is evident in its weakened structure.
+items.Weapon_Mace_Cobalt_Common.name=Cobalt Mace
+items.Weapon_Mace_Cobalt_Common.description=A standard cobalt mace with balanced stats. This is the baseline quality for this weapon type, providing reliable performance in combat.
+items.Weapon_Mace_Cobalt_Uncommon.name=Cobalt Mace
+items.Weapon_Mace_Cobalt_Uncommon.description=A well-forged cobalt mace with enhanced durability. Deals 5% more damage and has 25% more durability than a common mace. The superior craftsmanship makes it more effective in battle.
+items.Weapon_Mace_Cobalt_Rare.name=Cobalt Mace
+items.Weapon_Mace_Cobalt_Rare.description=A finely crafted cobalt mace with superior stats. Deals 10% more damage and has 50% more durability than a common mace. This weapon demonstrates exceptional quality and reliability.
+items.Weapon_Mace_Cobalt_Epic.name=Cobalt Mace
+items.Weapon_Mace_Cobalt_Epic.description=An expertly forged cobalt mace with exceptional power. Deals 15% more damage and has 75% more durability than a common mace. The masterful workmanship is evident in its superior performance.
+items.Weapon_Mace_Cobalt_Legendary.name=Cobalt Mace
+items.Weapon_Mace_Cobalt_Legendary.description=A legendary cobalt mace of unparalleled quality. Deals 20% more damage and has 100% more durability than a common mace. This weapon is a true masterpiece, capable of legendary combat prowess.
+
+# Thorium Mace
+items.Weapon_Mace_Thorium_Poor.name=Thorium Mace
+items.Weapon_Mace_Thorium_Poor.description=A poorly forged thorium mace with reduced effectiveness. Deals 10% less damage and has 50% less durability than a common mace. The inferior craftsmanship is evident in its weakened structure.
+items.Weapon_Mace_Thorium_Common.name=Thorium Mace
+items.Weapon_Mace_Thorium_Common.description=A standard thorium mace with balanced stats. This is the baseline quality for this weapon type, providing reliable performance in combat.
+items.Weapon_Mace_Thorium_Uncommon.name=Thorium Mace
+items.Weapon_Mace_Thorium_Uncommon.description=A well-forged thorium mace with enhanced durability. Deals 5% more damage and has 25% more durability than a common mace. The superior craftsmanship makes it more effective in battle.
+items.Weapon_Mace_Thorium_Rare.name=Thorium Mace
+items.Weapon_Mace_Thorium_Rare.description=A finely crafted thorium mace with superior stats. Deals 10% more damage and has 50% more durability than a common mace. This weapon demonstrates exceptional quality and reliability.
+items.Weapon_Mace_Thorium_Epic.name=Thorium Mace
+items.Weapon_Mace_Thorium_Epic.description=An expertly forged thorium mace with exceptional power. Deals 15% more damage and has 75% more durability than a common mace. The masterful workmanship is evident in its superior performance.
+items.Weapon_Mace_Thorium_Legendary.name=Thorium Mace
+items.Weapon_Mace_Thorium_Legendary.description=A legendary thorium mace of unparalleled quality. Deals 20% more damage and has 100% more durability than a common mace. This weapon is a true masterpiece, capable of legendary combat prowess.
+
+# Mithril Mace
+items.Weapon_Mace_Mithril_Poor.name=Mithril Mace
+items.Weapon_Mace_Mithril_Poor.description=A poorly forged mithril mace with reduced effectiveness. Deals 10% less damage and has 50% less durability than a common mace. The inferior craftsmanship is evident in its weakened structure.
+items.Weapon_Mace_Mithril_Common.name=Mithril Mace
+items.Weapon_Mace_Mithril_Common.description=A standard mithril mace with balanced stats. This is the baseline quality for this weapon type, providing reliable performance in combat.
+items.Weapon_Mace_Mithril_Uncommon.name=Mithril Mace
+items.Weapon_Mace_Mithril_Uncommon.description=A well-forged mithril mace with enhanced durability. Deals 5% more damage and has 25% more durability than a common mace. The superior craftsmanship makes it more effective in battle.
+items.Weapon_Mace_Mithril_Rare.name=Mithril Mace
+items.Weapon_Mace_Mithril_Rare.description=A finely crafted mithril mace with superior stats. Deals 10% more damage and has 50% more durability than a common mace. This weapon demonstrates exceptional quality and reliability.
+items.Weapon_Mace_Mithril_Epic.name=Mithril Mace
+items.Weapon_Mace_Mithril_Epic.description=An expertly forged mithril mace with exceptional power. Deals 15% more damage and has 75% more durability than a common mace. The masterful workmanship is evident in its superior performance.
+items.Weapon_Mace_Mithril_Legendary.name=Mithril Mace
+items.Weapon_Mace_Mithril_Legendary.description=A legendary mithril mace of unparalleled quality. Deals 20% more damage and has 100% more durability than a common mace. This weapon is a true masterpiece, capable of legendary combat prowess.
+
+# Adamantite Mace
+items.Weapon_Mace_Adamantite_Poor.name=Adamantite Mace
+items.Weapon_Mace_Adamantite_Poor.description=A poorly forged adamantite mace with reduced effectiveness. Deals 10% less damage and has 50% less durability than a common mace. The inferior craftsmanship is evident in its weakened structure.
+items.Weapon_Mace_Adamantite_Common.name=Adamantite Mace
+items.Weapon_Mace_Adamantite_Common.description=A standard adamantite mace with balanced stats. This is the baseline quality for this weapon type, providing reliable performance in combat.
+items.Weapon_Mace_Adamantite_Uncommon.name=Adamantite Mace
+items.Weapon_Mace_Adamantite_Uncommon.description=A well-forged adamantite mace with enhanced durability. Deals 5% more damage and has 25% more durability than a common mace. The superior craftsmanship makes it more effective in battle.
+items.Weapon_Mace_Adamantite_Rare.name=Adamantite Mace
+items.Weapon_Mace_Adamantite_Rare.description=A finely crafted adamantite mace with superior stats. Deals 10% more damage and has 50% more durability than a common mace. This weapon demonstrates exceptional quality and reliability.
+items.Weapon_Mace_Adamantite_Epic.name=Adamantite Mace
+items.Weapon_Mace_Adamantite_Epic.description=An expertly forged adamantite mace with exceptional power. Deals 15% more damage and has 75% more durability than a common mace. The masterful workmanship is evident in its superior performance.
+items.Weapon_Mace_Adamantite_Legendary.name=Adamantite Mace
+items.Weapon_Mace_Adamantite_Legendary.description=A legendary adamantite mace of unparalleled quality. Deals 20% more damage and has 100% more durability than a common mace. This weapon is a true masterpiece, capable of legendary combat prowess.
+
+
+# ============================================
+# SHIELDS
+# ============================================
+
+# Crude Shield
+items.Weapon_Shield_Crude_Poor.name=Crude Shield
+items.Weapon_Shield_Crude_Poor.description=A poorly forged crude shield with reduced effectiveness. Has 50% less durability and higher stamina cost than a common shield. The inferior craftsmanship is evident in its weakened structure.
+items.Weapon_Shield_Crude_Common.name=Crude Shield
+items.Weapon_Shield_Crude_Common.description=A standard crude shield with balanced stats. This is the baseline quality for this shield type, providing reliable protection in combat.
+items.Weapon_Shield_Crude_Uncommon.name=Crude Shield
+items.Weapon_Shield_Crude_Uncommon.description=A well-forged crude shield with enhanced durability. Has 25% more durability and slightly lower stamina cost than a common shield. The superior craftsmanship makes it more reliable in extended battles.
+items.Weapon_Shield_Crude_Rare.name=Crude Shield
+items.Weapon_Shield_Crude_Rare.description=A finely crafted crude shield with superior stats. Has 50% more durability and reduced stamina cost compared to a common shield. This shield demonstrates exceptional quality and reliability.
+items.Weapon_Shield_Crude_Epic.name=Crude Shield
+items.Weapon_Shield_Crude_Epic.description=An expertly forged crude shield with exceptional resilience. Has 75% more durability and significantly lower stamina cost than a common shield. The masterful workmanship is evident in its superior defensive capabilities.
+items.Weapon_Shield_Crude_Legendary.name=Crude Shield
+items.Weapon_Shield_Crude_Legendary.description=A legendary crude shield of unparalleled quality. Has 100% more durability and minimal stamina cost compared to a common shield. This shield is a true masterpiece, capable of legendary defensive prowess.
+
+# Copper Shield
+items.Weapon_Shield_Copper_Poor.name=Copper Shield
+items.Weapon_Shield_Copper_Poor.description=A poorly forged copper shield with reduced effectiveness. Has 50% less durability and higher stamina cost than a common shield. The inferior craftsmanship is evident in its weakened structure.
+items.Weapon_Shield_Copper_Common.name=Copper Shield
+items.Weapon_Shield_Copper_Common.description=A standard copper shield with balanced stats. This is the baseline quality for this shield type, providing reliable protection in combat.
+items.Weapon_Shield_Copper_Uncommon.name=Copper Shield
+items.Weapon_Shield_Copper_Uncommon.description=A well-forged copper shield with enhanced durability. Has 25% more durability and slightly lower stamina cost than a common shield. The superior craftsmanship makes it more reliable in extended battles.
+items.Weapon_Shield_Copper_Rare.name=Copper Shield
+items.Weapon_Shield_Copper_Rare.description=A finely crafted copper shield with superior stats. Has 50% more durability and reduced stamina cost compared to a common shield. This shield demonstrates exceptional quality and reliability.
+items.Weapon_Shield_Copper_Epic.name=Copper Shield
+items.Weapon_Shield_Copper_Epic.description=An expertly forged copper shield with exceptional resilience. Has 75% more durability and significantly lower stamina cost than a common shield. The masterful workmanship is evident in its superior defensive capabilities.
+items.Weapon_Shield_Copper_Legendary.name=Copper Shield
+items.Weapon_Shield_Copper_Legendary.description=A legendary copper shield of unparalleled quality. Has 100% more durability and minimal stamina cost compared to a common shield. This shield is a true masterpiece, capable of legendary defensive prowess.
+
+# Iron Shield
+items.Weapon_Shield_Iron_Poor.name=Iron Shield
+items.Weapon_Shield_Iron_Poor.description=A poorly forged iron shield with reduced effectiveness. Has 50% less durability and higher stamina cost than a common shield. The inferior craftsmanship is evident in its weakened structure.
+items.Weapon_Shield_Iron_Common.name=Iron Shield
+items.Weapon_Shield_Iron_Common.description=A standard iron shield with balanced stats. This is the baseline quality for this shield type, providing reliable protection in combat.
+items.Weapon_Shield_Iron_Uncommon.name=Iron Shield
+items.Weapon_Shield_Iron_Uncommon.description=A well-forged iron shield with enhanced durability. Has 25% more durability and slightly lower stamina cost than a common shield. The superior craftsmanship makes it more reliable in extended battles.
+items.Weapon_Shield_Iron_Rare.name=Iron Shield
+items.Weapon_Shield_Iron_Rare.description=A finely crafted iron shield with superior stats. Has 50% more durability and reduced stamina cost compared to a common shield. This shield demonstrates exceptional quality and reliability.
+items.Weapon_Shield_Iron_Epic.name=Iron Shield
+items.Weapon_Shield_Iron_Epic.description=An expertly forged iron shield with exceptional resilience. Has 75% more durability and significantly lower stamina cost than a common shield. The masterful workmanship is evident in its superior defensive capabilities.
+items.Weapon_Shield_Iron_Legendary.name=Iron Shield
+items.Weapon_Shield_Iron_Legendary.description=A legendary iron shield of unparalleled quality. Has 100% more durability and minimal stamina cost compared to a common shield. This shield is a true masterpiece, capable of legendary defensive prowess.
+
+# Cobalt Shield
+items.Weapon_Shield_Cobalt_Poor.name=Cobalt Shield
+items.Weapon_Shield_Cobalt_Poor.description=A poorly forged cobalt shield with reduced effectiveness. Has 50% less durability and higher stamina cost than a common shield. The inferior craftsmanship is evident in its weakened structure.
+items.Weapon_Shield_Cobalt_Common.name=Cobalt Shield
+items.Weapon_Shield_Cobalt_Common.description=A standard cobalt shield with balanced stats. This is the baseline quality for this shield type, providing reliable protection in combat.
+items.Weapon_Shield_Cobalt_Uncommon.name=Cobalt Shield
+items.Weapon_Shield_Cobalt_Uncommon.description=A well-forged cobalt shield with enhanced durability. Has 25% more durability and slightly lower stamina cost than a common shield. The superior craftsmanship makes it more reliable in extended battles.
+items.Weapon_Shield_Cobalt_Rare.name=Cobalt Shield
+items.Weapon_Shield_Cobalt_Rare.description=A finely crafted cobalt shield with superior stats. Has 50% more durability and reduced stamina cost compared to a common shield. This shield demonstrates exceptional quality and reliability.
+items.Weapon_Shield_Cobalt_Epic.name=Cobalt Shield
+items.Weapon_Shield_Cobalt_Epic.description=An expertly forged cobalt shield with exceptional resilience. Has 75% more durability and significantly lower stamina cost than a common shield. The masterful workmanship is evident in its superior defensive capabilities.
+items.Weapon_Shield_Cobalt_Legendary.name=Cobalt Shield
+items.Weapon_Shield_Cobalt_Legendary.description=A legendary cobalt shield of unparalleled quality. Has 100% more durability and minimal stamina cost compared to a common shield. This shield is a true masterpiece, capable of legendary defensive prowess.
+
+# Thorium Shield
+items.Weapon_Shield_Thorium_Poor.name=Thorium Shield
+items.Weapon_Shield_Thorium_Poor.description=A poorly forged thorium shield with reduced effectiveness. Has 50% less durability and higher stamina cost than a common shield. The inferior craftsmanship is evident in its weakened structure.
+items.Weapon_Shield_Thorium_Common.name=Thorium Shield
+items.Weapon_Shield_Thorium_Common.description=A standard thorium shield with balanced stats. This is the baseline quality for this shield type, providing reliable protection in combat.
+items.Weapon_Shield_Thorium_Uncommon.name=Thorium Shield
+items.Weapon_Shield_Thorium_Uncommon.description=A well-forged thorium shield with enhanced durability. Has 25% more durability and slightly lower stamina cost than a common shield. The superior craftsmanship makes it more reliable in extended battles.
+items.Weapon_Shield_Thorium_Rare.name=Thorium Shield
+items.Weapon_Shield_Thorium_Rare.description=A finely crafted thorium shield with superior stats. Has 50% more durability and reduced stamina cost compared to a common shield. This shield demonstrates exceptional quality and reliability.
+items.Weapon_Shield_Thorium_Epic.name=Thorium Shield
+items.Weapon_Shield_Thorium_Epic.description=An expertly forged thorium shield with exceptional resilience. Has 75% more durability and significantly lower stamina cost than a common shield. The masterful workmanship is evident in its superior defensive capabilities.
+items.Weapon_Shield_Thorium_Legendary.name=Thorium Shield
+items.Weapon_Shield_Thorium_Legendary.description=A legendary thorium shield of unparalleled quality. Has 100% more durability and minimal stamina cost compared to a common shield. This shield is a true masterpiece, capable of legendary defensive prowess.
+
+# Mithril Shield
+items.Weapon_Shield_Mithril_Poor.name=Mithril Shield
+items.Weapon_Shield_Mithril_Poor.description=A poorly forged mithril shield with reduced effectiveness. Has 50% less durability and higher stamina cost than a common shield. The inferior craftsmanship is evident in its weakened structure.
+items.Weapon_Shield_Mithril_Common.name=Mithril Shield
+items.Weapon_Shield_Mithril_Common.description=A standard mithril shield with balanced stats. This is the baseline quality for this shield type, providing reliable protection in combat.
+items.Weapon_Shield_Mithril_Uncommon.name=Mithril Shield
+items.Weapon_Shield_Mithril_Uncommon.description=A well-forged mithril shield with enhanced durability. Has 25% more durability and slightly lower stamina cost than a common shield. The superior craftsmanship makes it more reliable in extended battles.
+items.Weapon_Shield_Mithril_Rare.name=Mithril Shield
+items.Weapon_Shield_Mithril_Rare.description=A finely crafted mithril shield with superior stats. Has 50% more durability and reduced stamina cost compared to a common shield. This shield demonstrates exceptional quality and reliability.
+items.Weapon_Shield_Mithril_Epic.name=Mithril Shield
+items.Weapon_Shield_Mithril_Epic.description=An expertly forged mithril shield with exceptional resilience. Has 75% more durability and significantly lower stamina cost than a common shield. The masterful workmanship is evident in its superior defensive capabilities.
+items.Weapon_Shield_Mithril_Legendary.name=Mithril Shield
+items.Weapon_Shield_Mithril_Legendary.description=A legendary mithril shield of unparalleled quality. Has 100% more durability and minimal stamina cost compared to a common shield. This shield is a true masterpiece, capable of legendary defensive prowess.
+
+# Adamantite Shield
+items.Weapon_Shield_Adamantite_Poor.name=Adamantite Shield
+items.Weapon_Shield_Adamantite_Poor.description=A poorly forged adamantite shield with reduced effectiveness. Has 50% less durability and higher stamina cost than a common shield. The inferior craftsmanship is evident in its weakened structure.
+items.Weapon_Shield_Adamantite_Common.name=Adamantite Shield
+items.Weapon_Shield_Adamantite_Common.description=A standard adamantite shield with balanced stats. This is the baseline quality for this shield type, providing reliable protection in combat.
+items.Weapon_Shield_Adamantite_Uncommon.name=Adamantite Shield
+items.Weapon_Shield_Adamantite_Uncommon.description=A well-forged adamantite shield with enhanced durability. Has 25% more durability and slightly lower stamina cost than a common shield. The superior craftsmanship makes it more reliable in extended battles.
+items.Weapon_Shield_Adamantite_Rare.name=Adamantite Shield
+items.Weapon_Shield_Adamantite_Rare.description=A finely crafted adamantite shield with superior stats. Has 50% more durability and reduced stamina cost compared to a common shield. This shield demonstrates exceptional quality and reliability.
+items.Weapon_Shield_Adamantite_Epic.name=Adamantite Shield
+items.Weapon_Shield_Adamantite_Epic.description=An expertly forged adamantite shield with exceptional resilience. Has 75% more durability and significantly lower stamina cost than a common shield. The masterful workmanship is evident in its superior defensive capabilities.
+items.Weapon_Shield_Adamantite_Legendary.name=Adamantite Shield
+items.Weapon_Shield_Adamantite_Legendary.description=A legendary adamantite shield of unparalleled quality. Has 100% more durability and minimal stamina cost compared to a common shield. This shield is a true masterpiece, capable of legendary defensive prowess.
+
+
+# ============================================
+# SHORTBOWS
+# ============================================
+
+# Crude Shortbow
+items.Weapon_Shortbow_Crude_Poor.name=Crude Shortbow
+items.Weapon_Shortbow_Crude_Poor.description=A poorly forged crude shortbow with reduced effectiveness. Deals 10% less damage and has 50% less durability than a common shortbow. The inferior craftsmanship is evident in its weakened structure.
+items.Weapon_Shortbow_Crude_Common.name=Crude Shortbow
+items.Weapon_Shortbow_Crude_Common.description=A standard crude shortbow with balanced stats. This is the baseline quality for this weapon type, providing reliable performance in combat.
+items.Weapon_Shortbow_Crude_Uncommon.name=Crude Shortbow
+items.Weapon_Shortbow_Crude_Uncommon.description=A well-forged crude shortbow with enhanced durability. Deals 5% more damage and has 25% more durability than a common shortbow. The superior craftsmanship makes it more effective in battle.
+items.Weapon_Shortbow_Crude_Rare.name=Crude Shortbow
+items.Weapon_Shortbow_Crude_Rare.description=A finely crafted crude shortbow with superior stats. Deals 10% more damage and has 50% more durability than a common shortbow. This weapon demonstrates exceptional quality and reliability.
+items.Weapon_Shortbow_Crude_Epic.name=Crude Shortbow
+items.Weapon_Shortbow_Crude_Epic.description=An expertly forged crude shortbow with exceptional power. Deals 15% more damage and has 75% more durability than a common shortbow. The masterful workmanship is evident in its superior performance.
+items.Weapon_Shortbow_Crude_Legendary.name=Crude Shortbow
+items.Weapon_Shortbow_Crude_Legendary.description=A legendary crude shortbow of unparalleled quality. Deals 20% more damage and has 100% more durability than a common shortbow. This weapon is a true masterpiece, capable of legendary combat prowess.
+
+# Copper Shortbow
+items.Weapon_Shortbow_Copper_Poor.name=Copper Shortbow
+items.Weapon_Shortbow_Copper_Poor.description=A poorly forged copper shortbow with reduced effectiveness. Deals 10% less damage and has 50% less durability than a common shortbow. The inferior craftsmanship is evident in its weakened structure.
+items.Weapon_Shortbow_Copper_Common.name=Copper Shortbow
+items.Weapon_Shortbow_Copper_Common.description=A standard copper shortbow with balanced stats. This is the baseline quality for this weapon type, providing reliable performance in combat.
+items.Weapon_Shortbow_Copper_Uncommon.name=Copper Shortbow
+items.Weapon_Shortbow_Copper_Uncommon.description=A well-forged copper shortbow with enhanced durability. Deals 5% more damage and has 25% more durability than a common shortbow. The superior craftsmanship makes it more effective in battle.
+items.Weapon_Shortbow_Copper_Rare.name=Copper Shortbow
+items.Weapon_Shortbow_Copper_Rare.description=A finely crafted copper shortbow with superior stats. Deals 10% more damage and has 50% more durability than a common shortbow. This weapon demonstrates exceptional quality and reliability.
+items.Weapon_Shortbow_Copper_Epic.name=Copper Shortbow
+items.Weapon_Shortbow_Copper_Epic.description=An expertly forged copper shortbow with exceptional power. Deals 15% more damage and has 75% more durability than a common shortbow. The masterful workmanship is evident in its superior performance.
+items.Weapon_Shortbow_Copper_Legendary.name=Copper Shortbow
+items.Weapon_Shortbow_Copper_Legendary.description=A legendary copper shortbow of unparalleled quality. Deals 20% more damage and has 100% more durability than a common shortbow. This weapon is a true masterpiece, capable of legendary combat prowess.
+
+# Iron Shortbow
+items.Weapon_Shortbow_Iron_Poor.name=Iron Shortbow
+items.Weapon_Shortbow_Iron_Poor.description=A poorly forged iron shortbow with reduced effectiveness. Deals 10% less damage and has 50% less durability than a common shortbow. The inferior craftsmanship is evident in its weakened structure.
+items.Weapon_Shortbow_Iron_Common.name=Iron Shortbow
+items.Weapon_Shortbow_Iron_Common.description=A standard iron shortbow with balanced stats. This is the baseline quality for this weapon type, providing reliable performance in combat.
+items.Weapon_Shortbow_Iron_Uncommon.name=Iron Shortbow
+items.Weapon_Shortbow_Iron_Uncommon.description=A well-forged iron shortbow with enhanced durability. Deals 5% more damage and has 25% more durability than a common shortbow. The superior craftsmanship makes it more effective in battle.
+items.Weapon_Shortbow_Iron_Rare.name=Iron Shortbow
+items.Weapon_Shortbow_Iron_Rare.description=A finely crafted iron shortbow with superior stats. Deals 10% more damage and has 50% more durability than a common shortbow. This weapon demonstrates exceptional quality and reliability.
+items.Weapon_Shortbow_Iron_Epic.name=Iron Shortbow
+items.Weapon_Shortbow_Iron_Epic.description=An expertly forged iron shortbow with exceptional power. Deals 15% more damage and has 75% more durability than a common shortbow. The masterful workmanship is evident in its superior performance.
+items.Weapon_Shortbow_Iron_Legendary.name=Iron Shortbow
+items.Weapon_Shortbow_Iron_Legendary.description=A legendary iron shortbow of unparalleled quality. Deals 20% more damage and has 100% more durability than a common shortbow. This weapon is a true masterpiece, capable of legendary combat prowess.
+
+# Cobalt Shortbow
+items.Weapon_Shortbow_Cobalt_Poor.name=Cobalt Shortbow
+items.Weapon_Shortbow_Cobalt_Poor.description=A poorly forged cobalt shortbow with reduced effectiveness. Deals 10% less damage and has 50% less durability than a common shortbow. The inferior craftsmanship is evident in its weakened structure.
+items.Weapon_Shortbow_Cobalt_Common.name=Cobalt Shortbow
+items.Weapon_Shortbow_Cobalt_Common.description=A standard cobalt shortbow with balanced stats. This is the baseline quality for this weapon type, providing reliable performance in combat.
+items.Weapon_Shortbow_Cobalt_Uncommon.name=Cobalt Shortbow
+items.Weapon_Shortbow_Cobalt_Uncommon.description=A well-forged cobalt shortbow with enhanced durability. Deals 5% more damage and has 25% more durability than a common shortbow. The superior craftsmanship makes it more effective in battle.
+items.Weapon_Shortbow_Cobalt_Rare.name=Cobalt Shortbow
+items.Weapon_Shortbow_Cobalt_Rare.description=A finely crafted cobalt shortbow with superior stats. Deals 10% more damage and has 50% more durability than a common shortbow. This weapon demonstrates exceptional quality and reliability.
+items.Weapon_Shortbow_Cobalt_Epic.name=Cobalt Shortbow
+items.Weapon_Shortbow_Cobalt_Epic.description=An expertly forged cobalt shortbow with exceptional power. Deals 15% more damage and has 75% more durability than a common shortbow. The masterful workmanship is evident in its superior performance.
+items.Weapon_Shortbow_Cobalt_Legendary.name=Cobalt Shortbow
+items.Weapon_Shortbow_Cobalt_Legendary.description=A legendary cobalt shortbow of unparalleled quality. Deals 20% more damage and has 100% more durability than a common shortbow. This weapon is a true masterpiece, capable of legendary combat prowess.
+
+# Thorium Shortbow
+items.Weapon_Shortbow_Thorium_Poor.name=Thorium Shortbow
+items.Weapon_Shortbow_Thorium_Poor.description=A poorly forged thorium shortbow with reduced effectiveness. Deals 10% less damage and has 50% less durability than a common shortbow. The inferior craftsmanship is evident in its weakened structure.
+items.Weapon_Shortbow_Thorium_Common.name=Thorium Shortbow
+items.Weapon_Shortbow_Thorium_Common.description=A standard thorium shortbow with balanced stats. This is the baseline quality for this weapon type, providing reliable performance in combat.
+items.Weapon_Shortbow_Thorium_Uncommon.name=Thorium Shortbow
+items.Weapon_Shortbow_Thorium_Uncommon.description=A well-forged thorium shortbow with enhanced durability. Deals 5% more damage and has 25% more durability than a common shortbow. The superior craftsmanship makes it more effective in battle.
+items.Weapon_Shortbow_Thorium_Rare.name=Thorium Shortbow
+items.Weapon_Shortbow_Thorium_Rare.description=A finely crafted thorium shortbow with superior stats. Deals 10% more damage and has 50% more durability than a common shortbow. This weapon demonstrates exceptional quality and reliability.
+items.Weapon_Shortbow_Thorium_Epic.name=Thorium Shortbow
+items.Weapon_Shortbow_Thorium_Epic.description=An expertly forged thorium shortbow with exceptional power. Deals 15% more damage and has 75% more durability than a common shortbow. The masterful workmanship is evident in its superior performance.
+items.Weapon_Shortbow_Thorium_Legendary.name=Thorium Shortbow
+items.Weapon_Shortbow_Thorium_Legendary.description=A legendary thorium shortbow of unparalleled quality. Deals 20% more damage and has 100% more durability than a common shortbow. This weapon is a true masterpiece, capable of legendary combat prowess.
+
+# Mithril Shortbow
+items.Weapon_Shortbow_Mithril_Poor.name=Mithril Shortbow
+items.Weapon_Shortbow_Mithril_Poor.description=A poorly forged mithril shortbow with reduced effectiveness. Deals 10% less damage and has 50% less durability than a common shortbow. The inferior craftsmanship is evident in its weakened structure.
+items.Weapon_Shortbow_Mithril_Common.name=Mithril Shortbow
+items.Weapon_Shortbow_Mithril_Common.description=A standard mithril shortbow with balanced stats. This is the baseline quality for this weapon type, providing reliable performance in combat.
+items.Weapon_Shortbow_Mithril_Uncommon.name=Mithril Shortbow
+items.Weapon_Shortbow_Mithril_Uncommon.description=A well-forged mithril shortbow with enhanced durability. Deals 5% more damage and has 25% more durability than a common shortbow. The superior craftsmanship makes it more effective in battle.
+items.Weapon_Shortbow_Mithril_Rare.name=Mithril Shortbow
+items.Weapon_Shortbow_Mithril_Rare.description=A finely crafted mithril shortbow with superior stats. Deals 10% more damage and has 50% more durability than a common shortbow. This weapon demonstrates exceptional quality and reliability.
+items.Weapon_Shortbow_Mithril_Epic.name=Mithril Shortbow
+items.Weapon_Shortbow_Mithril_Epic.description=An expertly forged mithril shortbow with exceptional power. Deals 15% more damage and has 75% more durability than a common shortbow. The masterful workmanship is evident in its superior performance.
+items.Weapon_Shortbow_Mithril_Legendary.name=Mithril Shortbow
+items.Weapon_Shortbow_Mithril_Legendary.description=A legendary mithril shortbow of unparalleled quality. Deals 20% more damage and has 100% more durability than a common shortbow. This weapon is a true masterpiece, capable of legendary combat prowess.
+
+# Adamantite Shortbow
+items.Weapon_Shortbow_Adamantite_Poor.name=Adamantite Shortbow
+items.Weapon_Shortbow_Adamantite_Poor.description=A poorly forged adamantite shortbow with reduced effectiveness. Deals 10% less damage and has 50% less durability than a common shortbow. The inferior craftsmanship is evident in its weakened structure.
+items.Weapon_Shortbow_Adamantite_Common.name=Adamantite Shortbow
+items.Weapon_Shortbow_Adamantite_Common.description=A standard adamantite shortbow with balanced stats. This is the baseline quality for this weapon type, providing reliable performance in combat.
+items.Weapon_Shortbow_Adamantite_Uncommon.name=Adamantite Shortbow
+items.Weapon_Shortbow_Adamantite_Uncommon.description=A well-forged adamantite shortbow with enhanced durability. Deals 5% more damage and has 25% more durability than a common shortbow. The superior craftsmanship makes it more effective in battle.
+items.Weapon_Shortbow_Adamantite_Rare.name=Adamantite Shortbow
+items.Weapon_Shortbow_Adamantite_Rare.description=A finely crafted adamantite shortbow with superior stats. Deals 10% more damage and has 50% more durability than a common shortbow. This weapon demonstrates exceptional quality and reliability.
+items.Weapon_Shortbow_Adamantite_Epic.name=Adamantite Shortbow
+items.Weapon_Shortbow_Adamantite_Epic.description=An expertly forged adamantite shortbow with exceptional power. Deals 15% more damage and has 75% more durability than a common shortbow. The masterful workmanship is evident in its superior performance.
+items.Weapon_Shortbow_Adamantite_Legendary.name=Adamantite Shortbow
+items.Weapon_Shortbow_Adamantite_Legendary.description=A legendary adamantite shortbow of unparalleled quality. Deals 20% more damage and has 100% more durability than a common shortbow. This weapon is a true masterpiece, capable of legendary combat prowess.
+
+
+# ============================================
+# CROSSBOWS
+# ============================================
+
+# Iron Crossbow
+items.Weapon_Crossbow_Iron_Poor.name=Iron Crossbow
+items.Weapon_Crossbow_Iron_Poor.description=A poorly forged iron crossbow with reduced effectiveness. Deals 10% less damage and has 50% less durability than a common crossbow. The inferior craftsmanship is evident in its weakened structure.
+items.Weapon_Crossbow_Iron_Common.name=Iron Crossbow
+items.Weapon_Crossbow_Iron_Common.description=A standard iron crossbow with balanced stats. This is the baseline quality for this weapon type, providing reliable performance in combat.
+items.Weapon_Crossbow_Iron_Uncommon.name=Iron Crossbow
+items.Weapon_Crossbow_Iron_Uncommon.description=A well-forged iron crossbow with enhanced durability. Deals 5% more damage and has 25% more durability than a common crossbow. The superior craftsmanship makes it more effective in battle.
+items.Weapon_Crossbow_Iron_Rare.name=Iron Crossbow
+items.Weapon_Crossbow_Iron_Rare.description=A finely crafted iron crossbow with superior stats. Deals 10% more damage and has 50% more durability than a common crossbow. This weapon demonstrates exceptional quality and reliability.
+items.Weapon_Crossbow_Iron_Epic.name=Iron Crossbow
+items.Weapon_Crossbow_Iron_Epic.description=An expertly forged iron crossbow with exceptional power. Deals 15% more damage and has 75% more durability than a common crossbow. The masterful workmanship is evident in its superior performance.
+items.Weapon_Crossbow_Iron_Legendary.name=Iron Crossbow
+items.Weapon_Crossbow_Iron_Legendary.description=A legendary iron crossbow of unparalleled quality. Deals 20% more damage and has 100% more durability than a common crossbow. This weapon is a true masterpiece, capable of legendary combat prowess.
+
+
+# ============================================
+# ARMORS
+# ============================================
+
+items.Armor_Adamantite_Chest_Poor.name=Adamantite Chest
+items.Armor_Adamantite_Chest_Poor.description=A poorly crafted Adamantite Chest with reduced effectiveness. Provides 10% less protection and has 50% less durability than a common Adamantite Chest. The inferior craftsmanship is evident in its weakened structure.
+items.Armor_Adamantite_Chest_Common.name=Adamantite Chest
+items.Armor_Adamantite_Chest_Common.description=A standard Adamantite Chest with balanced stats. This is the baseline quality for this armor type, providing reliable protection in combat.
+items.Armor_Adamantite_Chest_Uncommon.name=Adamantite Chest
+items.Armor_Adamantite_Chest_Uncommon.description=A well-crafted Adamantite Chest with enhanced durability. Provides 5% more protection and has 25% more durability than a common Adamantite Chest. The superior craftsmanship makes it more effective in battle.
+items.Armor_Adamantite_Chest_Rare.name=Adamantite Chest
+items.Armor_Adamantite_Chest_Rare.description=A finely crafted Adamantite Chest with superior stats. Provides 10% more protection and has 50% more durability than a common Adamantite Chest. This armor demonstrates exceptional quality and reliability.
+items.Armor_Adamantite_Chest_Epic.name=Adamantite Chest
+items.Armor_Adamantite_Chest_Epic.description=An expertly forged Adamantite Chest with exceptional power. Provides 15% more protection and has 75% more durability than a common Adamantite Chest. The masterful workmanship is evident in its superior performance.
+items.Armor_Adamantite_Chest_Legendary.name=Adamantite Chest
+items.Armor_Adamantite_Chest_Legendary.description=A legendary Adamantite Chest of unparalleled quality. Provides 20% more protection and has 100% more durability than a common Adamantite Chest. This armor is a true masterpiece, capable of legendary feats.
+items.Armor_Adamantite_Hands_Poor.name=Adamantite Hands
+items.Armor_Adamantite_Hands_Poor.description=A poorly crafted Adamantite Hands with reduced effectiveness. Provides 10% less protection and has 50% less durability than a common Adamantite Hands. The inferior craftsmanship is evident in its weakened structure.
+items.Armor_Adamantite_Hands_Common.name=Adamantite Hands
+items.Armor_Adamantite_Hands_Common.description=A standard Adamantite Hands with balanced stats. This is the baseline quality for this armor type, providing reliable protection in combat.
+items.Armor_Adamantite_Hands_Uncommon.name=Adamantite Hands
+items.Armor_Adamantite_Hands_Uncommon.description=A well-crafted Adamantite Hands with enhanced durability. Provides 5% more protection and has 25% more durability than a common Adamantite Hands. The superior craftsmanship makes it more effective in battle.
+items.Armor_Adamantite_Hands_Rare.name=Adamantite Hands
+items.Armor_Adamantite_Hands_Rare.description=A finely crafted Adamantite Hands with superior stats. Provides 10% more protection and has 50% more durability than a common Adamantite Hands. This armor demonstrates exceptional quality and reliability.
+items.Armor_Adamantite_Hands_Epic.name=Adamantite Hands
+items.Armor_Adamantite_Hands_Epic.description=An expertly forged Adamantite Hands with exceptional power. Provides 15% more protection and has 75% more durability than a common Adamantite Hands. The masterful workmanship is evident in its superior performance.
+items.Armor_Adamantite_Hands_Legendary.name=Adamantite Hands
+items.Armor_Adamantite_Hands_Legendary.description=A legendary Adamantite Hands of unparalleled quality. Provides 20% more protection and has 100% more durability than a common Adamantite Hands. This armor is a true masterpiece, capable of legendary feats.
+items.Armor_Adamantite_Head_Poor.name=Adamantite Head
+items.Armor_Adamantite_Head_Poor.description=A poorly crafted Adamantite Head with reduced effectiveness. Provides 10% less protection and has 50% less durability than a common Adamantite Head. The inferior craftsmanship is evident in its weakened structure.
+items.Armor_Adamantite_Head_Common.name=Adamantite Head
+items.Armor_Adamantite_Head_Common.description=A standard Adamantite Head with balanced stats. This is the baseline quality for this armor type, providing reliable protection in combat.
+items.Armor_Adamantite_Head_Uncommon.name=Adamantite Head
+items.Armor_Adamantite_Head_Uncommon.description=A well-crafted Adamantite Head with enhanced durability. Provides 5% more protection and has 25% more durability than a common Adamantite Head. The superior craftsmanship makes it more effective in battle.
+items.Armor_Adamantite_Head_Rare.name=Adamantite Head
+items.Armor_Adamantite_Head_Rare.description=A finely crafted Adamantite Head with superior stats. Provides 10% more protection and has 50% more durability than a common Adamantite Head. This armor demonstrates exceptional quality and reliability.
+items.Armor_Adamantite_Head_Epic.name=Adamantite Head
+items.Armor_Adamantite_Head_Epic.description=An expertly forged Adamantite Head with exceptional power. Provides 15% more protection and has 75% more durability than a common Adamantite Head. The masterful workmanship is evident in its superior performance.
+items.Armor_Adamantite_Head_Legendary.name=Adamantite Head
+items.Armor_Adamantite_Head_Legendary.description=A legendary Adamantite Head of unparalleled quality. Provides 20% more protection and has 100% more durability than a common Adamantite Head. This armor is a true masterpiece, capable of legendary feats.
+items.Armor_Adamantite_Legs_Poor.name=Adamantite Legs
+items.Armor_Adamantite_Legs_Poor.description=A poorly crafted Adamantite Legs with reduced effectiveness. Provides 10% less protection and has 50% less durability than a common Adamantite Legs. The inferior craftsmanship is evident in its weakened structure.
+items.Armor_Adamantite_Legs_Common.name=Adamantite Legs
+items.Armor_Adamantite_Legs_Common.description=A standard Adamantite Legs with balanced stats. This is the baseline quality for this armor type, providing reliable protection in combat.
+items.Armor_Adamantite_Legs_Uncommon.name=Adamantite Legs
+items.Armor_Adamantite_Legs_Uncommon.description=A well-crafted Adamantite Legs with enhanced durability. Provides 5% more protection and has 25% more durability than a common Adamantite Legs. The superior craftsmanship makes it more effective in battle.
+items.Armor_Adamantite_Legs_Rare.name=Adamantite Legs
+items.Armor_Adamantite_Legs_Rare.description=A finely crafted Adamantite Legs with superior stats. Provides 10% more protection and has 50% more durability than a common Adamantite Legs. This armor demonstrates exceptional quality and reliability.
+items.Armor_Adamantite_Legs_Epic.name=Adamantite Legs
+items.Armor_Adamantite_Legs_Epic.description=An expertly forged Adamantite Legs with exceptional power. Provides 15% more protection and has 75% more durability than a common Adamantite Legs. The masterful workmanship is evident in its superior performance.
+items.Armor_Adamantite_Legs_Legendary.name=Adamantite Legs
+items.Armor_Adamantite_Legs_Legendary.description=A legendary Adamantite Legs of unparalleled quality. Provides 20% more protection and has 100% more durability than a common Adamantite Legs. This armor is a true masterpiece, capable of legendary feats.
+items.Armor_Cobalt_Chest_Poor.name=Cobalt Chest
+items.Armor_Cobalt_Chest_Poor.description=A poorly crafted Cobalt Chest with reduced effectiveness. Provides 10% less protection and has 50% less durability than a common Cobalt Chest. The inferior craftsmanship is evident in its weakened structure.
+items.Armor_Cobalt_Chest_Common.name=Cobalt Chest
+items.Armor_Cobalt_Chest_Common.description=A standard Cobalt Chest with balanced stats. This is the baseline quality for this armor type, providing reliable protection in combat.
+items.Armor_Cobalt_Chest_Uncommon.name=Cobalt Chest
+items.Armor_Cobalt_Chest_Uncommon.description=A well-crafted Cobalt Chest with enhanced durability. Provides 5% more protection and has 25% more durability than a common Cobalt Chest. The superior craftsmanship makes it more effective in battle.
+items.Armor_Cobalt_Chest_Rare.name=Cobalt Chest
+items.Armor_Cobalt_Chest_Rare.description=A finely crafted Cobalt Chest with superior stats. Provides 10% more protection and has 50% more durability than a common Cobalt Chest. This armor demonstrates exceptional quality and reliability.
+items.Armor_Cobalt_Chest_Epic.name=Cobalt Chest
+items.Armor_Cobalt_Chest_Epic.description=An expertly forged Cobalt Chest with exceptional power. Provides 15% more protection and has 75% more durability than a common Cobalt Chest. The masterful workmanship is evident in its superior performance.
+items.Armor_Cobalt_Chest_Legendary.name=Cobalt Chest
+items.Armor_Cobalt_Chest_Legendary.description=A legendary Cobalt Chest of unparalleled quality. Provides 20% more protection and has 100% more durability than a common Cobalt Chest. This armor is a true masterpiece, capable of legendary feats.
+items.Armor_Cobalt_Hands_Poor.name=Cobalt Hands
+items.Armor_Cobalt_Hands_Poor.description=A poorly crafted Cobalt Hands with reduced effectiveness. Provides 10% less protection and has 50% less durability than a common Cobalt Hands. The inferior craftsmanship is evident in its weakened structure.
+items.Armor_Cobalt_Hands_Common.name=Cobalt Hands
+items.Armor_Cobalt_Hands_Common.description=A standard Cobalt Hands with balanced stats. This is the baseline quality for this armor type, providing reliable protection in combat.
+items.Armor_Cobalt_Hands_Uncommon.name=Cobalt Hands
+items.Armor_Cobalt_Hands_Uncommon.description=A well-crafted Cobalt Hands with enhanced durability. Provides 5% more protection and has 25% more durability than a common Cobalt Hands. The superior craftsmanship makes it more effective in battle.
+items.Armor_Cobalt_Hands_Rare.name=Cobalt Hands
+items.Armor_Cobalt_Hands_Rare.description=A finely crafted Cobalt Hands with superior stats. Provides 10% more protection and has 50% more durability than a common Cobalt Hands. This armor demonstrates exceptional quality and reliability.
+items.Armor_Cobalt_Hands_Epic.name=Cobalt Hands
+items.Armor_Cobalt_Hands_Epic.description=An expertly forged Cobalt Hands with exceptional power. Provides 15% more protection and has 75% more durability than a common Cobalt Hands. The masterful workmanship is evident in its superior performance.
+items.Armor_Cobalt_Hands_Legendary.name=Cobalt Hands
+items.Armor_Cobalt_Hands_Legendary.description=A legendary Cobalt Hands of unparalleled quality. Provides 20% more protection and has 100% more durability than a common Cobalt Hands. This armor is a true masterpiece, capable of legendary feats.
+items.Armor_Cobalt_Head_Poor.name=Cobalt Head
+items.Armor_Cobalt_Head_Poor.description=A poorly crafted Cobalt Head with reduced effectiveness. Provides 10% less protection and has 50% less durability than a common Cobalt Head. The inferior craftsmanship is evident in its weakened structure.
+items.Armor_Cobalt_Head_Common.name=Cobalt Head
+items.Armor_Cobalt_Head_Common.description=A standard Cobalt Head with balanced stats. This is the baseline quality for this armor type, providing reliable protection in combat.
+items.Armor_Cobalt_Head_Uncommon.name=Cobalt Head
+items.Armor_Cobalt_Head_Uncommon.description=A well-crafted Cobalt Head with enhanced durability. Provides 5% more protection and has 25% more durability than a common Cobalt Head. The superior craftsmanship makes it more effective in battle.
+items.Armor_Cobalt_Head_Rare.name=Cobalt Head
+items.Armor_Cobalt_Head_Rare.description=A finely crafted Cobalt Head with superior stats. Provides 10% more protection and has 50% more durability than a common Cobalt Head. This armor demonstrates exceptional quality and reliability.
+items.Armor_Cobalt_Head_Epic.name=Cobalt Head
+items.Armor_Cobalt_Head_Epic.description=An expertly forged Cobalt Head with exceptional power. Provides 15% more protection and has 75% more durability than a common Cobalt Head. The masterful workmanship is evident in its superior performance.
+items.Armor_Cobalt_Head_Legendary.name=Cobalt Head
+items.Armor_Cobalt_Head_Legendary.description=A legendary Cobalt Head of unparalleled quality. Provides 20% more protection and has 100% more durability than a common Cobalt Head. This armor is a true masterpiece, capable of legendary feats.
+items.Armor_Cobalt_Legs_Poor.name=Cobalt Legs
+items.Armor_Cobalt_Legs_Poor.description=A poorly crafted Cobalt Legs with reduced effectiveness. Provides 10% less protection and has 50% less durability than a common Cobalt Legs. The inferior craftsmanship is evident in its weakened structure.
+items.Armor_Cobalt_Legs_Common.name=Cobalt Legs
+items.Armor_Cobalt_Legs_Common.description=A standard Cobalt Legs with balanced stats. This is the baseline quality for this armor type, providing reliable protection in combat.
+items.Armor_Cobalt_Legs_Uncommon.name=Cobalt Legs
+items.Armor_Cobalt_Legs_Uncommon.description=A well-crafted Cobalt Legs with enhanced durability. Provides 5% more protection and has 25% more durability than a common Cobalt Legs. The superior craftsmanship makes it more effective in battle.
+items.Armor_Cobalt_Legs_Rare.name=Cobalt Legs
+items.Armor_Cobalt_Legs_Rare.description=A finely crafted Cobalt Legs with superior stats. Provides 10% more protection and has 50% more durability than a common Cobalt Legs. This armor demonstrates exceptional quality and reliability.
+items.Armor_Cobalt_Legs_Epic.name=Cobalt Legs
+items.Armor_Cobalt_Legs_Epic.description=An expertly forged Cobalt Legs with exceptional power. Provides 15% more protection and has 75% more durability than a common Cobalt Legs. The masterful workmanship is evident in its superior performance.
+items.Armor_Cobalt_Legs_Legendary.name=Cobalt Legs
+items.Armor_Cobalt_Legs_Legendary.description=A legendary Cobalt Legs of unparalleled quality. Provides 20% more protection and has 100% more durability than a common Cobalt Legs. This armor is a true masterpiece, capable of legendary feats.
+items.Armor_Copper_Chest_Poor.name=Copper Chest
+items.Armor_Copper_Chest_Poor.description=A poorly crafted Copper Chest with reduced effectiveness. Provides 10% less protection and has 50% less durability than a common Copper Chest. The inferior craftsmanship is evident in its weakened structure.
+items.Armor_Copper_Chest_Common.name=Copper Chest
+items.Armor_Copper_Chest_Common.description=A standard Copper Chest with balanced stats. This is the baseline quality for this armor type, providing reliable protection in combat.
+items.Armor_Copper_Chest_Uncommon.name=Copper Chest
+items.Armor_Copper_Chest_Uncommon.description=A well-crafted Copper Chest with enhanced durability. Provides 5% more protection and has 25% more durability than a common Copper Chest. The superior craftsmanship makes it more effective in battle.
+items.Armor_Copper_Chest_Rare.name=Copper Chest
+items.Armor_Copper_Chest_Rare.description=A finely crafted Copper Chest with superior stats. Provides 10% more protection and has 50% more durability than a common Copper Chest. This armor demonstrates exceptional quality and reliability.
+items.Armor_Copper_Chest_Epic.name=Copper Chest
+items.Armor_Copper_Chest_Epic.description=An expertly forged Copper Chest with exceptional power. Provides 15% more protection and has 75% more durability than a common Copper Chest. The masterful workmanship is evident in its superior performance.
+items.Armor_Copper_Chest_Legendary.name=Copper Chest
+items.Armor_Copper_Chest_Legendary.description=A legendary Copper Chest of unparalleled quality. Provides 20% more protection and has 100% more durability than a common Copper Chest. This armor is a true masterpiece, capable of legendary feats.
+items.Armor_Copper_Hands_Poor.name=Copper Hands
+items.Armor_Copper_Hands_Poor.description=A poorly crafted Copper Hands with reduced effectiveness. Provides 10% less protection and has 50% less durability than a common Copper Hands. The inferior craftsmanship is evident in its weakened structure.
+items.Armor_Copper_Hands_Common.name=Copper Hands
+items.Armor_Copper_Hands_Common.description=A standard Copper Hands with balanced stats. This is the baseline quality for this armor type, providing reliable protection in combat.
+items.Armor_Copper_Hands_Uncommon.name=Copper Hands
+items.Armor_Copper_Hands_Uncommon.description=A well-crafted Copper Hands with enhanced durability. Provides 5% more protection and has 25% more durability than a common Copper Hands. The superior craftsmanship makes it more effective in battle.
+items.Armor_Copper_Hands_Rare.name=Copper Hands
+items.Armor_Copper_Hands_Rare.description=A finely crafted Copper Hands with superior stats. Provides 10% more protection and has 50% more durability than a common Copper Hands. This armor demonstrates exceptional quality and reliability.
+items.Armor_Copper_Hands_Epic.name=Copper Hands
+items.Armor_Copper_Hands_Epic.description=An expertly forged Copper Hands with exceptional power. Provides 15% more protection and has 75% more durability than a common Copper Hands. The masterful workmanship is evident in its superior performance.
+items.Armor_Copper_Hands_Legendary.name=Copper Hands
+items.Armor_Copper_Hands_Legendary.description=A legendary Copper Hands of unparalleled quality. Provides 20% more protection and has 100% more durability than a common Copper Hands. This armor is a true masterpiece, capable of legendary feats.
+items.Armor_Copper_Head_Poor.name=Copper Head
+items.Armor_Copper_Head_Poor.description=A poorly crafted Copper Head with reduced effectiveness. Provides 10% less protection and has 50% less durability than a common Copper Head. The inferior craftsmanship is evident in its weakened structure.
+items.Armor_Copper_Head_Common.name=Copper Head
+items.Armor_Copper_Head_Common.description=A standard Copper Head with balanced stats. This is the baseline quality for this armor type, providing reliable protection in combat.
+items.Armor_Copper_Head_Uncommon.name=Copper Head
+items.Armor_Copper_Head_Uncommon.description=A well-crafted Copper Head with enhanced durability. Provides 5% more protection and has 25% more durability than a common Copper Head. The superior craftsmanship makes it more effective in battle.
+items.Armor_Copper_Head_Rare.name=Copper Head
+items.Armor_Copper_Head_Rare.description=A finely crafted Copper Head with superior stats. Provides 10% more protection and has 50% more durability than a common Copper Head. This armor demonstrates exceptional quality and reliability.
+items.Armor_Copper_Head_Epic.name=Copper Head
+items.Armor_Copper_Head_Epic.description=An expertly forged Copper Head with exceptional power. Provides 15% more protection and has 75% more durability than a common Copper Head. The masterful workmanship is evident in its superior performance.
+items.Armor_Copper_Head_Legendary.name=Copper Head
+items.Armor_Copper_Head_Legendary.description=A legendary Copper Head of unparalleled quality. Provides 20% more protection and has 100% more durability than a common Copper Head. This armor is a true masterpiece, capable of legendary feats.
+items.Armor_Copper_Legs_Poor.name=Copper Legs
+items.Armor_Copper_Legs_Poor.description=A poorly crafted Copper Legs with reduced effectiveness. Provides 10% less protection and has 50% less durability than a common Copper Legs. The inferior craftsmanship is evident in its weakened structure.
+items.Armor_Copper_Legs_Common.name=Copper Legs
+items.Armor_Copper_Legs_Common.description=A standard Copper Legs with balanced stats. This is the baseline quality for this armor type, providing reliable protection in combat.
+items.Armor_Copper_Legs_Uncommon.name=Copper Legs
+items.Armor_Copper_Legs_Uncommon.description=A well-crafted Copper Legs with enhanced durability. Provides 5% more protection and has 25% more durability than a common Copper Legs. The superior craftsmanship makes it more effective in battle.
+items.Armor_Copper_Legs_Rare.name=Copper Legs
+items.Armor_Copper_Legs_Rare.description=A finely crafted Copper Legs with superior stats. Provides 10% more protection and has 50% more durability than a common Copper Legs. This armor demonstrates exceptional quality and reliability.
+items.Armor_Copper_Legs_Epic.name=Copper Legs
+items.Armor_Copper_Legs_Epic.description=An expertly forged Copper Legs with exceptional power. Provides 15% more protection and has 75% more durability than a common Copper Legs. The masterful workmanship is evident in its superior performance.
+items.Armor_Copper_Legs_Legendary.name=Copper Legs
+items.Armor_Copper_Legs_Legendary.description=A legendary Copper Legs of unparalleled quality. Provides 20% more protection and has 100% more durability than a common Copper Legs. This armor is a true masterpiece, capable of legendary feats.
+items.Armor_Iron_Chest_Poor.name=Iron Chest
+items.Armor_Iron_Chest_Poor.description=A poorly crafted Iron Chest with reduced effectiveness. Provides 10% less protection and has 50% less durability than a common Iron Chest. The inferior craftsmanship is evident in its weakened structure.
+items.Armor_Iron_Chest_Common.name=Iron Chest
+items.Armor_Iron_Chest_Common.description=A standard Iron Chest with balanced stats. This is the baseline quality for this armor type, providing reliable protection in combat.
+items.Armor_Iron_Chest_Uncommon.name=Iron Chest
+items.Armor_Iron_Chest_Uncommon.description=A well-crafted Iron Chest with enhanced durability. Provides 5% more protection and has 25% more durability than a common Iron Chest. The superior craftsmanship makes it more effective in battle.
+items.Armor_Iron_Chest_Rare.name=Iron Chest
+items.Armor_Iron_Chest_Rare.description=A finely crafted Iron Chest with superior stats. Provides 10% more protection and has 50% more durability than a common Iron Chest. This armor demonstrates exceptional quality and reliability.
+items.Armor_Iron_Chest_Epic.name=Iron Chest
+items.Armor_Iron_Chest_Epic.description=An expertly forged Iron Chest with exceptional power. Provides 15% more protection and has 75% more durability than a common Iron Chest. The masterful workmanship is evident in its superior performance.
+items.Armor_Iron_Chest_Legendary.name=Iron Chest
+items.Armor_Iron_Chest_Legendary.description=A legendary Iron Chest of unparalleled quality. Provides 20% more protection and has 100% more durability than a common Iron Chest. This armor is a true masterpiece, capable of legendary feats.
+items.Armor_Iron_Hands_Poor.name=Iron Hands
+items.Armor_Iron_Hands_Poor.description=A poorly crafted Iron Hands with reduced effectiveness. Provides 10% less protection and has 50% less durability than a common Iron Hands. The inferior craftsmanship is evident in its weakened structure.
+items.Armor_Iron_Hands_Common.name=Iron Hands
+items.Armor_Iron_Hands_Common.description=A standard Iron Hands with balanced stats. This is the baseline quality for this armor type, providing reliable protection in combat.
+items.Armor_Iron_Hands_Uncommon.name=Iron Hands
+items.Armor_Iron_Hands_Uncommon.description=A well-crafted Iron Hands with enhanced durability. Provides 5% more protection and has 25% more durability than a common Iron Hands. The superior craftsmanship makes it more effective in battle.
+items.Armor_Iron_Hands_Rare.name=Iron Hands
+items.Armor_Iron_Hands_Rare.description=A finely crafted Iron Hands with superior stats. Provides 10% more protection and has 50% more durability than a common Iron Hands. This armor demonstrates exceptional quality and reliability.
+items.Armor_Iron_Hands_Epic.name=Iron Hands
+items.Armor_Iron_Hands_Epic.description=An expertly forged Iron Hands with exceptional power. Provides 15% more protection and has 75% more durability than a common Iron Hands. The masterful workmanship is evident in its superior performance.
+items.Armor_Iron_Hands_Legendary.name=Iron Hands
+items.Armor_Iron_Hands_Legendary.description=A legendary Iron Hands of unparalleled quality. Provides 20% more protection and has 100% more durability than a common Iron Hands. This armor is a true masterpiece, capable of legendary feats.
+items.Armor_Iron_Head_Poor.name=Iron Head
+items.Armor_Iron_Head_Poor.description=A poorly crafted Iron Head with reduced effectiveness. Provides 10% less protection and has 50% less durability than a common Iron Head. The inferior craftsmanship is evident in its weakened structure.
+items.Armor_Iron_Head_Common.name=Iron Head
+items.Armor_Iron_Head_Common.description=A standard Iron Head with balanced stats. This is the baseline quality for this armor type, providing reliable protection in combat.
+items.Armor_Iron_Head_Uncommon.name=Iron Head
+items.Armor_Iron_Head_Uncommon.description=A well-crafted Iron Head with enhanced durability. Provides 5% more protection and has 25% more durability than a common Iron Head. The superior craftsmanship makes it more effective in battle.
+items.Armor_Iron_Head_Rare.name=Iron Head
+items.Armor_Iron_Head_Rare.description=A finely crafted Iron Head with superior stats. Provides 10% more protection and has 50% more durability than a common Iron Head. This armor demonstrates exceptional quality and reliability.
+items.Armor_Iron_Head_Epic.name=Iron Head
+items.Armor_Iron_Head_Epic.description=An expertly forged Iron Head with exceptional power. Provides 15% more protection and has 75% more durability than a common Iron Head. The masterful workmanship is evident in its superior performance.
+items.Armor_Iron_Head_Legendary.name=Iron Head
+items.Armor_Iron_Head_Legendary.description=A legendary Iron Head of unparalleled quality. Provides 20% more protection and has 100% more durability than a common Iron Head. This armor is a true masterpiece, capable of legendary feats.
+items.Armor_Iron_Legs_Poor.name=Iron Legs
+items.Armor_Iron_Legs_Poor.description=A poorly crafted Iron Legs with reduced effectiveness. Provides 10% less protection and has 50% less durability than a common Iron Legs. The inferior craftsmanship is evident in its weakened structure.
+items.Armor_Iron_Legs_Common.name=Iron Legs
+items.Armor_Iron_Legs_Common.description=A standard Iron Legs with balanced stats. This is the baseline quality for this armor type, providing reliable protection in combat.
+items.Armor_Iron_Legs_Uncommon.name=Iron Legs
+items.Armor_Iron_Legs_Uncommon.description=A well-crafted Iron Legs with enhanced durability. Provides 5% more protection and has 25% more durability than a common Iron Legs. The superior craftsmanship makes it more effective in battle.
+items.Armor_Iron_Legs_Rare.name=Iron Legs
+items.Armor_Iron_Legs_Rare.description=A finely crafted Iron Legs with superior stats. Provides 10% more protection and has 50% more durability than a common Iron Legs. This armor demonstrates exceptional quality and reliability.
+items.Armor_Iron_Legs_Epic.name=Iron Legs
+items.Armor_Iron_Legs_Epic.description=An expertly forged Iron Legs with exceptional power. Provides 15% more protection and has 75% more durability than a common Iron Legs. The masterful workmanship is evident in its superior performance.
+items.Armor_Iron_Legs_Legendary.name=Iron Legs
+items.Armor_Iron_Legs_Legendary.description=A legendary Iron Legs of unparalleled quality. Provides 20% more protection and has 100% more durability than a common Iron Legs. This armor is a true masterpiece, capable of legendary feats.
+items.Armor_Mithril_Chest_Poor.name=Mithril Chest
+items.Armor_Mithril_Chest_Poor.description=A poorly crafted Mithril Chest with reduced effectiveness. Provides 10% less protection and has 50% less durability than a common Mithril Chest. The inferior craftsmanship is evident in its weakened structure.
+items.Armor_Mithril_Chest_Common.name=Mithril Chest
+items.Armor_Mithril_Chest_Common.description=A standard Mithril Chest with balanced stats. This is the baseline quality for this armor type, providing reliable protection in combat.
+items.Armor_Mithril_Chest_Uncommon.name=Mithril Chest
+items.Armor_Mithril_Chest_Uncommon.description=A well-crafted Mithril Chest with enhanced durability. Provides 5% more protection and has 25% more durability than a common Mithril Chest. The superior craftsmanship makes it more effective in battle.
+items.Armor_Mithril_Chest_Rare.name=Mithril Chest
+items.Armor_Mithril_Chest_Rare.description=A finely crafted Mithril Chest with superior stats. Provides 10% more protection and has 50% more durability than a common Mithril Chest. This armor demonstrates exceptional quality and reliability.
+items.Armor_Mithril_Chest_Epic.name=Mithril Chest
+items.Armor_Mithril_Chest_Epic.description=An expertly forged Mithril Chest with exceptional power. Provides 15% more protection and has 75% more durability than a common Mithril Chest. The masterful workmanship is evident in its superior performance.
+items.Armor_Mithril_Chest_Legendary.name=Mithril Chest
+items.Armor_Mithril_Chest_Legendary.description=A legendary Mithril Chest of unparalleled quality. Provides 20% more protection and has 100% more durability than a common Mithril Chest. This armor is a true masterpiece, capable of legendary feats.
+items.Armor_Mithril_Hands_Poor.name=Mithril Hands
+items.Armor_Mithril_Hands_Poor.description=A poorly crafted Mithril Hands with reduced effectiveness. Provides 10% less protection and has 50% less durability than a common Mithril Hands. The inferior craftsmanship is evident in its weakened structure.
+items.Armor_Mithril_Hands_Common.name=Mithril Hands
+items.Armor_Mithril_Hands_Common.description=A standard Mithril Hands with balanced stats. This is the baseline quality for this armor type, providing reliable protection in combat.
+items.Armor_Mithril_Hands_Uncommon.name=Mithril Hands
+items.Armor_Mithril_Hands_Uncommon.description=A well-crafted Mithril Hands with enhanced durability. Provides 5% more protection and has 25% more durability than a common Mithril Hands. The superior craftsmanship makes it more effective in battle.
+items.Armor_Mithril_Hands_Rare.name=Mithril Hands
+items.Armor_Mithril_Hands_Rare.description=A finely crafted Mithril Hands with superior stats. Provides 10% more protection and has 50% more durability than a common Mithril Hands. This armor demonstrates exceptional quality and reliability.
+items.Armor_Mithril_Hands_Epic.name=Mithril Hands
+items.Armor_Mithril_Hands_Epic.description=An expertly forged Mithril Hands with exceptional power. Provides 15% more protection and has 75% more durability than a common Mithril Hands. The masterful workmanship is evident in its superior performance.
+items.Armor_Mithril_Hands_Legendary.name=Mithril Hands
+items.Armor_Mithril_Hands_Legendary.description=A legendary Mithril Hands of unparalleled quality. Provides 20% more protection and has 100% more durability than a common Mithril Hands. This armor is a true masterpiece, capable of legendary feats.
+items.Armor_Mithril_Head_Poor.name=Mithril Head
+items.Armor_Mithril_Head_Poor.description=A poorly crafted Mithril Head with reduced effectiveness. Provides 10% less protection and has 50% less durability than a common Mithril Head. The inferior craftsmanship is evident in its weakened structure.
+items.Armor_Mithril_Head_Common.name=Mithril Head
+items.Armor_Mithril_Head_Common.description=A standard Mithril Head with balanced stats. This is the baseline quality for this armor type, providing reliable protection in combat.
+items.Armor_Mithril_Head_Uncommon.name=Mithril Head
+items.Armor_Mithril_Head_Uncommon.description=A well-crafted Mithril Head with enhanced durability. Provides 5% more protection and has 25% more durability than a common Mithril Head. The superior craftsmanship makes it more effective in battle.
+items.Armor_Mithril_Head_Rare.name=Mithril Head
+items.Armor_Mithril_Head_Rare.description=A finely crafted Mithril Head with superior stats. Provides 10% more protection and has 50% more durability than a common Mithril Head. This armor demonstrates exceptional quality and reliability.
+items.Armor_Mithril_Head_Epic.name=Mithril Head
+items.Armor_Mithril_Head_Epic.description=An expertly forged Mithril Head with exceptional power. Provides 15% more protection and has 75% more durability than a common Mithril Head. The masterful workmanship is evident in its superior performance.
+items.Armor_Mithril_Head_Legendary.name=Mithril Head
+items.Armor_Mithril_Head_Legendary.description=A legendary Mithril Head of unparalleled quality. Provides 20% more protection and has 100% more durability than a common Mithril Head. This armor is a true masterpiece, capable of legendary feats.
+items.Armor_Mithril_Legs_Poor.name=Mithril Legs
+items.Armor_Mithril_Legs_Poor.description=A poorly crafted Mithril Legs with reduced effectiveness. Provides 10% less protection and has 50% less durability than a common Mithril Legs. The inferior craftsmanship is evident in its weakened structure.
+items.Armor_Mithril_Legs_Common.name=Mithril Legs
+items.Armor_Mithril_Legs_Common.description=A standard Mithril Legs with balanced stats. This is the baseline quality for this armor type, providing reliable protection in combat.
+items.Armor_Mithril_Legs_Uncommon.name=Mithril Legs
+items.Armor_Mithril_Legs_Uncommon.description=A well-crafted Mithril Legs with enhanced durability. Provides 5% more protection and has 25% more durability than a common Mithril Legs. The superior craftsmanship makes it more effective in battle.
+items.Armor_Mithril_Legs_Rare.name=Mithril Legs
+items.Armor_Mithril_Legs_Rare.description=A finely crafted Mithril Legs with superior stats. Provides 10% more protection and has 50% more durability than a common Mithril Legs. This armor demonstrates exceptional quality and reliability.
+items.Armor_Mithril_Legs_Epic.name=Mithril Legs
+items.Armor_Mithril_Legs_Epic.description=An expertly forged Mithril Legs with exceptional power. Provides 15% more protection and has 75% more durability than a common Mithril Legs. The masterful workmanship is evident in its superior performance.
+items.Armor_Mithril_Legs_Legendary.name=Mithril Legs
+items.Armor_Mithril_Legs_Legendary.description=A legendary Mithril Legs of unparalleled quality. Provides 20% more protection and has 100% more durability than a common Mithril Legs. This armor is a true masterpiece, capable of legendary feats.
+items.Armor_Thorium_Chest_Poor.name=Thorium Chest
+items.Armor_Thorium_Chest_Poor.description=A poorly crafted Thorium Chest with reduced effectiveness. Provides 10% less protection and has 50% less durability than a common Thorium Chest. The inferior craftsmanship is evident in its weakened structure.
+items.Armor_Thorium_Chest_Common.name=Thorium Chest
+items.Armor_Thorium_Chest_Common.description=A standard Thorium Chest with balanced stats. This is the baseline quality for this armor type, providing reliable protection in combat.
+items.Armor_Thorium_Chest_Uncommon.name=Thorium Chest
+items.Armor_Thorium_Chest_Uncommon.description=A well-crafted Thorium Chest with enhanced durability. Provides 5% more protection and has 25% more durability than a common Thorium Chest. The superior craftsmanship makes it more effective in battle.
+items.Armor_Thorium_Chest_Rare.name=Thorium Chest
+items.Armor_Thorium_Chest_Rare.description=A finely crafted Thorium Chest with superior stats. Provides 10% more protection and has 50% more durability than a common Thorium Chest. This armor demonstrates exceptional quality and reliability.
+items.Armor_Thorium_Chest_Epic.name=Thorium Chest
+items.Armor_Thorium_Chest_Epic.description=An expertly forged Thorium Chest with exceptional power. Provides 15% more protection and has 75% more durability than a common Thorium Chest. The masterful workmanship is evident in its superior performance.
+items.Armor_Thorium_Chest_Legendary.name=Thorium Chest
+items.Armor_Thorium_Chest_Legendary.description=A legendary Thorium Chest of unparalleled quality. Provides 20% more protection and has 100% more durability than a common Thorium Chest. This armor is a true masterpiece, capable of legendary feats.
+items.Armor_Thorium_Hands_Poor.name=Thorium Hands
+items.Armor_Thorium_Hands_Poor.description=A poorly crafted Thorium Hands with reduced effectiveness. Provides 10% less protection and has 50% less durability than a common Thorium Hands. The inferior craftsmanship is evident in its weakened structure.
+items.Armor_Thorium_Hands_Common.name=Thorium Hands
+items.Armor_Thorium_Hands_Common.description=A standard Thorium Hands with balanced stats. This is the baseline quality for this armor type, providing reliable protection in combat.
+items.Armor_Thorium_Hands_Uncommon.name=Thorium Hands
+items.Armor_Thorium_Hands_Uncommon.description=A well-crafted Thorium Hands with enhanced durability. Provides 5% more protection and has 25% more durability than a common Thorium Hands. The superior craftsmanship makes it more effective in battle.
+items.Armor_Thorium_Hands_Rare.name=Thorium Hands
+items.Armor_Thorium_Hands_Rare.description=A finely crafted Thorium Hands with superior stats. Provides 10% more protection and has 50% more durability than a common Thorium Hands. This armor demonstrates exceptional quality and reliability.
+items.Armor_Thorium_Hands_Epic.name=Thorium Hands
+items.Armor_Thorium_Hands_Epic.description=An expertly forged Thorium Hands with exceptional power. Provides 15% more protection and has 75% more durability than a common Thorium Hands. The masterful workmanship is evident in its superior performance.
+items.Armor_Thorium_Hands_Legendary.name=Thorium Hands
+items.Armor_Thorium_Hands_Legendary.description=A legendary Thorium Hands of unparalleled quality. Provides 20% more protection and has 100% more durability than a common Thorium Hands. This armor is a true masterpiece, capable of legendary feats.
+items.Armor_Thorium_Head_Poor.name=Thorium Head
+items.Armor_Thorium_Head_Poor.description=A poorly crafted Thorium Head with reduced effectiveness. Provides 10% less protection and has 50% less durability than a common Thorium Head. The inferior craftsmanship is evident in its weakened structure.
+items.Armor_Thorium_Head_Common.name=Thorium Head
+items.Armor_Thorium_Head_Common.description=A standard Thorium Head with balanced stats. This is the baseline quality for this armor type, providing reliable protection in combat.
+items.Armor_Thorium_Head_Uncommon.name=Thorium Head
+items.Armor_Thorium_Head_Uncommon.description=A well-crafted Thorium Head with enhanced durability. Provides 5% more protection and has 25% more durability than a common Thorium Head. The superior craftsmanship makes it more effective in battle.
+items.Armor_Thorium_Head_Rare.name=Thorium Head
+items.Armor_Thorium_Head_Rare.description=A finely crafted Thorium Head with superior stats. Provides 10% more protection and has 50% more durability than a common Thorium Head. This armor demonstrates exceptional quality and reliability.
+items.Armor_Thorium_Head_Epic.name=Thorium Head
+items.Armor_Thorium_Head_Epic.description=An expertly forged Thorium Head with exceptional power. Provides 15% more protection and has 75% more durability than a common Thorium Head. The masterful workmanship is evident in its superior performance.
+items.Armor_Thorium_Head_Legendary.name=Thorium Head
+items.Armor_Thorium_Head_Legendary.description=A legendary Thorium Head of unparalleled quality. Provides 20% more protection and has 100% more durability than a common Thorium Head. This armor is a true masterpiece, capable of legendary feats.
+items.Armor_Thorium_Legs_Poor.name=Thorium Legs
+items.Armor_Thorium_Legs_Poor.description=A poorly crafted Thorium Legs with reduced effectiveness. Provides 10% less protection and has 50% less durability than a common Thorium Legs. The inferior craftsmanship is evident in its weakened structure.
+items.Armor_Thorium_Legs_Common.name=Thorium Legs
+items.Armor_Thorium_Legs_Common.description=A standard Thorium Legs with balanced stats. This is the baseline quality for this armor type, providing reliable protection in combat.
+items.Armor_Thorium_Legs_Uncommon.name=Thorium Legs
+items.Armor_Thorium_Legs_Uncommon.description=A well-crafted Thorium Legs with enhanced durability. Provides 5% more protection and has 25% more durability than a common Thorium Legs. The superior craftsmanship makes it more effective in battle.
+items.Armor_Thorium_Legs_Rare.name=Thorium Legs
+items.Armor_Thorium_Legs_Rare.description=A finely crafted Thorium Legs with superior stats. Provides 10% more protection and has 50% more durability than a common Thorium Legs. This armor demonstrates exceptional quality and reliability.
+items.Armor_Thorium_Legs_Epic.name=Thorium Legs
+items.Armor_Thorium_Legs_Epic.description=An expertly forged Thorium Legs with exceptional power. Provides 15% more protection and has 75% more durability than a common Thorium Legs. The masterful workmanship is evident in its superior performance.
+items.Armor_Thorium_Legs_Legendary.name=Thorium Legs
+items.Armor_Thorium_Legs_Legendary.description=A legendary Thorium Legs of unparalleled quality. Provides 20% more protection and has 100% more durability than a common Thorium Legs. This armor is a true masterpiece, capable of legendary feats.
+
+# ============================================
+# TOOLS
+# ============================================
+
+items.Tool_Hammer_Crude_Poor.name=Crude Hammer
+items.Tool_Hammer_Crude_Poor.description=A poorly crafted Crude Hammer with reduced effectiveness. Has 50% less durability than a common Crude Hammer. The inferior craftsmanship is evident in its weakened structure.
+items.Tool_Hammer_Crude_Common.name=Crude Hammer
+items.Tool_Hammer_Crude_Common.description=A standard Crude Hammer with balanced stats. This is the baseline quality for this tool type, providing reliable performance.
+items.Tool_Hammer_Crude_Uncommon.name=Crude Hammer
+items.Tool_Hammer_Crude_Uncommon.description=A well-crafted Crude Hammer with enhanced durability. Has 25% more durability than a common Crude Hammer. The superior craftsmanship makes it more reliable.
+items.Tool_Hammer_Crude_Rare.name=Crude Hammer
+items.Tool_Hammer_Crude_Rare.description=A finely crafted Crude Hammer with superior stats. Has 50% more durability than a common Crude Hammer. This tool demonstrates exceptional quality and reliability.
+items.Tool_Hammer_Crude_Epic.name=Crude Hammer
+items.Tool_Hammer_Crude_Epic.description=An expertly forged Crude Hammer with exceptional power. Has 75% more durability than a common Crude Hammer. The masterful workmanship is evident in its superior performance.
+items.Tool_Hammer_Crude_Legendary.name=Crude Hammer
+items.Tool_Hammer_Crude_Legendary.description=A legendary Crude Hammer of unparalleled quality. Has 100% more durability than a common Crude Hammer. This tool is a true masterpiece, capable of legendary feats.
+items.Tool_Hammer_Iron_Poor.name=Iron Hammer
+items.Tool_Hammer_Iron_Poor.description=A poorly crafted Iron Hammer with reduced effectiveness. Has 50% less durability than a common Iron Hammer. The inferior craftsmanship is evident in its weakened structure.
+items.Tool_Hammer_Iron_Common.name=Iron Hammer
+items.Tool_Hammer_Iron_Common.description=A standard Iron Hammer with balanced stats. This is the baseline quality for this tool type, providing reliable performance.
+items.Tool_Hammer_Iron_Uncommon.name=Iron Hammer
+items.Tool_Hammer_Iron_Uncommon.description=A well-crafted Iron Hammer with enhanced durability. Has 25% more durability than a common Iron Hammer. The superior craftsmanship makes it more reliable.
+items.Tool_Hammer_Iron_Rare.name=Iron Hammer
+items.Tool_Hammer_Iron_Rare.description=A finely crafted Iron Hammer with superior stats. Has 50% more durability than a common Iron Hammer. This tool demonstrates exceptional quality and reliability.
+items.Tool_Hammer_Iron_Epic.name=Iron Hammer
+items.Tool_Hammer_Iron_Epic.description=An expertly forged Iron Hammer with exceptional power. Has 75% more durability than a common Iron Hammer. The masterful workmanship is evident in its superior performance.
+items.Tool_Hammer_Iron_Legendary.name=Iron Hammer
+items.Tool_Hammer_Iron_Legendary.description=A legendary Iron Hammer of unparalleled quality. Has 100% more durability than a common Iron Hammer. This tool is a true masterpiece, capable of legendary feats.
+items.Tool_Hatchet_Adamantite_Poor.name=Adamantite Hatchet
+items.Tool_Hatchet_Adamantite_Poor.description=A poorly crafted Adamantite Hatchet with reduced effectiveness. Has 50% less durability than a common Adamantite Hatchet. The inferior craftsmanship is evident in its weakened structure.
+items.Tool_Hatchet_Adamantite_Common.name=Adamantite Hatchet
+items.Tool_Hatchet_Adamantite_Common.description=A standard Adamantite Hatchet with balanced stats. This is the baseline quality for this tool type, providing reliable performance.
+items.Tool_Hatchet_Adamantite_Uncommon.name=Adamantite Hatchet
+items.Tool_Hatchet_Adamantite_Uncommon.description=A well-crafted Adamantite Hatchet with enhanced durability. Has 25% more durability than a common Adamantite Hatchet. The superior craftsmanship makes it more reliable.
+items.Tool_Hatchet_Adamantite_Rare.name=Adamantite Hatchet
+items.Tool_Hatchet_Adamantite_Rare.description=A finely crafted Adamantite Hatchet with superior stats. Has 50% more durability than a common Adamantite Hatchet. This tool demonstrates exceptional quality and reliability.
+items.Tool_Hatchet_Adamantite_Epic.name=Adamantite Hatchet
+items.Tool_Hatchet_Adamantite_Epic.description=An expertly forged Adamantite Hatchet with exceptional power. Has 75% more durability than a common Adamantite Hatchet. The masterful workmanship is evident in its superior performance.
+items.Tool_Hatchet_Adamantite_Legendary.name=Adamantite Hatchet
+items.Tool_Hatchet_Adamantite_Legendary.description=A legendary Adamantite Hatchet of unparalleled quality. Has 100% more durability than a common Adamantite Hatchet. This tool is a true masterpiece, capable of legendary feats.
+items.Tool_Hatchet_Cobalt_Poor.name=Cobalt Hatchet
+items.Tool_Hatchet_Cobalt_Poor.description=A poorly crafted Cobalt Hatchet with reduced effectiveness. Has 50% less durability than a common Cobalt Hatchet. The inferior craftsmanship is evident in its weakened structure.
+items.Tool_Hatchet_Cobalt_Common.name=Cobalt Hatchet
+items.Tool_Hatchet_Cobalt_Common.description=A standard Cobalt Hatchet with balanced stats. This is the baseline quality for this tool type, providing reliable performance.
+items.Tool_Hatchet_Cobalt_Uncommon.name=Cobalt Hatchet
+items.Tool_Hatchet_Cobalt_Uncommon.description=A well-crafted Cobalt Hatchet with enhanced durability. Has 25% more durability than a common Cobalt Hatchet. The superior craftsmanship makes it more reliable.
+items.Tool_Hatchet_Cobalt_Rare.name=Cobalt Hatchet
+items.Tool_Hatchet_Cobalt_Rare.description=A finely crafted Cobalt Hatchet with superior stats. Has 50% more durability than a common Cobalt Hatchet. This tool demonstrates exceptional quality and reliability.
+items.Tool_Hatchet_Cobalt_Epic.name=Cobalt Hatchet
+items.Tool_Hatchet_Cobalt_Epic.description=An expertly forged Cobalt Hatchet with exceptional power. Has 75% more durability than a common Cobalt Hatchet. The masterful workmanship is evident in its superior performance.
+items.Tool_Hatchet_Cobalt_Legendary.name=Cobalt Hatchet
+items.Tool_Hatchet_Cobalt_Legendary.description=A legendary Cobalt Hatchet of unparalleled quality. Has 100% more durability than a common Cobalt Hatchet. This tool is a true masterpiece, capable of legendary feats.
+items.Tool_Hatchet_Copper_Poor.name=Copper Hatchet
+items.Tool_Hatchet_Copper_Poor.description=A poorly crafted Copper Hatchet with reduced effectiveness. Has 50% less durability than a common Copper Hatchet. The inferior craftsmanship is evident in its weakened structure.
+items.Tool_Hatchet_Copper_Common.name=Copper Hatchet
+items.Tool_Hatchet_Copper_Common.description=A standard Copper Hatchet with balanced stats. This is the baseline quality for this tool type, providing reliable performance.
+items.Tool_Hatchet_Copper_Uncommon.name=Copper Hatchet
+items.Tool_Hatchet_Copper_Uncommon.description=A well-crafted Copper Hatchet with enhanced durability. Has 25% more durability than a common Copper Hatchet. The superior craftsmanship makes it more reliable.
+items.Tool_Hatchet_Copper_Rare.name=Copper Hatchet
+items.Tool_Hatchet_Copper_Rare.description=A finely crafted Copper Hatchet with superior stats. Has 50% more durability than a common Copper Hatchet. This tool demonstrates exceptional quality and reliability.
+items.Tool_Hatchet_Copper_Epic.name=Copper Hatchet
+items.Tool_Hatchet_Copper_Epic.description=An expertly forged Copper Hatchet with exceptional power. Has 75% more durability than a common Copper Hatchet. The masterful workmanship is evident in its superior performance.
+items.Tool_Hatchet_Copper_Legendary.name=Copper Hatchet
+items.Tool_Hatchet_Copper_Legendary.description=A legendary Copper Hatchet of unparalleled quality. Has 100% more durability than a common Copper Hatchet. This tool is a true masterpiece, capable of legendary feats.
+items.Tool_Hatchet_Crude_Poor.name=Crude Hatchet
+items.Tool_Hatchet_Crude_Poor.description=A poorly crafted Crude Hatchet with reduced effectiveness. Has 50% less durability than a common Crude Hatchet. The inferior craftsmanship is evident in its weakened structure.
+items.Tool_Hatchet_Crude_Common.name=Crude Hatchet
+items.Tool_Hatchet_Crude_Common.description=A standard Crude Hatchet with balanced stats. This is the baseline quality for this tool type, providing reliable performance.
+items.Tool_Hatchet_Crude_Uncommon.name=Crude Hatchet
+items.Tool_Hatchet_Crude_Uncommon.description=A well-crafted Crude Hatchet with enhanced durability. Has 25% more durability than a common Crude Hatchet. The superior craftsmanship makes it more reliable.
+items.Tool_Hatchet_Crude_Rare.name=Crude Hatchet
+items.Tool_Hatchet_Crude_Rare.description=A finely crafted Crude Hatchet with superior stats. Has 50% more durability than a common Crude Hatchet. This tool demonstrates exceptional quality and reliability.
+items.Tool_Hatchet_Crude_Epic.name=Crude Hatchet
+items.Tool_Hatchet_Crude_Epic.description=An expertly forged Crude Hatchet with exceptional power. Has 75% more durability than a common Crude Hatchet. The masterful workmanship is evident in its superior performance.
+items.Tool_Hatchet_Crude_Legendary.name=Crude Hatchet
+items.Tool_Hatchet_Crude_Legendary.description=A legendary Crude Hatchet of unparalleled quality. Has 100% more durability than a common Crude Hatchet. This tool is a true masterpiece, capable of legendary feats.
+items.Tool_Hatchet_Iron_Poor.name=Iron Hatchet
+items.Tool_Hatchet_Iron_Poor.description=A poorly crafted Iron Hatchet with reduced effectiveness. Has 50% less durability than a common Iron Hatchet. The inferior craftsmanship is evident in its weakened structure.
+items.Tool_Hatchet_Iron_Common.name=Iron Hatchet
+items.Tool_Hatchet_Iron_Common.description=A standard Iron Hatchet with balanced stats. This is the baseline quality for this tool type, providing reliable performance.
+items.Tool_Hatchet_Iron_Uncommon.name=Iron Hatchet
+items.Tool_Hatchet_Iron_Uncommon.description=A well-crafted Iron Hatchet with enhanced durability. Has 25% more durability than a common Iron Hatchet. The superior craftsmanship makes it more reliable.
+items.Tool_Hatchet_Iron_Rare.name=Iron Hatchet
+items.Tool_Hatchet_Iron_Rare.description=A finely crafted Iron Hatchet with superior stats. Has 50% more durability than a common Iron Hatchet. This tool demonstrates exceptional quality and reliability.
+items.Tool_Hatchet_Iron_Epic.name=Iron Hatchet
+items.Tool_Hatchet_Iron_Epic.description=An expertly forged Iron Hatchet with exceptional power. Has 75% more durability than a common Iron Hatchet. The masterful workmanship is evident in its superior performance.
+items.Tool_Hatchet_Iron_Legendary.name=Iron Hatchet
+items.Tool_Hatchet_Iron_Legendary.description=A legendary Iron Hatchet of unparalleled quality. Has 100% more durability than a common Iron Hatchet. This tool is a true masterpiece, capable of legendary feats.
+items.Tool_Hatchet_Mithril_Poor.name=Mithril Hatchet
+items.Tool_Hatchet_Mithril_Poor.description=A poorly crafted Mithril Hatchet with reduced effectiveness. Has 50% less durability than a common Mithril Hatchet. The inferior craftsmanship is evident in its weakened structure.
+items.Tool_Hatchet_Mithril_Common.name=Mithril Hatchet
+items.Tool_Hatchet_Mithril_Common.description=A standard Mithril Hatchet with balanced stats. This is the baseline quality for this tool type, providing reliable performance.
+items.Tool_Hatchet_Mithril_Uncommon.name=Mithril Hatchet
+items.Tool_Hatchet_Mithril_Uncommon.description=A well-crafted Mithril Hatchet with enhanced durability. Has 25% more durability than a common Mithril Hatchet. The superior craftsmanship makes it more reliable.
+items.Tool_Hatchet_Mithril_Rare.name=Mithril Hatchet
+items.Tool_Hatchet_Mithril_Rare.description=A finely crafted Mithril Hatchet with superior stats. Has 50% more durability than a common Mithril Hatchet. This tool demonstrates exceptional quality and reliability.
+items.Tool_Hatchet_Mithril_Epic.name=Mithril Hatchet
+items.Tool_Hatchet_Mithril_Epic.description=An expertly forged Mithril Hatchet with exceptional power. Has 75% more durability than a common Mithril Hatchet. The masterful workmanship is evident in its superior performance.
+items.Tool_Hatchet_Mithril_Legendary.name=Mithril Hatchet
+items.Tool_Hatchet_Mithril_Legendary.description=A legendary Mithril Hatchet of unparalleled quality. Has 100% more durability than a common Mithril Hatchet. This tool is a true masterpiece, capable of legendary feats.
+items.Tool_Hatchet_Thorium_Poor.name=Thorium Hatchet
+items.Tool_Hatchet_Thorium_Poor.description=A poorly crafted Thorium Hatchet with reduced effectiveness. Has 50% less durability than a common Thorium Hatchet. The inferior craftsmanship is evident in its weakened structure.
+items.Tool_Hatchet_Thorium_Common.name=Thorium Hatchet
+items.Tool_Hatchet_Thorium_Common.description=A standard Thorium Hatchet with balanced stats. This is the baseline quality for this tool type, providing reliable performance.
+items.Tool_Hatchet_Thorium_Uncommon.name=Thorium Hatchet
+items.Tool_Hatchet_Thorium_Uncommon.description=A well-crafted Thorium Hatchet with enhanced durability. Has 25% more durability than a common Thorium Hatchet. The superior craftsmanship makes it more reliable.
+items.Tool_Hatchet_Thorium_Rare.name=Thorium Hatchet
+items.Tool_Hatchet_Thorium_Rare.description=A finely crafted Thorium Hatchet with superior stats. Has 50% more durability than a common Thorium Hatchet. This tool demonstrates exceptional quality and reliability.
+items.Tool_Hatchet_Thorium_Epic.name=Thorium Hatchet
+items.Tool_Hatchet_Thorium_Epic.description=An expertly forged Thorium Hatchet with exceptional power. Has 75% more durability than a common Thorium Hatchet. The masterful workmanship is evident in its superior performance.
+items.Tool_Hatchet_Thorium_Legendary.name=Thorium Hatchet
+items.Tool_Hatchet_Thorium_Legendary.description=A legendary Thorium Hatchet of unparalleled quality. Has 100% more durability than a common Thorium Hatchet. This tool is a true masterpiece, capable of legendary feats.
+items.Tool_Pickaxe_Adamantite_Poor.name=Adamantite Pickaxe
+items.Tool_Pickaxe_Adamantite_Poor.description=A poorly crafted Adamantite Pickaxe with reduced effectiveness. Has 50% less durability than a common Adamantite Pickaxe. The inferior craftsmanship is evident in its weakened structure.
+items.Tool_Pickaxe_Adamantite_Common.name=Adamantite Pickaxe
+items.Tool_Pickaxe_Adamantite_Common.description=A standard Adamantite Pickaxe with balanced stats. This is the baseline quality for this tool type, providing reliable performance.
+items.Tool_Pickaxe_Adamantite_Uncommon.name=Adamantite Pickaxe
+items.Tool_Pickaxe_Adamantite_Uncommon.description=A well-crafted Adamantite Pickaxe with enhanced durability. Has 25% more durability than a common Adamantite Pickaxe. The superior craftsmanship makes it more reliable.
+items.Tool_Pickaxe_Adamantite_Rare.name=Adamantite Pickaxe
+items.Tool_Pickaxe_Adamantite_Rare.description=A finely crafted Adamantite Pickaxe with superior stats. Has 50% more durability than a common Adamantite Pickaxe. This tool demonstrates exceptional quality and reliability.
+items.Tool_Pickaxe_Adamantite_Epic.name=Adamantite Pickaxe
+items.Tool_Pickaxe_Adamantite_Epic.description=An expertly forged Adamantite Pickaxe with exceptional power. Has 75% more durability than a common Adamantite Pickaxe. The masterful workmanship is evident in its superior performance.
+items.Tool_Pickaxe_Adamantite_Legendary.name=Adamantite Pickaxe
+items.Tool_Pickaxe_Adamantite_Legendary.description=A legendary Adamantite Pickaxe of unparalleled quality. Has 100% more durability than a common Adamantite Pickaxe. This tool is a true masterpiece, capable of legendary feats.
+items.Tool_Pickaxe_Cobalt_Poor.name=Cobalt Pickaxe
+items.Tool_Pickaxe_Cobalt_Poor.description=A poorly crafted Cobalt Pickaxe with reduced effectiveness. Has 50% less durability than a common Cobalt Pickaxe. The inferior craftsmanship is evident in its weakened structure.
+items.Tool_Pickaxe_Cobalt_Common.name=Cobalt Pickaxe
+items.Tool_Pickaxe_Cobalt_Common.description=A standard Cobalt Pickaxe with balanced stats. This is the baseline quality for this tool type, providing reliable performance.
+items.Tool_Pickaxe_Cobalt_Uncommon.name=Cobalt Pickaxe
+items.Tool_Pickaxe_Cobalt_Uncommon.description=A well-crafted Cobalt Pickaxe with enhanced durability. Has 25% more durability than a common Cobalt Pickaxe. The superior craftsmanship makes it more reliable.
+items.Tool_Pickaxe_Cobalt_Rare.name=Cobalt Pickaxe
+items.Tool_Pickaxe_Cobalt_Rare.description=A finely crafted Cobalt Pickaxe with superior stats. Has 50% more durability than a common Cobalt Pickaxe. This tool demonstrates exceptional quality and reliability.
+items.Tool_Pickaxe_Cobalt_Epic.name=Cobalt Pickaxe
+items.Tool_Pickaxe_Cobalt_Epic.description=An expertly forged Cobalt Pickaxe with exceptional power. Has 75% more durability than a common Cobalt Pickaxe. The masterful workmanship is evident in its superior performance.
+items.Tool_Pickaxe_Cobalt_Legendary.name=Cobalt Pickaxe
+items.Tool_Pickaxe_Cobalt_Legendary.description=A legendary Cobalt Pickaxe of unparalleled quality. Has 100% more durability than a common Cobalt Pickaxe. This tool is a true masterpiece, capable of legendary feats.
+items.Tool_Pickaxe_Copper_Poor.name=Copper Pickaxe
+items.Tool_Pickaxe_Copper_Poor.description=A poorly crafted Copper Pickaxe with reduced effectiveness. Has 50% less durability than a common Copper Pickaxe. The inferior craftsmanship is evident in its weakened structure.
+items.Tool_Pickaxe_Copper_Common.name=Copper Pickaxe
+items.Tool_Pickaxe_Copper_Common.description=A standard Copper Pickaxe with balanced stats. This is the baseline quality for this tool type, providing reliable performance.
+items.Tool_Pickaxe_Copper_Uncommon.name=Copper Pickaxe
+items.Tool_Pickaxe_Copper_Uncommon.description=A well-crafted Copper Pickaxe with enhanced durability. Has 25% more durability than a common Copper Pickaxe. The superior craftsmanship makes it more reliable.
+items.Tool_Pickaxe_Copper_Rare.name=Copper Pickaxe
+items.Tool_Pickaxe_Copper_Rare.description=A finely crafted Copper Pickaxe with superior stats. Has 50% more durability than a common Copper Pickaxe. This tool demonstrates exceptional quality and reliability.
+items.Tool_Pickaxe_Copper_Epic.name=Copper Pickaxe
+items.Tool_Pickaxe_Copper_Epic.description=An expertly forged Copper Pickaxe with exceptional power. Has 75% more durability than a common Copper Pickaxe. The masterful workmanship is evident in its superior performance.
+items.Tool_Pickaxe_Copper_Legendary.name=Copper Pickaxe
+items.Tool_Pickaxe_Copper_Legendary.description=A legendary Copper Pickaxe of unparalleled quality. Has 100% more durability than a common Copper Pickaxe. This tool is a true masterpiece, capable of legendary feats.
+items.Tool_Pickaxe_Crude_Poor.name=Crude Pickaxe
+items.Tool_Pickaxe_Crude_Poor.description=A poorly crafted Crude Pickaxe with reduced effectiveness. Has 50% less durability than a common Crude Pickaxe. The inferior craftsmanship is evident in its weakened structure.
+items.Tool_Pickaxe_Crude_Common.name=Crude Pickaxe
+items.Tool_Pickaxe_Crude_Common.description=A standard Crude Pickaxe with balanced stats. This is the baseline quality for this tool type, providing reliable performance.
+items.Tool_Pickaxe_Crude_Uncommon.name=Crude Pickaxe
+items.Tool_Pickaxe_Crude_Uncommon.description=A well-crafted Crude Pickaxe with enhanced durability. Has 25% more durability than a common Crude Pickaxe. The superior craftsmanship makes it more reliable.
+items.Tool_Pickaxe_Crude_Rare.name=Crude Pickaxe
+items.Tool_Pickaxe_Crude_Rare.description=A finely crafted Crude Pickaxe with superior stats. Has 50% more durability than a common Crude Pickaxe. This tool demonstrates exceptional quality and reliability.
+items.Tool_Pickaxe_Crude_Epic.name=Crude Pickaxe
+items.Tool_Pickaxe_Crude_Epic.description=An expertly forged Crude Pickaxe with exceptional power. Has 75% more durability than a common Crude Pickaxe. The masterful workmanship is evident in its superior performance.
+items.Tool_Pickaxe_Crude_Legendary.name=Crude Pickaxe
+items.Tool_Pickaxe_Crude_Legendary.description=A legendary Crude Pickaxe of unparalleled quality. Has 100% more durability than a common Crude Pickaxe. This tool is a true masterpiece, capable of legendary feats.
+items.Tool_Pickaxe_Iron_Poor.name=Iron Pickaxe
+items.Tool_Pickaxe_Iron_Poor.description=A poorly crafted Iron Pickaxe with reduced effectiveness. Has 50% less durability than a common Iron Pickaxe. The inferior craftsmanship is evident in its weakened structure.
+items.Tool_Pickaxe_Iron_Common.name=Iron Pickaxe
+items.Tool_Pickaxe_Iron_Common.description=A standard Iron Pickaxe with balanced stats. This is the baseline quality for this tool type, providing reliable performance.
+items.Tool_Pickaxe_Iron_Uncommon.name=Iron Pickaxe
+items.Tool_Pickaxe_Iron_Uncommon.description=A well-crafted Iron Pickaxe with enhanced durability. Has 25% more durability than a common Iron Pickaxe. The superior craftsmanship makes it more reliable.
+items.Tool_Pickaxe_Iron_Rare.name=Iron Pickaxe
+items.Tool_Pickaxe_Iron_Rare.description=A finely crafted Iron Pickaxe with superior stats. Has 50% more durability than a common Iron Pickaxe. This tool demonstrates exceptional quality and reliability.
+items.Tool_Pickaxe_Iron_Epic.name=Iron Pickaxe
+items.Tool_Pickaxe_Iron_Epic.description=An expertly forged Iron Pickaxe with exceptional power. Has 75% more durability than a common Iron Pickaxe. The masterful workmanship is evident in its superior performance.
+items.Tool_Pickaxe_Iron_Legendary.name=Iron Pickaxe
+items.Tool_Pickaxe_Iron_Legendary.description=A legendary Iron Pickaxe of unparalleled quality. Has 100% more durability than a common Iron Pickaxe. This tool is a true masterpiece, capable of legendary feats.
+items.Tool_Pickaxe_Mithril_Poor.name=Mithril Pickaxe
+items.Tool_Pickaxe_Mithril_Poor.description=A poorly crafted Mithril Pickaxe with reduced effectiveness. Has 50% less durability than a common Mithril Pickaxe. The inferior craftsmanship is evident in its weakened structure.
+items.Tool_Pickaxe_Mithril_Common.name=Mithril Pickaxe
+items.Tool_Pickaxe_Mithril_Common.description=A standard Mithril Pickaxe with balanced stats. This is the baseline quality for this tool type, providing reliable performance.
+items.Tool_Pickaxe_Mithril_Uncommon.name=Mithril Pickaxe
+items.Tool_Pickaxe_Mithril_Uncommon.description=A well-crafted Mithril Pickaxe with enhanced durability. Has 25% more durability than a common Mithril Pickaxe. The superior craftsmanship makes it more reliable.
+items.Tool_Pickaxe_Mithril_Rare.name=Mithril Pickaxe
+items.Tool_Pickaxe_Mithril_Rare.description=A finely crafted Mithril Pickaxe with superior stats. Has 50% more durability than a common Mithril Pickaxe. This tool demonstrates exceptional quality and reliability.
+items.Tool_Pickaxe_Mithril_Epic.name=Mithril Pickaxe
+items.Tool_Pickaxe_Mithril_Epic.description=An expertly forged Mithril Pickaxe with exceptional power. Has 75% more durability than a common Mithril Pickaxe. The masterful workmanship is evident in its superior performance.
+items.Tool_Pickaxe_Mithril_Legendary.name=Mithril Pickaxe
+items.Tool_Pickaxe_Mithril_Legendary.description=A legendary Mithril Pickaxe of unparalleled quality. Has 100% more durability than a common Mithril Pickaxe. This tool is a true masterpiece, capable of legendary feats.
+items.Tool_Pickaxe_Thorium_Poor.name=Thorium Pickaxe
+items.Tool_Pickaxe_Thorium_Poor.description=A poorly crafted Thorium Pickaxe with reduced effectiveness. Has 50% less durability than a common Thorium Pickaxe. The inferior craftsmanship is evident in its weakened structure.
+items.Tool_Pickaxe_Thorium_Common.name=Thorium Pickaxe
+items.Tool_Pickaxe_Thorium_Common.description=A standard Thorium Pickaxe with balanced stats. This is the baseline quality for this tool type, providing reliable performance.
+items.Tool_Pickaxe_Thorium_Uncommon.name=Thorium Pickaxe
+items.Tool_Pickaxe_Thorium_Uncommon.description=A well-crafted Thorium Pickaxe with enhanced durability. Has 25% more durability than a common Thorium Pickaxe. The superior craftsmanship makes it more reliable.
+items.Tool_Pickaxe_Thorium_Rare.name=Thorium Pickaxe
+items.Tool_Pickaxe_Thorium_Rare.description=A finely crafted Thorium Pickaxe with superior stats. Has 50% more durability than a common Thorium Pickaxe. This tool demonstrates exceptional quality and reliability.
+items.Tool_Pickaxe_Thorium_Epic.name=Thorium Pickaxe
+items.Tool_Pickaxe_Thorium_Epic.description=An expertly forged Thorium Pickaxe with exceptional power. Has 75% more durability than a common Thorium Pickaxe. The masterful workmanship is evident in its superior performance.
+items.Tool_Pickaxe_Thorium_Legendary.name=Thorium Pickaxe
+items.Tool_Pickaxe_Thorium_Legendary.description=A legendary Thorium Pickaxe of unparalleled quality. Has 100% more durability than a common Thorium Pickaxe. This tool is a true masterpiece, capable of legendary feats.
+
+# Reforge Kits
+items.Tool_Reforge_Kit_Crude.name=Crude Reforge Kit
+items.Tool_Reforge_Kit_Crude.description=Allows you to reforge Crude items to change their quality tier. Right-click to open the reforge interface.
+
+items.Tool_Reforge_Kit_Iron.name=Iron Reforge Kit
+items.Tool_Reforge_Kit_Iron.description=Allows you to reforge Iron items to change their quality tier. Right-click to open the reforge interface.
+
+items.Tool_Reforge_Kit_Copper.name=Copper Reforge Kit
+items.Tool_Reforge_Kit_Copper.description=Allows you to reforge Copper items to change their quality tier. Right-click to open the reforge interface.
+
+items.Tool_Reforge_Kit_Cobalt.name=Cobalt Reforge Kit
+items.Tool_Reforge_Kit_Cobalt.description=Allows you to reforge Cobalt items to change their quality tier. Right-click to open the reforge interface.
+
+items.Tool_Reforge_Kit_Mithril.name=Mithril Reforge Kit
+items.Tool_Reforge_Kit_Mithril.description=Allows you to reforge Mithril items to change their quality tier. Right-click to open the reforge interface.
+
+items.Tool_Reforge_Kit_Thorium.name=Thorium Reforge Kit
+items.Tool_Reforge_Kit_Thorium.description=Allows you to reforge Thorium items to change their quality tier. Right-click to open the reforge interface.
+
+items.Tool_Reforge_Kit_Adamantite.name=Adamantite Reforge Kit
+items.Tool_Reforge_Kit_Adamantite.description=Allows you to reforge Adamantite items to change their quality tier. Right-click to open the reforge interface.
+
+# Custom UI
+customUI.itemReforgePage.title=Reforge Items
+customUI.itemReforgePage.item=Item
+customUI.itemReforgePage.quality=Quality
+customUI.itemReforgePage.noItems=No items with quality found in inventory

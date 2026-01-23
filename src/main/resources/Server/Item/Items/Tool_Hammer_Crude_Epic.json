@@ -1,0 +1,65 @@
+{
+  "TranslationProperties": {
+    "Name": "server.items.Tool_Hammer_Crude_Epic.name",
+    "Description": "server.items.Tool_Hammer_Crude_Epic.description"
+  },
+  "Categories": [
+    "Items.Tools"
+  ],
+  "Icon": "Icons/ItemsGenerated/Tool_Hammer_Crude.png",
+  "Quality": "Epic",
+  "ItemLevel": 2,
+  "MaxStack": 1,
+  "Set": "Tool_Stone",
+  "Model": "Items/Tools/Hammer/Crude.blockymodel",
+  "Texture": "Items/Tools/Hammer/Crude_Texture.png",
+  "PlayerAnimationsId": "Pickaxe",
+  "Interactions": {
+    "Primary": {
+      "Interactions": [
+        {
+          "Type": "CycleBlockGroup",
+          "RunTime": 0.1,
+          "Effects": {
+            "ItemAnimationId": "Mine"
+          }
+        }
+      ]
+    },
+    "Secondary": {
+      "Interactions": [
+        {
+          "Type": "CycleBlockGroup",
+          "RunTime": 0.1,
+          "Effects": {
+            "ItemAnimationId": "Mine"
+          }
+        }
+      ]
+    }
+  },
+  "MaxDurability": 175,
+  "IconProperties": {
+    "Scale": 0.45,
+    "Translation": [
+      20.4,
+      -27
+    ],
+    "Rotation": [
+      45,
+      300,
+      0
+    ]
+  },
+  "DroppedItemAnimation": "Items/Animations/Dropped/Dropped_Diagonal_Left.blockyanim",
+  "Tags": {
+    "Type": [
+      "Tool"
+    ]
+  },
+  "BlockSelectorTool": {
+    "DurabilityLossOnUse": 1.0
+  },
+  "ItemSoundSetId": "ISS_Weapons_Wood",
+  "Id": "Tool_Hammer_Crude_Epic"
+}

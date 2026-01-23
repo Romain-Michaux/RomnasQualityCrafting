@@ -1,0 +1,15 @@
+{
+  "QualityValue": 0,
+  "ItemTooltipTexture": "UI/ItemQualities/Tooltips/ItemTooltipCommon.png",
+  "ItemTooltipArrowTexture": "UI/ItemQualities/Tooltips/ItemTooltipCommonArrow.png",
+  "SlotTexture": "UI/ItemQualities/Slots/SlotCommon.png",
+  "BlockSlotTexture": "UI/ItemQualities/Slots/SlotCommon.png",
+  "SpecialSlotTexture": "UI/ItemQualities/Slots/SlotCommon.png",
+  "TextColor": "#5c5c5c",
+  "LocalizationKey": "server.qualities.Poor.name",
+  "VisibleQualityLabel": true,
+  "RenderSpecialSlot": true,
+  "ItemEntityConfig": {
+    "ParticleSystemId": "Drop_Common"
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "Input": [
+    {
+      "ItemId": "Armor_Mithril_Hands_Uncommon",
+      "Quantity": 1
+    },
+    {
+      "ItemId": "Ingredient_Bar_Mithril",
+      "Quantity": 1
+    }
+  ],
+  "PrimaryOutput": {
+    "ItemId": "Armor_Mithril_Hands_Common",
+    "Quantity": 1
+  },
+  "Output": [
+    {
+      "ItemId": "Armor_Mithril_Hands_Common",
+      "Quantity": 1
+    }
+  ],
+  "BenchRequirement": [
+    {
+      "Type": "Processing",
+      "Id": "Reforgebench"
+    }
+  ],
+  "TimeSeconds": 5
+}

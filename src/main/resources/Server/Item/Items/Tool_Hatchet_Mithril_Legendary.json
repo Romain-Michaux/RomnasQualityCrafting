@@ -1,0 +1,53 @@
+{
+  "TranslationProperties": {
+    "Name": "server.items.Tool_Hatchet_Mithril_Legendary.name",
+    "Description": "server.items.Tool_Hatchet_Mithril_Legendary.description"
+  },
+  "Parent": "Tool_Hatchet_Crude",
+  "Model": "Items/Tools/Hatchet/Mithril.blockymodel",
+  "Texture": "Items/Tools/Hatchet/Mithril_Texture.png",
+  "Quality": "Legendary",
+  "ItemLevel": 50,
+  "Tool": {
+    "Specs": [
+      {
+        "Power": 1.1428,
+        "GatherType": "SoftBlocks"
+      },
+      {
+        "Power": 0.0572,
+        "GatherType": "Soils"
+      },
+      {
+        "Power": 0.5714,
+        "GatherType": "Woods"
+      },
+      {
+        "Power": 0.0572,
+        "GatherType": "Rocks"
+      },
+      {
+        "Power": 0.5714,
+        "GatherType": "Benches"
+      },
+      {
+        "Power": 0.0194,
+        "GatherType": "VolcanicRocks"
+      }
+    ],
+    "DurabilityLossBlockTypes": [
+      {
+        "BlockSets": [
+          "Stone",
+          "Rock",
+          "Ores",
+          "Soil"
+        ],
+        "DurabilityLossOnHit": 0.25
+      }
+    ]
+  },
+  "Icon": "Icons/ItemsGenerated/Tool_Hatchet_Mithril.png",
+  "MaxDurability": 456,
+  "Id": "Tool_Hatchet_Mithril_Legendary"
+}

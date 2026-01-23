@@ -1,0 +1,29 @@
+{
+  "Input": [
+    {
+      "ItemId": "Tool_Pickaxe_Copper_Legendary",
+      "Quantity": 1
+    },
+    {
+      "ItemId": "Ingredient_Bar_Copper",
+      "Quantity": 1
+    }
+  ],
+  "PrimaryOutput": {
+    "ItemId": "Tool_Pickaxe_Copper_Common",
+    "Quantity": 1
+  },
+  "Output": [
+    {
+      "ItemId": "Tool_Pickaxe_Copper_Common",
+      "Quantity": 1
+    }
+  ],
+  "BenchRequirement": [
+    {
+      "Type": "Processing",
+      "Id": "Reforgebench"
+    }
+  ],
+  "TimeSeconds": 5
+}

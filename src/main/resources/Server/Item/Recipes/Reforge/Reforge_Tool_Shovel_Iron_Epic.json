@@ -1,0 +1,29 @@
+{
+  "Input": [
+    {
+      "ItemId": "Tool_Shovel_Iron_Epic",
+      "Quantity": 1
+    },
+    {
+      "ItemId": "Ingredient_Bar_Iron",
+      "Quantity": 1
+    }
+  ],
+  "PrimaryOutput": {
+    "ItemId": "Tool_Shovel_Iron_Common",
+    "Quantity": 1
+  },
+  "Output": [
+    {
+      "ItemId": "Tool_Shovel_Iron_Common",
+      "Quantity": 1
+    }
+  ],
+  "BenchRequirement": [
+    {
+      "Type": "Processing",
+      "Id": "Reforgebench"
+    }
+  ],
+  "TimeSeconds": 5
+}

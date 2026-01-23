@@ -1,0 +1,53 @@
+{
+  "TranslationProperties": {
+    "Name": "server.items.Tool_Pickaxe_Thorium_Legendary.name",
+    "Description": "server.items.Tool_Pickaxe_Thorium_Legendary.description"
+  },
+  "Icon": "Icons/ItemsGenerated/Tool_Pickaxe_Thorium.png",
+  "Quality": "Legendary",
+  "ItemLevel": 30,
+  "Parent": "Tool_Pickaxe_Crude",
+  "Model": "Items/Tools/Pickaxe/Thorium.blockymodel",
+  "Texture": "Items/Tools/Pickaxe/Thorium_Texture.png",
+  "Tool": {
+    "Specs": [
+      {
+        "Power": 1.3334,
+        "GatherType": "SoftBlocks"
+      },
+      {
+        "Power": 0.6666,
+        "GatherType": "Soils"
+      },
+      {
+        "Power": 0.0666,
+        "GatherType": "Woods"
+      },
+      {
+        "Power": 0.6666,
+        "GatherType": "Rocks"
+      },
+      {
+        "Power": 0.6666,
+        "GatherType": "Benches"
+      },
+      {
+        "Power": 0.2266,
+        "GatherType": "VolcanicRocks"
+      }
+    ],
+    "DurabilityLossBlockTypes": [
+      {
+        "BlockSets": [
+          "Stone",
+          "Rock",
+          "Ores",
+          "Soil"
+        ],
+        "DurabilityLossOnHit": 0.25
+      }
+    ]
+  },
+  "MaxDurability": 466,
+  "Id": "Tool_Pickaxe_Thorium_Legendary"
+}
