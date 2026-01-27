@@ -1,0 +1,47 @@
+Button #ItemSlot {
+  LayoutMode: Left;
+  Padding: (Full: 8);
+  Style: (
+    Hovered: (
+      Background: #000000(0.2),
+    )
+  );
+
+  ItemIcon #ItemIcon {
+    Anchor: (Width: 48, Height: 48);
+  }
+
+  Group {
+    FlexWeight: 1;
+    LayoutMode: Top;
+    Padding: (Left: 10);
+
+    Label #ItemName {
+      Style: (FontSize: 16, RenderBold: true);
+      FlexWeight: 1;
+      Text: "";
+    }
+
+    Group {
+      LayoutMode: Left;
+      Padding: (Top: 4);
+
+      Label #QualityLabel {
+        Style: (FontSize: 14, RenderBold: true);
+        Text: "";
+        Padding: (Right: 8);
+      }
+
+      Label #DurabilityLabel {
+        Style: (FontSize: 12, TextColor: #ffffff(0.7));
+        Text: "";
+      }
+    }
+  }
+
+  Group {
+    LayoutMode: Full;
+    Anchor: (Height: 1);
+    Background: #ffffff(0.2);
+  }
+}

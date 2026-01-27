@@ -1,0 +1,8 @@
+{
+  "QualityWeightPoor": 25,
+  "QualityWeightCommon": 40,
+  "QualityWeightUncommon": 20,
+  "QualityWeightRare": 10,
+  "QualityWeightEpic": 4,
+  "QualityWeightLegendary": 1
+}

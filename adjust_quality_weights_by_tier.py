@@ -13,7 +13,7 @@ from pathlib import Path
 # Format: {tier: {quality: weight}}
 TIER_QUALITY_WEIGHTS = {
     1: {
-        "Poor": 30,
+        "Junk": 30,
         "Common": 40,
         "Uncommon": 20,
         "Rare": 8,
@@ -21,7 +21,7 @@ TIER_QUALITY_WEIGHTS = {
         "Legendary": 0.5
     },
     2: {
-        "Poor": 20,
+        "Junk": 20,
         "Common": 35,
         "Uncommon": 25,
         "Rare": 15,
@@ -29,7 +29,7 @@ TIER_QUALITY_WEIGHTS = {
         "Legendary": 1
     },
     3: {
-        "Poor": 10,
+        "Junk": 10,
         "Common": 25,
         "Uncommon": 30,
         "Rare": 25,
@@ -37,7 +37,7 @@ TIER_QUALITY_WEIGHTS = {
         "Legendary": 2
     },
     4: {
-        "Poor": 5,
+        "Junk": 5,
         "Common": 15,
         "Uncommon": 25,
         "Rare": 30,
@@ -46,7 +46,7 @@ TIER_QUALITY_WEIGHTS = {
     }
 }
 
-QUALITIES = ["Poor", "Common", "Uncommon", "Rare", "Epic", "Legendary"]
+QUALITIES = ["Junk", "Common", "Uncommon", "Rare", "Epic", "Legendary"]
 
 # Chemin vers les fichiers de drops
 DROPS_PATH = Path("src/main/resources/Server/Drops/Prefabs")

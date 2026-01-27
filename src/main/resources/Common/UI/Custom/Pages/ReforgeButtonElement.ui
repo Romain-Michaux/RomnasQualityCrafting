@@ -1,0 +1,6 @@
+$C = "../Common.ui";
+
+$C.@TextButton #ReforgeButton {
+  Anchor: (Width: 150);
+  Text: "Reforge";
+}

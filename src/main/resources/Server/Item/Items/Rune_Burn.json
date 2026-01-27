@@ -1,0 +1,61 @@
+{
+  "TranslationProperties": {
+    "Name": "server.items.Rune_Burn.name",
+    "Description": "server.items.Rune_Burn.description"
+  },
+  "Icon": "Icons/ItemsGenerated/Ingredient_Fire_Essence.png",
+  "Categories": [
+    "Items.Magic"
+  ],
+  "Interactions": {
+    "Primary": {
+      "Interactions": [
+        {
+          "Type": "OpenApplyRunePage"
+        }
+      ]
+    },
+    "Secondary": {
+      "Interactions": [
+        {
+          "Type": "OpenApplyRunePage"
+        }
+      ]
+    }
+  },
+  "Recipe": {
+    "TimeSeconds": 3,
+    "Input": [
+      {
+        "ItemId": "Ingredient_Crystal_Red",
+        "Quantity": 15
+      },
+      {
+        "ItemId": "Ingredient_Fire_Essence",
+        "Quantity": 40
+      },
+      {
+        "ItemId": "Plant_Crop_Mushroom_Glowing_Orange",
+        "Quantity": 10
+      }
+    ],
+    "OutputQuantity": 1,
+    "BenchRequirement": [
+      {
+        "Id": "Arcanebench",
+        "Type": "Crafting",
+        "Categories": [
+          "Arcane_Runes"
+        ],
+        "RequiredTierLevel": 1
+      }
+    ]
+  },
+  "PlayerAnimationsId": "Item",
+  "MaxStack": 16,
+  "Tags": {
+    "Type": [
+      "Rune"
+    ]
+  }
+}

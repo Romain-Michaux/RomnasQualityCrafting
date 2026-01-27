@@ -5,6 +5,24 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.3] - 2026-01-25
+
+### 🔧 Fixed
+- Pioches qui ne minaient plus de minerais
+
+### ✨ Added
+- Traductions françaises (fr-FR)
+
+## [1.0.2] - 2026-01-24
+
+### ✨ Added
+- Reforge kits for upgrading item quality
+- New interface for reforging and item stats (only accessible through creative mode)
+
+### 📝 Changed
+- All loot tables have been modified: higher tier chests now loot higher quality items
+- Increased legendary item chances in higher tier chests
+
 ## [1.0.1] - 2024-12-XX
 
 ### 🔧 Fixed

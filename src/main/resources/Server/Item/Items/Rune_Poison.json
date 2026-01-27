@@ -1,0 +1,61 @@
+{
+  "TranslationProperties": {
+    "Name": "server.items.Rune_Poison.name",
+    "Description": "server.items.Rune_Poison.description"
+  },
+  "Icon": "Icons/ItemsGenerated/Ingredient_Fire_Essence.png",
+  "Categories": [
+    "Items.Magic"
+  ],
+  "Interactions": {
+    "Primary": {
+      "Interactions": [
+        {
+          "Type": "OpenApplyRunePage"
+        }
+      ]
+    },
+    "Secondary": {
+      "Interactions": [
+        {
+          "Type": "OpenApplyRunePage"
+        }
+      ]
+    }
+  },
+  "Recipe": {
+    "TimeSeconds": 3,
+    "Input": [
+      {
+        "ItemId": "Ingredient_Crystal_Purple",
+        "Quantity": 15
+      },
+      {
+        "ItemId": "Ingredient_Sac_Venom",
+        "Quantity": 10
+      },
+      {
+        "ItemId": "Plant_Fruit_Poison",
+        "Quantity": 8
+      }
+    ],
+    "OutputQuantity": 1,
+    "BenchRequirement": [
+      {
+        "Id": "Arcanebench",
+        "Type": "Crafting",
+        "Categories": [
+          "Arcane_Runes"
+        ],
+        "RequiredTierLevel": 1
+      }
+    ]
+  },
+  "PlayerAnimationsId": "Item",
+  "MaxStack": 16,
+  "Tags": {
+    "Type": [
+      "Rune"
+    ]
+  }
+}

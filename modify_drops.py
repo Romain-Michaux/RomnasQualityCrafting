@@ -12,14 +12,14 @@ from pathlib import Path
 # Probabilités des qualités (poids)
 QUALITY_WEIGHTS = {
     "Common": 40,
-    "Poor": 25,
+    "Junk": 25,
     "Uncommon": 20,
     "Rare": 10,
     "Epic": 4,
     "Legendary": 1
 }
 
-QUALITIES = ["Common", "Poor", "Uncommon", "Rare", "Epic", "Legendary"]
+QUALITIES = ["Common", "Junk", "Uncommon", "Rare", "Epic", "Legendary"]
 
 # Chemin vers les assets JSON du projet pour vérifier si les items existent
 PROJECT_ITEMS_PATH = Path("src/main/resources/Server/Item/Items")

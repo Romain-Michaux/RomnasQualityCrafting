@@ -75,7 +75,7 @@ public class ItemReforgePage extends ChoiceBasePage {
         }
         
         // Vérifier que l'item se termine par une qualité connue
-        String[] qualityNames = {"Poor", "Common", "Uncommon", "Rare", "Epic", "Legendary"};
+        String[] qualityNames = {"Junk", "Common", "Uncommon", "Rare", "Epic", "Legendary"};
         for (String quality : qualityNames) {
             if (itemId.endsWith("_" + quality)) {
                 return true;

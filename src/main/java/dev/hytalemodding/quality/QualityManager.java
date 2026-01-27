@@ -6,6 +6,9 @@ import org.bson.BsonDocument;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.lang.reflect.Method;
+import java.util.Collection;
+import java.util.Map;
 
 public class QualityManager {
     
@@ -65,6 +68,143 @@ public class QualityManager {
     public static boolean canHaveQuality(ItemStack itemStack) {
         return isWeapon(itemStack) || isArmor(itemStack) || isTool(itemStack);
     }
+
+    /**
+     * Returns true if the item is considered Weapon or Armor for quality compat:
+     * - Tags.Type contains "Weapon" or "Armor", or
+     * - Categories contains a string with "Weapon" or "Armor" (e.g. "Items.Weapons").
+     * Used by quality compat to avoid duplicating consumables, runes, etc.
+     */
+    public static boolean hasWeaponOrArmorTag(Item item) {
+        if (item == null) {
+            return false;
+        }
+        if (hasWeaponOrArmorInTags(item)) {
+            return true;
+        }
+        return hasWeaponOrArmorInCategories(item);
+    }
+
+    private static boolean hasWeaponOrArmorInTags(Item item) {
+        try {
+            Method getTags = Item.class.getMethod("getTags");
+            Object tags = getTags.invoke(item);
+            if (tags == null) {
+                return false;
+            }
+            Object typeVal = null;
+            if (tags instanceof Map) {
+                typeVal = ((Map<?, ?>) tags).get("Type");
+            } else {
+                try {
+                    Method getType = tags.getClass().getMethod("getType");
+                    typeVal = getType.invoke(tags);
+                } catch (NoSuchMethodException ignored) {
+                }
+                if (typeVal == null) {
+                    try {
+                        Method m = tags.getClass().getMethod("get", Object.class);
+                        typeVal = m.invoke(tags, "Type");
+                    } catch (Exception ignored) {
+                    }
+                }
+            }
+            if (typeVal == null) {
+                return false;
+            }
+            Collection<?> typeList = null;
+            if (typeVal instanceof Collection) {
+                typeList = (Collection<?>) typeVal;
+            } else if (typeVal instanceof Iterable && !(typeVal instanceof String)) {
+                java.util.List<Object> tmp = new java.util.ArrayList<>();
+                for (Object o : (Iterable<?>) typeVal) {
+                    tmp.add(o);
+                }
+                typeList = tmp;
+            } else if (typeVal.getClass().isArray()) {
+                java.util.List<Object> tmp = new java.util.ArrayList<>();
+                int len = java.lang.reflect.Array.getLength(typeVal);
+                for (int i = 0; i < len; i++) {
+                    tmp.add(java.lang.reflect.Array.get(typeVal, i));
+                }
+                typeList = tmp;
+            } else if (typeVal instanceof String) {
+                String s = (String) typeVal;
+                return "Weapon".equalsIgnoreCase(s) || "Armor".equalsIgnoreCase(s);
+            }
+            if (typeList != null) {
+                for (Object o : typeList) {
+                    String s = o == null ? null : String.valueOf(o).trim();
+                    if ("Weapon".equalsIgnoreCase(s) || "Armor".equalsIgnoreCase(s)) {
+                        return true;
+                    }
+                }
+            }
+        } catch (Exception ignored) {
+            // getTags or Tags.Type not available
+        }
+        return false;
+    }
+
+    private static boolean hasWeaponOrArmorInCategories(Item item) {
+        try {
+            Method getCategories = Item.class.getMethod("getCategories");
+            Object categories = getCategories.invoke(item);
+            if (categories == null) {
+                return false;
+            }
+            java.util.List<String> toCheck = new java.util.ArrayList<>();
+            if (categories instanceof Collection) {
+                for (Object o : (Collection<?>) categories) {
+                    toCheck.add(o == null ? "" : String.valueOf(o));
+                }
+            } else if (categories instanceof Iterable && !(categories instanceof String)) {
+                for (Object o : (Iterable<?>) categories) {
+                    toCheck.add(o == null ? "" : String.valueOf(o));
+                }
+            } else if (categories.getClass().isArray()) {
+                int len = java.lang.reflect.Array.getLength(categories);
+                for (int i = 0; i < len; i++) {
+                    toCheck.add(String.valueOf(java.lang.reflect.Array.get(categories, i)));
+                }
+            }
+            for (String s : toCheck) {
+                if (s == null) continue;
+                String lower = s.toLowerCase();
+                if (lower.contains("weapon") || lower.contains("armor")) {
+                    return true;
+                }
+            }
+        } catch (Exception ignored) {
+            // getCategories not available
+        }
+        return false;
+    }
+
+    /**
+     * Checks if an Item (asset) is a weapon, armor, or tool that can have a quality.
+     * Used by QualityCompatLoader to detect which items need auto-generated quality variants.
+     */
+    public static boolean canHaveQuality(Item item) {
+        if (item == null) {
+            return false;
+        }
+        if (item.getWeapon() != null || item.getArmor() != null) {
+            return true;
+        }
+        if (item.getTool() != null) {
+            return true;
+        }
+        try {
+            java.lang.reflect.Method m = Item.class.getMethod("getBlockSelectorTool");
+            if (m.invoke(item) != null) {
+                return true;
+            }
+        } catch (Exception ignored) {
+        }
+        String id = item.getId();
+        return id != null && id.startsWith("Tool_");
+    }
     
     /**
      * Checks if an item ID already ends with a quality name
@@ -85,7 +225,7 @@ public class QualityManager {
      * Returns true if at least one quality exists in JSON assets
      */
     public static boolean hasJsonAssetsForBaseItem(String baseItemId) {
-        String[] qualities = {"Poor", "Common", "Uncommon", "Rare", "Epic", "Legendary"};
+        String[] qualities = {"Junk", "Common", "Uncommon", "Rare", "Epic", "Legendary"};
         for (String quality : qualities) {
             String qualityId = baseItemId + "_" + quality;
             Item item = Item.getAssetMap().getAsset(qualityId);
@@ -179,16 +319,16 @@ public class QualityManager {
         }
         
         if (!typeMatches) {
-            System.out.println("[RomnasQualityCrafting] Quality asset incomplete or invalid: " + qualityItemId);
-            System.out.println("[RomnasQualityCrafting] Base item type mismatch - returning original item");
+            //System.out.println("[RomnasQualityCrafting] Quality asset incomplete or invalid: " + qualityItemId);
+            //System.out.println("[RomnasQualityCrafting] Base item type mismatch - returning original item");
             return itemStack;
         }
         
         // Additional check: verify the item has an ID set (ensures it's fully loaded)
         if (qualityItem.getId() == null || qualityItem.getId().isEmpty() || 
             !qualityItem.getId().equals(qualityItemId)) {
-            System.out.println("[RomnasQualityCrafting] Quality asset ID mismatch or incomplete: " + qualityItemId);
-            System.out.println("[RomnasQualityCrafting] Returning original item without quality modification");
+            //System.out.println("[RomnasQualityCrafting] Quality asset ID mismatch or incomplete: " + qualityItemId);
+            //System.out.println("[RomnasQualityCrafting] Returning original item without quality modification");
             return itemStack;
         }
         
@@ -198,9 +338,9 @@ public class QualityManager {
         ItemStack modified = new ItemStack(qualityItemId, itemStack.getQuantity());
         
         // Debug: Verify the ItemStack was created with the correct ID
-        System.out.println("[RomnasQualityCrafting] Created ItemStack with ID: " + modified.getItemId() + " (expected: " + qualityItemId + ")");
+        //System.out.println("[RomnasQualityCrafting] Created ItemStack with ID: " + modified.getItemId() + " (expected: " + qualityItemId + ")");
         if (modified.getItem() != null) {
-            System.out.println("[RomnasQualityCrafting] Item.getId(): " + modified.getItem().getId());
+            //System.out.println("[RomnasQualityCrafting] Item.getId(): " + modified.getItem().getId());
         }
         
         // Preserve durability ratio if item already had durability
@@ -275,7 +415,7 @@ public class QualityManager {
         
         // Vérifier que l'item a déjà une qualité
         if (!hasQualityInId(currentItemId)) {
-            System.out.println("[RomnasQualityCrafting] Cannot reforge item without quality: " + currentItemId);
+            //System.out.println("[RomnasQualityCrafting] Cannot reforge item without quality: " + currentItemId);
             return null;
         }
         
@@ -284,7 +424,7 @@ public class QualityManager {
         
         // Vérifier si des assets JSON existent pour cet item
         if (!hasJsonAssetsForBaseItem(baseItemId)) {
-            System.out.println("[RomnasQualityCrafting] No JSON assets found for base item: " + baseItemId);
+            //System.out.println("[RomnasQualityCrafting] No JSON assets found for base item: " + baseItemId);
             return null;
         }
         
@@ -294,7 +434,7 @@ public class QualityManager {
         // Vérifier que le nouvel item existe
         Item newItem = Item.getAssetMap().getAsset(newItemId);
         if (newItem == null || newItem == Item.UNKNOWN) {
-            System.out.println("[RomnasQualityCrafting] New quality item not found: " + newItemId);
+            //System.out.println("[RomnasQualityCrafting] New quality item not found: " + newItemId);
             return null;
         }
         

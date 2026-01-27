@@ -11,22 +11,26 @@ import com.hypixel.hytale.server.core.inventory.transaction.SlotTransaction;
 import com.hypixel.hytale.server.core.inventory.transaction.Transaction;
 import dev.hytalemodding.quality.ItemQuality;
 import dev.hytalemodding.quality.QualityManager;
+import dev.hytalemodding.rune.RuneSpeedBootsHandler;
 
 import javax.annotation.Nonnull;
 
 public class InventoryChangeHandler {
-    
+
     public static void onInventoryChange(@Nonnull LivingEntityInventoryChangeEvent event) {
         LivingEntity entity = event.getEntity();
         Transaction transaction = event.getTransaction();
         ItemContainer container = event.getItemContainer();
-        
+
         if (!transaction.succeeded()) {
             return;
         }
         
+        // Handle Speed rune effect on boots (legs armor)
+        RuneSpeedBootsHandler.onInventoryChange(event);
+        
         // Debug: Log all transactions to see what's happening
-        System.out.println("[RomnasQualityCrafting] DEBUG - Transaction type: " + transaction.getClass().getSimpleName() + ", succeeded: " + transaction.succeeded());
+        // System.out.println("[RomnasQualityCrafting] DEBUG - Transaction type: " + transaction.getClass().getSimpleName() + ", succeeded: " + transaction.succeeded());
         
             // Si c'est un SlotTransaction, utiliser la méthode originale
         if (transaction instanceof SlotTransaction) {
@@ -38,43 +42,43 @@ public class InventoryChangeHandler {
             }
             
             String itemId = itemAfter.getItemId();
-            System.out.println("[RomnasQualityCrafting] DEBUG SlotTransaction - Item ID: " + itemId);
+            //System.out.println("[RomnasQualityCrafting] DEBUG SlotTransaction - Item ID: " + itemId);
             
             // IMPORTANT: Vérifier que l'item n'a pas déjà une qualité AVANT de le traiter
             // Cela évite la boucle infinie quand on modifie l'item
             if (QualityManager.getQualityFromItem(itemAfter) != null) {
-                System.out.println("[RomnasQualityCrafting] DEBUG - Item already has quality in metadata, skipping");
+                //System.out.println("[RomnasQualityCrafting] DEBUG - Item already has quality in metadata, skipping");
                 return;
             }
             
             // Skip if item ID already ends with a quality name (e.g., Weapon_Sword_Copper_Common)
             if (QualityManager.hasQualityInId(itemId)) {
-                System.out.println("[RomnasQualityCrafting] DEBUG - Item ID already has quality suffix, skipping");
+                //System.out.println("[RomnasQualityCrafting] DEBUG - Item ID already has quality suffix, skipping");
                 return;
             }
             
             // Debug: Log item ID for troubleshooting
             if (itemId != null && (itemId.contains("Shovel") || itemId.contains("shovel"))) {
-                System.out.println("[RomnasQualityCrafting] DEBUG Shovel detected - ID: " + itemId);
-                System.out.println("[RomnasQualityCrafting] DEBUG - isTool: " + QualityManager.isTool(itemAfter));
-                System.out.println("[RomnasQualityCrafting] DEBUG - canHaveQuality: " + QualityManager.canHaveQuality(itemAfter));
-                System.out.println("[RomnasQualityCrafting] DEBUG - hasJsonAssets: " + QualityManager.hasJsonAssetsForBaseItem(itemId));
+                //System.out.println("[RomnasQualityCrafting] DEBUG Shovel detected - ID: " + itemId);
+                //System.out.println("[RomnasQualityCrafting] DEBUG - isTool: " + QualityManager.isTool(itemAfter));
+                //System.out.println("[RomnasQualityCrafting] DEBUG - canHaveQuality: " + QualityManager.canHaveQuality(itemAfter));
+                //.out.println("[RomnasQualityCrafting] DEBUG - hasJsonAssets: " + QualityManager.hasJsonAssetsForBaseItem(itemId));
             }
             
             // Vérifier que c'est une arme, armure ou outil avant de traiter
             if (!QualityManager.canHaveQuality(itemAfter)) {
-                System.out.println("[RomnasQualityCrafting] DEBUG - Item cannot have quality: " + itemId);
+                //System.out.println("[RomnasQualityCrafting] DEBUG - Item cannot have quality: " + itemId);
                 return;
             }
             
             // Vérifier si des assets JSON existent pour cet item avant de traiter
             // Si non, ne pas modifier l'item (évite les crashes avec les flèches, etc.)
             if (!QualityManager.hasJsonAssetsForBaseItem(itemId)) {
-                System.out.println("[RomnasQualityCrafting] DEBUG - No JSON assets found for: " + itemId);
+                //System.out.println("[RomnasQualityCrafting] DEBUG - No JSON assets found for: " + itemId);
                 return;
             }
             
-            System.out.println("[RomnasQualityCrafting] DEBUG - Processing item: " + itemId);
+            //System.out.println("[RomnasQualityCrafting] DEBUG - Processing item: " + itemId);
             processItem(itemAfter, container, slotTransaction.getSlot(), entity);
             return;
         }
@@ -145,27 +149,27 @@ public class InventoryChangeHandler {
                         
                         // Skip if item ID already ends with a quality name (e.g., Weapon_Sword_Copper_Common)
                         String itemId = itemAfter.getItemId();
-                        System.out.println("[RomnasQualityCrafting] DEBUG ListTransaction - Item ID: " + itemId);
+                        //System.out.println("[RomnasQualityCrafting] DEBUG ListTransaction - Item ID: " + itemId);
                         
                         if (QualityManager.hasQualityInId(itemId)) {
-                            System.out.println("[RomnasQualityCrafting] DEBUG - Item ID already has quality suffix, skipping");
+                            //System.out.println("[RomnasQualityCrafting] DEBUG - Item ID already has quality suffix, skipping");
                             continue;
                         }
                         
                         // Check if it's a weapon, armor or tool
                         if (!QualityManager.canHaveQuality(itemAfter)) {
-                            System.out.println("[RomnasQualityCrafting] DEBUG - Item cannot have quality: " + itemId);
+                            //System.out.println("[RomnasQualityCrafting] DEBUG - Item cannot have quality: " + itemId);
                             continue;
                         }
                         
                         // Vérifier si des assets JSON existent pour cet item avant de traiter
                         // Si non, ne pas modifier l'item (évite les crashes avec les flèches, etc.)
                         if (!QualityManager.hasJsonAssetsForBaseItem(itemId)) {
-                            System.out.println("[RomnasQualityCrafting] DEBUG - No JSON assets found for: " + itemId);
+                            //System.out.println("[RomnasQualityCrafting] DEBUG - No JSON assets found for: " + itemId);
                             continue;
                         }
                         
-                        System.out.println("[RomnasQualityCrafting] DEBUG - Processing item: " + itemId);
+                        //System.out.println("[RomnasQualityCrafting] DEBUG - Processing item: " + itemId);
                         // Process this item
                         processItem(itemAfter, container, slotTransaction.getSlot(), entity);
                     }
@@ -180,8 +184,8 @@ public class InventoryChangeHandler {
     private static void processItem(ItemStack itemStack, ItemContainer container, short slotIndex, LivingEntity entity) {
         String itemId = itemStack.getItemId();
         
-        // Apply random quality
-        ItemQuality quality = ItemQuality.random();
+        // Apply random quality using config weights
+        ItemQuality quality = ItemQuality.randomFromConfig();
         ItemStack modifiedItem = QualityManager.applyQuality(itemStack, quality);
         
         // Si l'item n'a pas été modifié (pas d'assets JSON), ne pas remplacer dans le container
@@ -191,14 +195,14 @@ public class InventoryChangeHandler {
         }
         
         // Debug: Log item transformation for salvage troubleshooting
-        System.out.println("[RomnasQualityCrafting] Item transformed from " + itemId + " to " + modifiedItem.getItemId() + " (quality: " + quality.getDisplayName() + ")");
-        System.out.println("[RomnasQualityCrafting] Modified item ID check: " + modifiedItem.getItemId() + ", Item.getId(): " + (modifiedItem.getItem() != null ? modifiedItem.getItem().getId() : "null"));
+        //System.out.println("[RomnasQualityCrafting] Item transformed from " + itemId + " to " + modifiedItem.getItemId() + " (quality: " + quality.getDisplayName() + ")");
+        //System.out.println("[RomnasQualityCrafting] Modified item ID check: " + modifiedItem.getItemId() + ", Item.getId(): " + (modifiedItem.getItem() != null ? modifiedItem.getItem().getId() : "null"));
         
         // Replace the item in the container with the modified version
         try {
             container.setItemStackForSlot(slotIndex, modifiedItem);
         } catch (Exception e) {
-            System.out.println("[RomnasQualityCrafting] Error setting item in container: " + e.getMessage());
+            //System.out.println("[RomnasQualityCrafting] Error setting item in container: " + e.getMessage());
             e.printStackTrace();
         }
     }

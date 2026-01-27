@@ -1,9 +1,8 @@
-package dev.hytalemodding.reforge;
+package dev.hytalemodding.qualityviewer;
 
 import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
 import com.hypixel.hytale.protocol.SoundCategory;
-import com.hypixel.hytale.protocol.packets.interface_.Page;
 import com.hypixel.hytale.server.core.Message;
 import com.hypixel.hytale.server.core.entity.entities.Player;
 import com.hypixel.hytale.server.core.entity.entities.player.pages.PageManager;
@@ -22,72 +21,109 @@ import dev.hytalemodding.quality.QualityManager;
 
 import javax.annotation.Nonnull;
 
-public class ReforgeItemInteraction extends ChoiceInteraction {
-    protected final ItemContext itemContext;
-    protected final ItemContext heldItemContext;
-
-    public ReforgeItemInteraction(ItemContext itemContext, ItemContext heldItemContext) {
+public class ReforgeFromViewerInteraction extends ChoiceInteraction {
+    private final ItemContext itemContext;
+    private final String material;
+    private final QualityViewerPage page;
+    
+    public ReforgeFromViewerInteraction(ItemContext itemContext, String material, QualityViewerPage page) {
         this.itemContext = itemContext;
-        this.heldItemContext = heldItemContext;
+        this.material = material;
+        this.page = page;
     }
 
+    @Override
     public void run(@Nonnull Store<EntityStore> store, @Nonnull Ref<EntityStore> ref, @Nonnull PlayerRef playerRef) {
         Player playerComponent = (Player) store.getComponent(ref, Player.getComponentType());
         PageManager pageManager = playerComponent.getPageManager();
         ItemStack itemStack = this.itemContext.getItemStack();
         
-        // Vérifier que l'item a une qualité
+        // Verify item has quality
         String itemId = itemStack.getItemId();
         if (!QualityManager.hasQualityInId(itemId)) {
             playerRef.sendMessage(Message.raw("[Reforge] This item doesn't have a quality!").color("#ff0000"));
-            pageManager.setPage(ref, store, Page.None);
             return;
         }
         
-        // Générer une nouvelle qualité aléatoire
+        // Find reforge kit in inventory
+        String reforgeKitId = "Tool_Reforge_Kit_" + material;
+        ItemContainer mainInventory = playerComponent.getInventory().getStorage();
+        ItemContainer hotbar = playerComponent.getInventory().getHotbar();
+        
+        ItemContainer kitContainer = null;
+        short kitSlot = -1;
+        ItemStack kitStack = null;
+        
+        // Search in main inventory
+        for (short i = 0; i < mainInventory.getCapacity(); i++) {
+            ItemStack stack = mainInventory.getItemStack(i);
+            if (!ItemStack.isEmpty(stack) && stack.getItemId().equals(reforgeKitId)) {
+                kitContainer = mainInventory;
+                kitSlot = i;
+                kitStack = stack;
+                break;
+            }
+        }
+        
+        // Search in hotbar if not found
+        if (kitContainer == null && hotbar != null) {
+            for (short i = 0; i < hotbar.getCapacity(); i++) {
+                ItemStack stack = hotbar.getItemStack(i);
+                if (!ItemStack.isEmpty(stack) && stack.getItemId().equals(reforgeKitId)) {
+                    kitContainer = hotbar;
+                    kitSlot = i;
+                    kitStack = stack;
+                    break;
+                }
+            }
+        }
+        
+        if (kitContainer == null || kitStack == null) {
+            playerRef.sendMessage(Message.raw("[Reforge] You need a " + material + " Reforge Kit!").color("#ff0000"));
+            return;
+        }
+        
+        // Generate new random quality using config weights
         ItemQuality newQuality = ItemQuality.randomFromConfig();
         ItemStack reforgedItem = QualityManager.reforgeItem(itemStack, newQuality);
         
         if (reforgedItem == null || reforgedItem.getItemId().equals(itemId)) {
             playerRef.sendMessage(Message.raw("[Reforge] Failed to reforge item!").color("#ff0000"));
-            pageManager.setPage(ref, store, Page.None);
             return;
         }
         
-        // Consommer le reforge kit (comme le repair kit)
-        ItemContainer heldItemContainer = this.heldItemContext.getContainer();
-        short heldItemSlot = this.heldItemContext.getSlot();
-        ItemStack heldItemStack = this.heldItemContext.getItemStack();
-        ItemStackSlotTransaction slotTransaction = heldItemContainer.removeItemStackFromSlot(heldItemSlot, heldItemStack, 1);
-        if (!slotTransaction.succeeded()) {
-            pageManager.setPage(ref, store, Page.None);
+        // Consume reforge kit
+        ItemStackSlotTransaction kitTransaction = kitContainer.removeItemStackFromSlot(kitSlot, kitStack, 1);
+        if (!kitTransaction.succeeded()) {
+            playerRef.sendMessage(Message.raw("[Reforge] Failed to consume reforge kit!").color("#ff0000"));
             return;
         }
         
-        // Remplacer l'item dans l'inventaire
+        // Replace item in inventory
         ItemStackSlotTransaction replaceTransaction = this.itemContext.getContainer().replaceItemStackInSlot(
-            this.itemContext.getSlot(), 
-            itemStack, 
+            this.itemContext.getSlot(),
+            itemStack,
             reforgedItem
         );
         
         if (!replaceTransaction.succeeded()) {
-            // Si le remplacement échoue, remettre le kit dans l'inventaire
-            SimpleItemContainer.addOrDropItemStack(store, ref, heldItemContainer, heldItemSlot, heldItemStack.withQuantity(1));
+            // Restore kit if replacement failed
+            SimpleItemContainer.addOrDropItemStack(store, ref, kitContainer, kitSlot, kitStack.withQuantity(1));
             playerRef.sendMessage(Message.raw("[Reforge] Failed to replace item in inventory!").color("#ff0000"));
-            pageManager.setPage(ref, store, Page.None);
             return;
         }
         
-        // Message de succès
-        Message newItemStackMessage = Message.translation(reforgedItem.getItem().getTranslationKey());
+        // Success message
         playerRef.sendMessage(Message.join(
             Message.raw("[Reforge] Item reforged! New quality: "),
             Message.raw(newQuality.getDisplayName()).color(getQualityColor(newQuality))
         ));
         
-        pageManager.setPage(ref, store, Page.None);
+        // Play sound
         SoundUtil.playSoundEvent2d(ref, TempAssetIdUtil.getSoundEventIndex("SFX_Item_Repair"), SoundCategory.UI, store);
+        
+        // Refresh the page to show updated items
+        page.refreshPage(ref, store);
     }
     
     private String getQualityColor(@Nonnull ItemQuality quality) {
