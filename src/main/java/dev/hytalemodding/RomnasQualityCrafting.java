@@ -10,8 +10,6 @@ import dev.hytalemodding.config.RomnasQualityCraftingConfig;
 import dev.hytalemodding.events.InventoryChangeHandler;
 import dev.hytalemodding.events.PlayerJoinHandler;
 import dev.hytalemodding.quality.QualityVariantBootstrap;
-import dev.hytalemodding.reforge.OpenReforgePageInteraction;
-import dev.hytalemodding.rune.OpenApplyRunePageInteraction;
 
 import javax.annotation.Nonnull;
 
@@ -42,11 +40,11 @@ public class RomnasQualityCrafting extends JavaPlugin {
             // Initialize logging
             dev.hytalemodding.quality.JsonQualityGenerator.initializeLogging(this, configData);
             // Initialize quality config manager for static access
-            dev.hytalemodding.quality.QualityConfigManager.initialize(configData);
+            dev.hytalemodding.quality.QualityConfigManager.initialize(configData, this);
         } catch (Exception e) {
             // If config is not available, use default
         }
-        // Génère les fichiers JSON pour les 6 variantes de qualité (Poor…Legendary) pour chaque arme/outil/armure au lancement
+        // Generate JSON files for the 6 quality variants (Poor…Legendary) for each weapon/tool/armor at launch
         this.getEventRegistry().register(BootEvent.class, event -> QualityVariantBootstrap.run(this, event));
 
         // Register inventory change handler (craft/loot → apply quality; respects AutoApplyQuality)
@@ -60,39 +58,6 @@ public class RomnasQualityCrafting extends JavaPlugin {
             PlayerReadyEvent.class,
             PlayerJoinHandler::onPlayerReady
         );
-
-            this.getCodecRegistry(Interaction.CODEC).register(
-                "OpenReforgePage",
-                OpenReforgePageInteraction.class,
-                OpenReforgePageInteraction.CODEC
-            );
-            this.getCodecRegistry(Interaction.CODEC).register(
-                "ReforgeFromViewerPage",
-                dev.hytalemodding.qualityviewer.ReforgeFromViewerPageInteraction.class,
-                dev.hytalemodding.qualityviewer.ReforgeFromViewerPageInteraction.CODEC
-            );
-    
-
-            this.getCodecRegistry(Interaction.CODEC).register(
-                "OpenQualityViewerPage",
-                dev.hytalemodding.qualityviewer.OpenQualityViewerPageInteraction.class,
-                dev.hytalemodding.qualityviewer.OpenQualityViewerPageInteraction.CODEC
-            );
-            this.getCodecRegistry(Interaction.CODEC).register(
-                "ApplyRuneFromViewerPage",
-                dev.hytalemodding.qualityviewer.ApplyRuneFromViewerPageInteraction.class,
-                dev.hytalemodding.qualityviewer.ApplyRuneFromViewerPageInteraction.CODEC
-            );
-
-        this.getCodecRegistry(Interaction.CODEC).register(
-            "OpenApplyRunePage",
-            OpenApplyRunePageInteraction.class,
-            OpenApplyRunePageInteraction.CODEC
-        );
-
-        this.getEntityStoreRegistry().registerSystem(new dev.hytalemodding.rune.RuneDamageEffectSystem());
-        this.getEntityStoreRegistry().registerSystem(new dev.hytalemodding.rune.RuneLuckMiningSystem());
-        // Rune Speed is applied in InventoryChangeHandler via RuneSpeedBootsHandler; no separate system to register
     }
     
     /**

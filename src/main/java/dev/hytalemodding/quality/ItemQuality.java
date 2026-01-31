@@ -13,25 +13,115 @@ public enum ItemQuality {
     LEGENDARY("Legendary", 2.0f, 2.0f);
 
     private final String displayName;
-    private final float damageMultiplier;
-    private final float durabilityMultiplier;
+    private final float defaultDamageMultiplier;
+    private final float defaultDurabilityMultiplier;
 
-    ItemQuality(String displayName, float damageMultiplier, float durabilityMultiplier) {
+    ItemQuality(String displayName, float defaultDamageMultiplier, float defaultDurabilityMultiplier) {
         this.displayName = displayName;
-        this.damageMultiplier = damageMultiplier;
-        this.durabilityMultiplier = durabilityMultiplier;
+        this.defaultDamageMultiplier = defaultDamageMultiplier;
+        this.defaultDurabilityMultiplier = defaultDurabilityMultiplier;
     }
 
     public String getDisplayName() {
         return displayName;
     }
 
+    /**
+     * Gets the damage multiplier for this quality, using config if available, otherwise default value.
+     */
     public float getDamageMultiplier() {
-        return damageMultiplier;
+        RomnasQualityCraftingConfig config = QualityConfigManager.getConfig();
+        if (config != null) {
+            switch (this) {
+                case POOR:
+                    return (float) config.getQualityDamageMultiplierPoor();
+                case COMMON:
+                    return (float) config.getQualityDamageMultiplierCommon();
+                case UNCOMMON:
+                    return (float) config.getQualityDamageMultiplierUncommon();
+                case RARE:
+                    return (float) config.getQualityDamageMultiplierRare();
+                case EPIC:
+                    return (float) config.getQualityDamageMultiplierEpic();
+                case LEGENDARY:
+                    return (float) config.getQualityDamageMultiplierLegendary();
+            }
+        }
+        return defaultDamageMultiplier;
     }
 
+    /**
+     * Gets the durability multiplier for this quality, using config if available, otherwise default value.
+     */
     public float getDurabilityMultiplier() {
-        return durabilityMultiplier;
+        RomnasQualityCraftingConfig config = QualityConfigManager.getConfig();
+        if (config != null) {
+            switch (this) {
+                case POOR:
+                    return (float) config.getQualityDurabilityMultiplierPoor();
+                case COMMON:
+                    return (float) config.getQualityDurabilityMultiplierCommon();
+                case UNCOMMON:
+                    return (float) config.getQualityDurabilityMultiplierUncommon();
+                case RARE:
+                    return (float) config.getQualityDurabilityMultiplierRare();
+                case EPIC:
+                    return (float) config.getQualityDurabilityMultiplierEpic();
+                case LEGENDARY:
+                    return (float) config.getQualityDurabilityMultiplierLegendary();
+            }
+        }
+        return defaultDurabilityMultiplier;
+    }
+
+    /**
+     * Gets the tool efficiency multiplier for this quality, using config if available, otherwise default damage multiplier.
+     * This is used for tool power/efficiency instead of damage.
+     */
+    public float getToolEfficiencyMultiplier() {
+        RomnasQualityCraftingConfig config = QualityConfigManager.getConfig();
+        if (config != null) {
+            switch (this) {
+                case POOR:
+                    return (float) config.getQualityToolEfficiencyMultiplierPoor();
+                case COMMON:
+                    return (float) config.getQualityToolEfficiencyMultiplierCommon();
+                case UNCOMMON:
+                    return (float) config.getQualityToolEfficiencyMultiplierUncommon();
+                case RARE:
+                    return (float) config.getQualityToolEfficiencyMultiplierRare();
+                case EPIC:
+                    return (float) config.getQualityToolEfficiencyMultiplierEpic();
+                case LEGENDARY:
+                    return (float) config.getQualityToolEfficiencyMultiplierLegendary();
+            }
+        }
+        return defaultDamageMultiplier;
+    }
+
+    /**
+     * Gets the armor multiplier for this quality, using config if available, otherwise default damage multiplier.
+     * This is used for armor resistance and stats.
+     */
+    public float getArmorMultiplier() {
+        RomnasQualityCraftingConfig config = QualityConfigManager.getConfig();
+        if (config != null) {
+            switch (this) {
+                case POOR:
+                    return (float) config.getQualityArmorMultiplierPoor();
+                case COMMON:
+                    return (float) config.getQualityArmorMultiplierCommon();
+                case UNCOMMON:
+                    return (float) config.getQualityArmorMultiplierUncommon();
+                case RARE:
+                    return (float) config.getQualityArmorMultiplierRare();
+                case EPIC:
+                    return (float) config.getQualityArmorMultiplierEpic();
+                case LEGENDARY:
+                    return (float) config.getQualityArmorMultiplierLegendary();
+            }
+        }
+        return defaultDamageMultiplier;
     }
 
     /** 

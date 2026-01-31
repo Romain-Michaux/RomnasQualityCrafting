@@ -6,7 +6,7 @@
 
     <groupId>dev.hytalemodding</groupId>
     <artifactId>RomnasQualityCrafting</artifactId>
-    <version>1.1.0</version>
+    <version>1.1.4</version>
 
     <properties>
         <maven.compiler.source>25</maven.compiler.source>

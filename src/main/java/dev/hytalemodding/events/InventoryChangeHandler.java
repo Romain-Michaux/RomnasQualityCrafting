@@ -11,7 +11,6 @@ import com.hypixel.hytale.server.core.inventory.transaction.SlotTransaction;
 import com.hypixel.hytale.server.core.inventory.transaction.Transaction;
 import dev.hytalemodding.quality.ItemQuality;
 import dev.hytalemodding.quality.QualityManager;
-import dev.hytalemodding.rune.RuneSpeedBootsHandler;
 
 import javax.annotation.Nonnull;
 
@@ -25,9 +24,6 @@ public class InventoryChangeHandler {
         if (!transaction.succeeded()) {
             return;
         }
-        
-        // Handle Speed rune effect on boots (legs armor)
-        RuneSpeedBootsHandler.onInventoryChange(event);
         
         // Debug: Log all transactions to see what's happening
         // System.out.println("[RomnasQualityCrafting] DEBUG - Transaction type: " + transaction.getClass().getSimpleName() + ", succeeded: " + transaction.succeeded());

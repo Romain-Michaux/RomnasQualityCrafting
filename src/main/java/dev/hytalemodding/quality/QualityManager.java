@@ -73,7 +73,7 @@ public class QualityManager {
      * Returns true if the item is considered Weapon or Armor for quality compat:
      * - Tags.Type contains "Weapon" or "Armor", or
      * - Categories contains a string with "Weapon" or "Armor" (e.g. "Items.Weapons").
-     * Used by quality compat to avoid duplicating consumables, runes, etc.
+     * Used by quality compat to avoid duplicating consumables, etc.
      */
     public static boolean hasWeaponOrArmorTag(Item item) {
         if (item == null) {
@@ -389,76 +389,6 @@ public class QualityManager {
         } catch (IllegalArgumentException e) {
             return null;
         }
-    }
-    
-    /**
-     * Reforges an item by changing its quality to a new random quality
-     * @param itemStack The item to reforge (must already have a quality)
-     * @param newQuality The new quality to apply
-     * @return The reforged item, or null if reforge failed
-     */
-    @Nullable
-    public static ItemStack reforgeItem(ItemStack itemStack, ItemQuality newQuality) {
-        if (itemStack == null || itemStack.isEmpty()) {
-            return null;
-        }
-        
-        Item item = itemStack.getItem();
-        if (item == null) {
-            return null;
-        }
-        
-        String currentItemId = item.getId();
-        if (currentItemId == null || currentItemId.isEmpty()) {
-            currentItemId = itemStack.getItemId();
-        }
-        
-        // Vérifier que l'item a déjà une qualité
-        if (!hasQualityInId(currentItemId)) {
-            //System.out.println("[RomnasQualityCrafting] Cannot reforge item without quality: " + currentItemId);
-            return null;
-        }
-        
-        // Obtenir l'ID de base (sans la qualité)
-        String baseItemId = getBaseItemId(currentItemId);
-        
-        // Vérifier si des assets JSON existent pour cet item
-        if (!hasJsonAssetsForBaseItem(baseItemId)) {
-            //System.out.println("[RomnasQualityCrafting] No JSON assets found for base item: " + baseItemId);
-            return null;
-        }
-        
-        // Obtenir le nouvel ID avec la nouvelle qualité
-        String newItemId = DynamicItemAssetCreator.getQualityItemId(baseItemId, newQuality);
-        
-        // Vérifier que le nouvel item existe
-        Item newItem = Item.getAssetMap().getAsset(newItemId);
-        if (newItem == null || newItem == Item.UNKNOWN) {
-            //System.out.println("[RomnasQualityCrafting] New quality item not found: " + newItemId);
-            return null;
-        }
-        
-        // Créer le nouvel ItemStack avec la nouvelle qualité
-        ItemStack reforgedItem = new ItemStack(newItemId, itemStack.getQuantity());
-        
-        // Préserver la durabilité (ratio)
-        double currentDurability = itemStack.getDurability();
-        double currentMaxDurability = itemStack.getMaxDurability();
-        double newMaxDurability = newItem.getMaxDurability();
-        
-        if (currentMaxDurability > 0 && currentDurability > 0 && newMaxDurability > 0) {
-            double durabilityRatio = currentDurability / currentMaxDurability;
-            double newDurability = newMaxDurability * durabilityRatio;
-            reforgedItem = reforgedItem
-                .withMaxDurability(newMaxDurability)
-                .withDurability(newDurability);
-        } else {
-            reforgedItem = reforgedItem
-                .withMaxDurability(newMaxDurability)
-                .withDurability(newMaxDurability);
-        }
-        
-        return reforgedItem;
     }
     
     /**

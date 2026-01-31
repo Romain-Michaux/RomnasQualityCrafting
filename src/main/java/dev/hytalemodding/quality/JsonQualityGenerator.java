@@ -32,18 +32,31 @@ import java.util.zip.ZipFile;
 
 /**
  * Génère les fichiers JSON pour les variantes de qualité dans le dossier mods de la sauvegarde.
- * Les fichiers sont créés dans : {saveDir}/mods/dev.hytalemodding_RomnasQualityCrafting/Server/Item/Items/
+ * Les fichiers sont créés dans : {saveDir}/mods/RQCGeneratedFiles/Server/Item/Items/
  */
 public final class JsonQualityGenerator {
     
     private static final String LOG_PREFIX = "[RomnasQualityCrafting] JsonGenerator: ";
     private static final String GENERATED_MOD_NAME = "RomnasQualityCraftingGenerated";
     
-    // Map pour stocker le chemin source de chaque item trouvé dans les mods
+    // Map to store the source path of each item found in mods
     private static final Map<String, Path> modItemSourcePaths = new java.util.HashMap<>();
     
-    // Configuration pour les logs détaillés (chargée depuis le fichier de config)
-    private static boolean verboseLogging = false;
+    // Map to store RootInteraction references found in items
+    private static final java.util.Set<String> requiredRootInteractions = new java.util.HashSet<>();
+    
+    // Sets to store ParticleSystem, Trail, ModelVFX and Interactions references found in items
+    private static final java.util.Set<String> requiredParticleSystems = new java.util.HashSet<>();
+    private static final java.util.Set<String> requiredParticleSpawners = new java.util.HashSet<>();
+    private static final java.util.Set<String> requiredTrails = new java.util.HashSet<>();
+    private static final java.util.Set<String> requiredModelVFX = new java.util.HashSet<>();
+    private static final java.util.Set<String> requiredInteractions = new java.util.HashSet<>();
+    
+    // Configuration for detailed logs (loaded from config file)
+    private static boolean verboseLogging = false; // Enabled by default for debugging
+    
+    // Store mods folder path to be able to find HytaleAssets
+    private static Path cachedModsDir = null;
     
     /**
      * Initializes logging configuration from the config object.
@@ -160,18 +173,32 @@ public final class JsonQualityGenerator {
             return false;
         }
         
+        // Stocker le chemin du dossier mods pour pouvoir trouver HytaleAssets
+        cachedModsDir = modsDir;
+        
         logEssential("Starting quality variant generation...");
         
-        // Scan external mods BEFORE generation to find items and their source files
-        Map<String, Item> modItems = scanExternalModsForItems(plugin);
-        if (!modItems.isEmpty()) {
-            logVerbose("Found " + modItems.size() + " item(s) in external mods, adding to generation list.");
-            logVerbose("modItemSourcePaths contains " + modItemSourcePaths.size() + " source path(s).");
-            // Add mod items to the base items map
-            baseItems.putAll(modItems);
+        // Scan external mods BEFORE generation to find items and their source files (only if enabled)
+        dev.hytalemodding.config.RomnasQualityCraftingConfig configData = null;
+        try {
+            if (plugin instanceof dev.hytalemodding.RomnasQualityCrafting) {
+                configData = ((dev.hytalemodding.RomnasQualityCrafting) plugin).getConfigData();
+            }
+        } catch (Exception e) {
+            // Ignore
         }
         
-        // Find the plugin's mod directory (e.g., dev.hytalemodding_RomnasQualityCrafting)
+        boolean externalModsCompatEnabled = configData == null || configData.isExternalModsCompatEnabled();
+        if (externalModsCompatEnabled) {
+            Map<String, Item> modItems = scanExternalModsForItems(plugin);
+            if (!modItems.isEmpty()) {
+                logEssential("Found " + modItems.size() + " item(s) in external mods.");
+                // Add mod items to the base items map
+                baseItems.putAll(modItems);
+            }
+        }
+        
+        // Find the plugin's mod directory (e.g., RQCGeneratedFiles)
         Path pluginModDir = getPluginModDirectory(plugin, modsDir);
         if (pluginModDir == null) {
             logEssential("Unable to find plugin mod directory in: " + modsDir);
@@ -180,8 +207,11 @@ public final class JsonQualityGenerator {
         
         Path itemsDir = pluginModDir.resolve("Server").resolve("Item").resolve("Items");
         
+        // Check ForceResetAssets flag
+        boolean forceResetAssets = configData != null && configData.isForceResetAssets();
+        
         // Check if files already exist
-        if (Files.exists(itemsDir)) {
+        if (Files.exists(itemsDir) && !forceResetAssets) {
             // Check if there are files in the Items directory
             try {
                 long fileCount = Files.list(itemsDir)
@@ -194,7 +224,6 @@ public final class JsonQualityGenerator {
                     return false;
                 }
             } catch (IOException e) {
-                logVerbose("Error checking existing files: " + e.getMessage());
                 // Continue with generation on error
             }
         }
@@ -202,7 +231,6 @@ public final class JsonQualityGenerator {
         try {
             // Create directory if necessary
             Files.createDirectories(itemsDir);
-            logVerbose("Directory created: " + itemsDir);
             
             // Always create/update manifest.json to ensure it's valid
             createManifestFile(pluginModDir);
@@ -211,28 +239,68 @@ public final class JsonQualityGenerator {
             return false;
         }
         
-        // Delete all existing JSON files to regenerate on each startup
-        try {
-            if (Files.exists(itemsDir)) {
-                java.util.List<Path> filesToDelete = new java.util.ArrayList<>();
-                try (java.util.stream.Stream<Path> stream = Files.walk(itemsDir)) {
-                    stream.filter(Files::isRegularFile)
-                          .filter(p -> p.toString().endsWith(".json"))
-                          .forEach(filesToDelete::add);
-                }
-                for (Path file : filesToDelete) {
-                    try {
-                        Files.delete(file);
-                    } catch (IOException e) {
-                        logVerbose("Unable to delete " + file + ": " + e.getMessage());
+        // Delete all content in the mod directory if ForceResetAssets is enabled
+        if (forceResetAssets) {
+            try {
+                if (Files.exists(pluginModDir)) {
+                    // Delete everything except manifest.json and RomnasQualityCrafting.json (config file)
+                    java.util.List<Path> itemsToDelete = new java.util.ArrayList<>();
+                    try (java.util.stream.Stream<Path> stream = Files.walk(pluginModDir)) {
+                        stream.forEach(path -> {
+                            // Skip the mod directory itself
+                            if (path.equals(pluginModDir)) {
+                                return;
+                            }
+                            Path relativePath = pluginModDir.relativize(path);
+                            String relativePathStr = relativePath.toString().replace("\\", "/");
+                            // Preserve manifest.json and RomnasQualityCrafting.json
+                            if (relativePathStr.equals("manifest.json") || relativePathStr.endsWith("/manifest.json") ||
+                                relativePathStr.equals("RomnasQualityCrafting.json") || relativePathStr.endsWith("/RomnasQualityCrafting.json")) {
+                                return;
+                            }
+                            itemsToDelete.add(path);
+                        });
+                    }
+                    
+                    // Delete in reverse order (files first, then directories)
+                    itemsToDelete.sort((a, b) -> {
+                        boolean aIsDir = Files.isDirectory(a);
+                        boolean bIsDir = Files.isDirectory(b);
+                        if (aIsDir && !bIsDir) return 1;
+                        if (!aIsDir && bIsDir) return -1;
+                        return b.compareTo(a); // Reverse order
+                    });
+                    
+                    int deletedCount = 0;
+                    for (Path item : itemsToDelete) {
+                        try {
+                            if (Files.isDirectory(item)) {
+                                deleteDirectoryRecursive(item);
+                            } else {
+                                Files.delete(item);
+                            }
+                            deletedCount++;
+                        } catch (IOException e) {
+                            // Ignore deletion errors
+                        }
+                    }
+                    
+                    if (deletedCount > 0) {
+                        logEssential("Force reset: Deleted " + deletedCount + " item(s) from mod directory.");
                     }
                 }
-                if (!filesToDelete.isEmpty()) {
-                    logVerbose("Deleted " + filesToDelete.size() + " existing JSON file(s) before regeneration");
-                }
+            } catch (IOException e) {
+                // Ignore errors
             }
-        } catch (IOException e) {
-            logVerbose("Error deleting existing files: " + e.getMessage());
+            
+            // Recréer le dossier Items après suppression
+            try {
+                Files.createDirectories(itemsDir);
+                logEssential("Items directory recreated after force reset.");
+            } catch (IOException e) {
+                logEssential("Error recreating items directory after force reset: " + e.getMessage());
+                return false;
+            }
         }
         
         logEssential("Generating quality variants for " + baseItems.size() + " base item(s)...");
@@ -254,26 +322,58 @@ public final class JsonQualityGenerator {
                 try {
                     Map<String, Object> jsonData = createQualityJson(baseItem, baseId, qualityId, quality);
                     if (jsonData != null && !jsonData.isEmpty()) {
+                        // Vérifier que le dossier parent existe avant d'écrire
+                        Path parentDir = jsonFile.getParent();
+                        if (parentDir != null && !Files.exists(parentDir)) {
+                            logEssential("Parent directory doesn't exist, recreating: " + parentDir);
+                            Files.createDirectories(parentDir);
+                        }
                         writeJsonFile(jsonFile, jsonData);
                         generatedCount++;
                         if (generatedCount % 50 == 0) {
-                            logVerbose("Progress: " + generatedCount + " file(s) created...");
+                            logEssential("Progress: " + generatedCount + " files generated...");
                         }
                     } else {
                         errorCount++;
-                        logVerbose("Failed: jsonData is null or empty for " + qualityId);
+                        logEssential("Failed to create quality JSON for " + baseId + " (" + quality.getDisplayName() + ")");
                     }
                 } catch (Exception e) {
                     errorCount++;
-                    logVerbose("Error generating " + qualityId + ": " + e.getMessage());
-                    if (verboseLogging) {
-                        e.printStackTrace();
-                    }
+                    logEssential("Error generating " + qualityId + ": " + e.getMessage());
+                    e.printStackTrace();
                 }
             }
         }
         
         logEssential("Generation completed: " + generatedCount + " JSON file(s) created, " + errorCount + " error(s)");
+        
+        // Copier les dossiers complets depuis les mods sources (only if external mods compat is enabled)
+        if (externalModsCompatEnabled) {
+            copyAssetDirectoriesFromSourceMods(plugin, pluginModDir);
+        }
+        
+        // Reset ForceResetAssets flag after successful generation
+        if (forceResetAssets && configData != null) {
+            try {
+                configData.setForceResetAssets(false);
+                // Save config
+                if (plugin instanceof dev.hytalemodding.RomnasQualityCrafting) {
+                    try {
+                        java.lang.reflect.Method getConfigMethod = plugin.getClass().getMethod("getConfig");
+                        Object configObj = getConfigMethod.invoke(plugin);
+                        if (configObj != null) {
+                            java.lang.reflect.Method saveMethod = configObj.getClass().getMethod("save");
+                            saveMethod.invoke(configObj);
+                            logEssential("ForceResetAssets flag reset to false.");
+                        }
+                    } catch (Exception e) {
+                        // Ignore if save method doesn't exist
+                    }
+                }
+            } catch (Exception e) {
+                // Ignore errors
+            }
+        }
         
         // Générer les SalvageRecipe pour chaque qualité
         generateSalvageRecipes(plugin, baseItems, pluginModDir);
@@ -283,44 +383,7 @@ public final class JsonQualityGenerator {
         
         return true;
     }
-    
-    /**
-     * Génère les variantes de qualité pour une liste spécifique d'items.
-     */
-    private static void generateQualityVariantsForItems(@Nonnull Map<String, Item> allItems, @Nonnull Path itemsDir, @Nonnull java.util.Set<String> itemIds) {
-        int generatedCount = 0;
-        int errorCount = 0;
-        
-        for (String baseId : itemIds) {
-            Item baseItem = allItems.get(baseId);
-            if (baseItem == null || baseItem == Item.UNKNOWN) {
-                continue;
-            }
-            
-            // Générer les 6 variantes de qualité
-            for (ItemQuality quality : ItemQuality.values()) {
-                String qualityId = baseId + "_" + quality.name();
-                try {
-                    Map<String, Object> jsonData = createQualityJson(baseItem, baseId, qualityId, quality);
-                    if (jsonData != null && !jsonData.isEmpty()) {
-                        Path qualityFilePath = itemsDir.resolve(qualityId + ".json");
-                        writeJsonFile(qualityFilePath, jsonData);
-                        generatedCount++;
-                    } else {
-                        errorCount++;
-                    }
-                } catch (Exception e) {
-                    errorCount++;
-                    logVerbose("Error generating " + qualityId + ": " + e.getMessage());
-                }
-            }
-        }
-        
-        if (generatedCount > 0 || errorCount > 0) {
-            logVerbose("External mods generation: " + generatedCount + " JSON file(s) created, " + errorCount + " error(s)");
-        }
-    }
-    
+
     /**
      * Crée les données JSON pour une variante de qualité en copiant le JSON original depuis Assets.zip ou un mod et en modifiant les valeurs nécessaires.
      */
@@ -332,7 +395,7 @@ public final class JsonQualityGenerator {
             Map<String, Object> jsonData = readJsonForItem(baseId);
             
             if (jsonData == null || jsonData.isEmpty()) {
-                logVerbose("Unable to read JSON for " + baseId + ", skipping.");
+                logEssential("Unable to read JSON for item: " + baseId + " (no JSON data found)");
                 return null;
             }
             
@@ -358,22 +421,30 @@ public final class JsonQualityGenerator {
             }
             
             // Modifier les dégâts des armes
-            modifyWeaponDagimage(jsonData, baseItem, quality.getDamageMultiplier());
+            modifyWeaponDamage(jsonData, baseItem, quality.getDamageMultiplier());
             
-            // Modifier la puissance des outils
-            modifyToolPower(jsonData, baseItem, quality.getDamageMultiplier());
+            // Modifier la puissance des outils (utilise le multiplicateur d'efficacité des outils)
+            modifyToolPower(jsonData, baseItem, quality.getToolEfficiencyMultiplier());
             
-            // Modifier les stats d'armure
-            modifyArmorStats(jsonData, baseItem, quality.getDamageMultiplier());
+            // Modifier les stats d'armure (utilise le multiplicateur d'armure)
+            modifyArmorStats(jsonData, baseItem, quality.getArmorMultiplier());
             
             removeRecipe(jsonData);
+            
+            // Collecter les références aux RootInteraction, ParticleSystem, ParticleSpawner, Trail, ModelVFX et Interactions pour les copier plus tard
+            collectRootInteractionReferences(jsonData);
+            collectParticleSystemReferences(jsonData);
+            collectParticleSpawnerReferences(jsonData);
+            collectTrailReferences(jsonData);
+            collectModelVFXReferences(jsonData);
+            collectInteractionReferences(jsonData);
 
             // Normaliser tous les nombres dans le JSON (convertir les doubles en entiers si approprié)
             normalizeJsonNumbers(jsonData);
             
             return jsonData;
         } catch (Exception e) {
-            logVerbose("Error creating JSON for " + qualityId + ": " + e.getMessage());
+            // Error creating JSON, logged silently
             e.printStackTrace();
             return null;
         }
@@ -383,6 +454,445 @@ public final class JsonQualityGenerator {
         jsonData.remove("Recipe");
     }
     
+    /**
+     * Collecte les références aux RootInteraction trouvées dans les items générés.
+     * Ces références seront utilisées pour copier les fichiers RootInteraction depuis les mods sources.
+     */
+    @SuppressWarnings("unchecked")
+    private static void collectRootInteractionReferences(@Nonnull Map<String, Object> jsonData) {
+        Object interactionsObj = jsonData.get("Interactions");
+        if (interactionsObj == null) {
+            return;
+        }
+        
+        if (!(interactionsObj instanceof Map)) {
+            return;
+        }
+        
+        Map<String, Object> interactions = (Map<String, Object>) interactionsObj;
+        
+        // Collecter toutes les références RootInteraction
+        for (Object value : interactions.values()) {
+            if (value instanceof String) {
+                String ref = (String) value;
+                // Les RootInteraction commencent généralement par "Root_"
+                if (ref.startsWith("Root_")) {
+                    requiredRootInteractions.add(ref);
+                                    // Reference collected silently
+                }
+            }
+        }
+    }
+    
+    /**
+     * Collecte les références aux ParticleSystem trouvées dans les items générés.
+     */
+    @SuppressWarnings("unchecked")
+    private static void collectParticleSystemReferences(@Nonnull Map<String, Object> jsonData) {
+        // Chercher dans Particles[]
+        Object particlesObj = jsonData.get("Particles");
+        if (particlesObj instanceof java.util.List) {
+            for (Object particle : (java.util.List<?>) particlesObj) {
+                if (particle instanceof Map) {
+                    Object systemId = ((Map<String, Object>) particle).get("SystemId");
+                    if (systemId instanceof String) {
+                        String systemIdStr = (String) systemId;
+                        requiredParticleSystems.add(systemIdStr);
+                        logEssential("Found ParticleSystem reference: " + systemIdStr);
+                    }
+                }
+            }
+        }
+        
+        // Chercher dans ItemAppearanceConditions.*.Particles[]
+        Object appearanceConditionsObj = jsonData.get("ItemAppearanceConditions");
+        if (appearanceConditionsObj instanceof Map) {
+            Map<String, Object> appearanceConditions = (Map<String, Object>) appearanceConditionsObj;
+            for (Object conditionList : appearanceConditions.values()) {
+                if (conditionList instanceof java.util.List) {
+                    for (Object condition : (java.util.List<?>) conditionList) {
+                        if (condition instanceof Map) {
+                            Object particlesObj2 = ((Map<String, Object>) condition).get("Particles");
+                            if (particlesObj2 instanceof java.util.List) {
+                                for (Object particle : (java.util.List<?>) particlesObj2) {
+                                    if (particle instanceof Map) {
+                                        Object systemId = ((Map<String, Object>) particle).get("SystemId");
+                                        if (systemId instanceof String) {
+                                            requiredParticleSystems.add((String) systemId);
+                                            // Reference collected silently
+                                        }
+                                    }
+                                }
+                            }
+                            Object firstPersonParticlesObj = ((Map<String, Object>) condition).get("FirstPersonParticles");
+                            if (firstPersonParticlesObj instanceof java.util.List) {
+                                for (Object particle : (java.util.List<?>) firstPersonParticlesObj) {
+                                    if (particle instanceof Map) {
+                                        Object systemId = ((Map<String, Object>) particle).get("SystemId");
+                                        if (systemId instanceof String) {
+                                            requiredParticleSystems.add((String) systemId);
+                                            // Reference collected silently
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        
+        // Chercher dans InteractionVars.*.Interactions[].Effects.Particles[]
+        Object interactionVarsObj = jsonData.get("InteractionVars");
+        if (interactionVarsObj instanceof Map) {
+            Map<String, Object> interactionVars = (Map<String, Object>) interactionVarsObj;
+            for (Object interactionVar : interactionVars.values()) {
+                if (interactionVar instanceof Map) {
+                    Object interactionsList = ((Map<String, Object>) interactionVar).get("Interactions");
+                    if (interactionsList instanceof java.util.List) {
+                        for (Object interaction : (java.util.List<?>) interactionsList) {
+                            if (interaction instanceof Map) {
+                                Map<String, Object> interactionMap = (Map<String, Object>) interaction;
+                                // Chercher dans Effects.Particles[]
+                                Object effectsObj = interactionMap.get("Effects");
+                                if (effectsObj instanceof Map) {
+                                    Object particlesObj3 = ((Map<String, Object>) effectsObj).get("Particles");
+                                    if (particlesObj3 instanceof java.util.List) {
+                                        for (Object particle : (java.util.List<?>) particlesObj3) {
+                                            if (particle instanceof Map) {
+                                                Object systemId = ((Map<String, Object>) particle).get("SystemId");
+                                                if (systemId instanceof String) {
+                                                    requiredParticleSystems.add((String) systemId);
+                                                    logVerbose("Found ParticleSystem reference in InteractionVars: " + systemId);
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    /**
+     * Collecte les références aux ParticleSpawner trouvées dans les items générés.
+     */
+    @SuppressWarnings("unchecked")
+    private static void collectParticleSpawnerReferences(@Nonnull Map<String, Object> jsonData) {
+        // Chercher dans Particles[] pour SpawnerId
+        Object particlesObj = jsonData.get("Particles");
+        if (particlesObj instanceof java.util.List) {
+            for (Object particle : (java.util.List<?>) particlesObj) {
+                if (particle instanceof Map) {
+                    Object spawnerId = ((Map<String, Object>) particle).get("SpawnerId");
+                    if (spawnerId instanceof String) {
+                        String spawnerIdStr = (String) spawnerId;
+                        requiredParticleSpawners.add(spawnerIdStr);
+                        logEssential("Found ParticleSpawner reference: " + spawnerIdStr);
+                    }
+                }
+            }
+        }
+        
+        // Chercher dans ItemAppearanceConditions.*.Particles[]
+        Object appearanceConditionsObj = jsonData.get("ItemAppearanceConditions");
+        if (appearanceConditionsObj instanceof Map) {
+            Map<String, Object> appearanceConditions = (Map<String, Object>) appearanceConditionsObj;
+            for (Object conditionList : appearanceConditions.values()) {
+                if (conditionList instanceof java.util.List) {
+                    for (Object condition : (java.util.List<?>) conditionList) {
+                        if (condition instanceof Map) {
+                            Object particlesObj2 = ((Map<String, Object>) condition).get("Particles");
+                            if (particlesObj2 instanceof java.util.List) {
+                                for (Object particle : (java.util.List<?>) particlesObj2) {
+                                    if (particle instanceof Map) {
+                                        Object spawnerId = ((Map<String, Object>) particle).get("SpawnerId");
+                                        if (spawnerId instanceof String) {
+                                            requiredParticleSpawners.add((String) spawnerId);
+                                            // Reference collected silently
+                                        }
+                                    }
+                                }
+                            }
+                            Object firstPersonParticlesObj = ((Map<String, Object>) condition).get("FirstPersonParticles");
+                            if (firstPersonParticlesObj instanceof java.util.List) {
+                                for (Object particle : (java.util.List<?>) firstPersonParticlesObj) {
+                                    if (particle instanceof Map) {
+                                        Object spawnerId = ((Map<String, Object>) particle).get("SpawnerId");
+                                        if (spawnerId instanceof String) {
+                                            requiredParticleSpawners.add((String) spawnerId);
+                                            // Reference collected silently
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        
+        // Chercher dans InteractionVars.*.Interactions[].Effects.Particles[]
+        Object interactionVarsObj = jsonData.get("InteractionVars");
+        if (interactionVarsObj instanceof Map) {
+            Map<String, Object> interactionVars = (Map<String, Object>) interactionVarsObj;
+            for (Object interactionVar : interactionVars.values()) {
+                if (interactionVar instanceof Map) {
+                    Object interactionsList = ((Map<String, Object>) interactionVar).get("Interactions");
+                    if (interactionsList instanceof java.util.List) {
+                        for (Object interaction : (java.util.List<?>) interactionsList) {
+                            if (interaction instanceof Map) {
+                                Map<String, Object> interactionMap = (Map<String, Object>) interaction;
+                                // Chercher dans Effects.Particles[]
+                                Object effectsObj = interactionMap.get("Effects");
+                                if (effectsObj instanceof Map) {
+                                    Object particlesObj3 = ((Map<String, Object>) effectsObj).get("Particles");
+                                    if (particlesObj3 instanceof java.util.List) {
+                                        for (Object particle : (java.util.List<?>) particlesObj3) {
+                                            if (particle instanceof Map) {
+                                                Object spawnerId = ((Map<String, Object>) particle).get("SpawnerId");
+                                                if (spawnerId instanceof String) {
+                                                    requiredParticleSpawners.add((String) spawnerId);
+                                                    // Reference collected silently
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    /**
+     * Collecte les références aux Trail trouvées dans les items générés.
+     */
+    @SuppressWarnings("unchecked")
+    private static void collectTrailReferences(@Nonnull Map<String, Object> jsonData) {
+        Object trailsObj = jsonData.get("Trails");
+        if (trailsObj instanceof java.util.List) {
+            for (Object trail : (java.util.List<?>) trailsObj) {
+                if (trail instanceof Map) {
+                    Map<String, Object> trailMap = (Map<String, Object>) trail;
+                    Object trailId = trailMap.get("TrailId");
+                    if (trailId instanceof String) {
+                        requiredTrails.add((String) trailId);
+                        // Reference collected silently
+                    }
+                }
+            }
+        }
+    }
+    
+    /**
+     * Collecte les références aux ModelVFX trouvées dans les items générés.
+     */
+    @SuppressWarnings("unchecked")
+    private static void collectModelVFXReferences(@Nonnull Map<String, Object> jsonData) {
+        // Chercher dans ItemAppearanceConditions.*.ModelVFXId
+        Object appearanceConditionsObj = jsonData.get("ItemAppearanceConditions");
+        if (appearanceConditionsObj instanceof Map) {
+            Map<String, Object> appearanceConditions = (Map<String, Object>) appearanceConditionsObj;
+            for (Object conditionList : appearanceConditions.values()) {
+                if (conditionList instanceof java.util.List) {
+                    for (Object condition : (java.util.List<?>) conditionList) {
+                        if (condition instanceof Map) {
+                            Object modelVFXId = ((Map<String, Object>) condition).get("ModelVFXId");
+                            if (modelVFXId instanceof String) {
+                                requiredModelVFX.add((String) modelVFXId);
+                                // Reference collected silently
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    /**
+     * Collecte les références aux Interactions trouvées dans les items générés.
+     * Les interactions sont référencées via "Parent" dans InteractionVars.
+     */
+    @SuppressWarnings("unchecked")
+    private static void collectInteractionReferences(@Nonnull Map<String, Object> jsonData) {
+        Object interactionVarsObj = jsonData.get("InteractionVars");
+        if (interactionVarsObj instanceof Map) {
+            Map<String, Object> interactionVars = (Map<String, Object>) interactionVarsObj;
+            for (Object interactionVar : interactionVars.values()) {
+                if (interactionVar instanceof Map) {
+                    Object interactionsList = ((Map<String, Object>) interactionVar).get("Interactions");
+                    if (interactionsList instanceof java.util.List) {
+                        for (Object interaction : (java.util.List<?>) interactionsList) {
+                            if (interaction instanceof Map) {
+                                Map<String, Object> interactionMap = (Map<String, Object>) interaction;
+                                Object parent = interactionMap.get("Parent");
+                                if (parent instanceof String) {
+                                    String parentId = (String) parent;
+                                    // Collecter toutes les interactions référencées
+                                    // Les interactions de mods (comme Weapon_Maelstrom_*) seront copiées depuis les mods
+                                    // Les interactions de base seront cherchées dans Assets.zip si nécessaire
+                                    requiredInteractions.add(parentId);
+                                    // Reference collected silently
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    /**
+     * Copie tout le contenu des mods sources vers le mod généré (sauf manifest.json).
+     * Cette approche garantit qu'on a tous les fichiers nécessaires pour la compatibilité maximale.
+     */
+    private static void copyAssetDirectoriesFromSourceMods(@Nonnull JavaPlugin plugin, @Nonnull Path pluginModDir) {
+        logEssential("Copying assets from source mods...");
+        
+        // Collecter tous les mods sources uniques
+        java.util.Set<Path> sourceMods = new java.util.HashSet<>();
+        for (Path sourcePath : modItemSourcePaths.values()) {
+            if (sourcePath != null && Files.exists(sourcePath)) {
+                // Si c'est un ZIP, on garde le ZIP
+                // Si c'est un fichier JSON, on prend le mod parent
+                String fileName = sourcePath.getFileName().toString();
+                if (fileName.endsWith(".zip") || fileName.endsWith(".jar")) {
+                    sourceMods.add(sourcePath);
+                } else {
+                    // C'est un fichier JSON, remonter jusqu'au dossier mod
+                    Path modDir = sourcePath;
+                    // Remonter jusqu'à trouver le dossier mod (qui contient Server/ ou Common/)
+                    while (modDir != null && 
+                           !Files.exists(modDir.resolve("Server")) && 
+                           !Files.exists(modDir.resolve("Common"))) {
+                        modDir = modDir.getParent();
+                        if (modDir == null || modDir.equals(modDir.getRoot())) {
+                            break;
+                        }
+                    }
+                    if (modDir != null && (Files.exists(modDir.resolve("Server")) || Files.exists(modDir.resolve("Common")))) {
+                        sourceMods.add(modDir);
+                    }
+                }
+            }
+        }
+        
+        if (sourceMods.isEmpty()) {
+            return;
+        }
+        
+        int totalCopied = 0;
+        for (Path sourceMod : sourceMods) {
+            String modName = sourceMod.getFileName().toString();
+            
+            if (Files.isDirectory(sourceMod)) {
+                // Mod en dossier - copier tout sauf manifest.json
+                try {
+                    Files.walk(sourceMod).forEach(sourcePath -> {
+                        try {
+                            Path relativePath = sourceMod.relativize(sourcePath);
+                            String relativePathStr = relativePath.toString().replace("\\", "/");
+                            
+                            // Ignorer le manifest.json
+                            if (relativePathStr.equals("manifest.json") || relativePathStr.endsWith("/manifest.json")) {
+                                return;
+                            }
+                            
+                            Path targetPath = pluginModDir.resolve(relativePath);
+                            
+                            if (Files.isDirectory(sourcePath)) {
+                                Files.createDirectories(targetPath);
+                            } else {
+                                Files.createDirectories(targetPath.getParent());
+                                Files.copy(sourcePath, targetPath, java.nio.file.StandardCopyOption.REPLACE_EXISTING);
+                            }
+                        } catch (IOException e) {
+                            // Ignore errors silently
+                        }
+                    });
+                    int fileCount = countFiles(sourceMod);
+                    totalCopied += fileCount;
+                } catch (IOException e) {
+                    // Ignore errors silently
+                }
+            } else if (modName.endsWith(".zip") || modName.endsWith(".jar")) {
+                // Mod en ZIP - copier tout sauf manifest.json
+                try (ZipFile zipFile = new ZipFile(sourceMod.toFile())) {
+                    java.util.Enumeration<? extends ZipEntry> entries = zipFile.entries();
+                    int filesCopied = 0;
+                    
+                    while (entries.hasMoreElements()) {
+                        ZipEntry entry = entries.nextElement();
+                        String entryName = entry.getName();
+                        
+                        // Ignorer le manifest.json
+                        if (entryName.equals("manifest.json") || entryName.endsWith("/manifest.json")) {
+                            continue;
+                        }
+                        
+                        // Ignorer les dossiers (ils seront créés automatiquement)
+                        if (entry.isDirectory()) {
+                            continue;
+                        }
+                        
+                        try (InputStream is = zipFile.getInputStream(entry)) {
+                            Path targetFile = pluginModDir.resolve(entryName);
+                            Files.createDirectories(targetFile.getParent());
+                            Files.copy(is, targetFile, java.nio.file.StandardCopyOption.REPLACE_EXISTING);
+                            filesCopied++;
+                        } catch (Exception e) {
+                            // Ignore errors silently
+                        }
+                    }
+                    
+                    totalCopied += filesCopied;
+                } catch (IOException e) {
+                    // Ignore errors silently
+                }
+            }
+        }
+        
+        if (totalCopied > 0) {
+            logEssential("Copied " + totalCopied + " asset file(s) from source mods.");
+        }
+    }
+
+    /**
+     * Supprime récursivement un dossier et son contenu.
+     */
+    private static void deleteDirectoryRecursive(@Nonnull Path directory) throws IOException {
+        if (Files.exists(directory)) {
+            Files.walk(directory)
+                .sorted((a, b) -> b.compareTo(a)) // Delete files before directories
+                .forEach(path -> {
+                    try {
+                        Files.delete(path);
+                    } catch (IOException e) {
+                        // Ignore deletion errors
+                    }
+                });
+        }
+    }
+    
+    /**
+     * Compte le nombre de fichiers dans un dossier (récursif).
+     */
+    private static int countFiles(@Nonnull Path directory) {
+        try {
+            return (int) Files.walk(directory)
+                .filter(Files::isRegularFile)
+                .count();
+        } catch (IOException e) {
+            return 0;
+        }
+    }
+
     /**
      * Modifie les dégâts des armes dans le JSON.
      * Structure Hytale : les armes utilisent "InteractionVars" à la racine, pas "Weapon.Interactions"
@@ -667,230 +1177,7 @@ public final class JsonQualityGenerator {
             // Ignorer les erreurs de modification des stats d'armure
         }
     }
-    
-    /**
-     * Crée le JSON via le codec d'Hytale (méthode préférée).
-     */
-    @Nullable
-    private static Map<String, Object> createQualityJsonViaCodec(@Nonnull Item baseItem, @Nonnull String baseId) {
-        try {
-            Object encoded = encodeItemViaCodec(baseItem);
-            if (encoded == null) {
-                return null;
-            }
-            
-            // Convertir l'objet encodé en Map
-            return convertEncodedToMap(encoded);
-        } catch (Exception e) {
-            return null;
-        }
-    }
-    
-    /**
-     * Construit le JSON manuellement en utilisant la réflexion pour lire les champs de l'item.
-     * Cette méthode évite les problèmes de sérialisation avec Gson.
-     */
-    @Nullable
-    private static Map<String, Object> buildJsonManually(@Nonnull Item baseItem, @Nonnull String baseId) {
-        Map<String, Object> jsonData = new java.util.LinkedHashMap<>();
-        
-        try {
-            // Lire les champs publics de l'item via réflexion
-            Class<?> itemClass = baseItem.getClass();
-            
-            // Lire tous les champs déclarés
-            for (Field field : itemClass.getDeclaredFields()) {
-                try {
-                    field.setAccessible(true);
-                    Object value = field.get(baseItem);
-                    
-                    // Ignorer les valeurs null et les types problématiques
-                    if (value == null) continue;
-                    
-                    String fieldName = field.getName();
-                    String fieldType = field.getType().getName();
-                    
-                    // Ignorer les champs internes et problématiques
-                    if (fieldType.contains("SoftReference") || fieldType.contains("WeakReference") ||
-                        fieldType.contains("Reference") || fieldType.contains("Thread") ||
-                        fieldType.contains("ClassLoader") || fieldType.contains("Bson") ||
-                        fieldName.equals("timestamp") || fieldName.equals("clock") ||
-                        fieldName.equals("ref") || fieldName.startsWith("$") ||
-                        fieldName.equals("serialVersionUID")) {
-                        continue;
-                    }
-                    
-                    // Convertir la valeur en type JSON-compatible
-                    Object jsonValue = convertToJsonValue(value);
-                    if (jsonValue != null) {
-                        // Utiliser le nom du champ avec la première lettre en majuscule (convention JSON Hytale)
-                        String jsonKey = fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1);
-                        jsonData.put(jsonKey, jsonValue);
-                    }
-                } catch (Exception e) {
-                    // Ignorer les champs qui ne peuvent pas être lus
-                    continue;
-                }
-            }
-            
-            // Lire aussi les méthodes getter publiques
-            for (Method method : itemClass.getMethods()) {
-                try {
-                    String methodName = method.getName();
-                    if (methodName.startsWith("get") && method.getParameterCount() == 0 && 
-                        methodName.length() > 3 && !methodName.equals("getClass")) {
-                        
-                        Object value = method.invoke(baseItem);
-                        if (value == null) continue;
-                        
-                        String fieldName = methodName.substring(3);
-                        String returnType = method.getReturnType().getName();
-                        
-                        // Ignorer les types problématiques
-                        if (returnType.contains("SoftReference") || returnType.contains("WeakReference") ||
-                            returnType.contains("Reference") || returnType.contains("Thread") ||
-                            returnType.contains("ClassLoader") || returnType.contains("Bson")) {
-                            continue;
-                        }
-                        
-                        Object jsonValue = convertToJsonValue(value);
-                        if (jsonValue != null) {
-                            jsonData.put(fieldName, jsonValue);
-                        }
-                    }
-                } catch (Exception e) {
-                    // Ignorer les méthodes qui ne peuvent pas être appelées
-                    continue;
-                }
-            }
-            
-            return jsonData.isEmpty() ? null : jsonData;
-        } catch (Exception e) {
-            return null;
-        }
-    }
-    
-    /**
-     * Convertit une valeur Java en valeur JSON-compatible.
-     */
-    @Nullable
-    private static Object convertToJsonValue(@Nullable Object value) {
-        if (value == null) return null;
-        
-        // Types primitifs et String
-        if (value instanceof String || value instanceof Number || value instanceof Boolean) {
-            return value;
-        }
-        
-        // Collections
-        if (value instanceof java.util.List) {
-            java.util.List<Object> result = new java.util.ArrayList<>();
-            for (Object item : (java.util.List<?>) value) {
-                Object converted = convertToJsonValue(item);
-                if (converted != null) {
-                    result.add(converted);
-                }
-            }
-            return result.isEmpty() ? null : result;
-        }
-        
-        if (value instanceof java.util.Map) {
-            Map<String, Object> result = new java.util.LinkedHashMap<>();
-            for (Map.Entry<?, ?> entry : ((java.util.Map<?, ?>) value).entrySet()) {
-                Object key = entry.getKey();
-                Object val = entry.getValue();
-                if (key != null && val != null) {
-                    Object convertedVal = convertToJsonValue(val);
-                    if (convertedVal != null) {
-                        result.put(key.toString(), convertedVal);
-                    }
-                }
-            }
-            return result.isEmpty() ? null : result;
-        }
-        
-        // Essayer de sérialiser avec Gson pour les objets complexes
-        try {
-            String json = GSON.toJson(value);
-            return GSON.fromJson(json, Object.class);
-        } catch (Exception e) {
-            // Si la sérialisation échoue, retourner null
-            return null;
-        }
-    }
-    
-    /**
-     * Encode un item en utilisant le codec d'Hytale.
-     */
-    @Nullable
-    private static Object encodeItemViaCodec(@Nonnull Item item) {
-        try {
-            Field codecField = null;
-            for (Field f : Item.class.getDeclaredFields()) {
-                String n = f.getName().toUpperCase();
-                if ((n.equals("CODEC") || n.equals("ABSTRACT_CODEC")) && f.getType().getName().contains("Codec")) {
-                    codecField = f;
-                    break;
-                }
-            }
-            if (codecField == null) return null;
-            codecField.setAccessible(true);
-            Object codec = codecField.get(null);
-            if (codec == null) return null;
-            
-            // Chercher la méthode encode
-            Method encodeMethod = null;
-            for (Method m : codec.getClass().getMethods()) {
-                if (m.getName().equals("encode") && m.getParameterCount() == 1) {
-                    encodeMethod = m;
-                    break;
-                }
-            }
-            if (encodeMethod == null) return null;
-            
-            return encodeMethod.invoke(codec, item);
-        } catch (Exception e) {
-            return null;
-        }
-    }
-    
-    /**
-     * Convertit un objet encodé (BsonDocument, Map, etc.) en Map<String, Object> pour modification.
-     */
-    @SuppressWarnings("unchecked")
-    @Nullable
-    private static Map<String, Object> convertEncodedToMap(@Nonnull Object encoded) {
-        // Si c'est déjà une Map
-        if (encoded instanceof Map) {
-            return (Map<String, Object>) encoded;
-        }
-        
-        // Si c'est un BsonDocument, convertir récursivement en Map
-        if (encoded.getClass().getName().contains("BsonDocument")) {
-            try {
-                return convertBsonDocumentToMap(encoded);
-            } catch (Exception e) {
-                // Si la conversion récursive échoue, essayer avec toJson()
-                try {
-                    Method toJsonMethod = encoded.getClass().getMethod("toJson");
-                    Object jsonResult = toJsonMethod.invoke(encoded);
-                    String json = jsonResult != null ? jsonResult.toString() : encoded.toString();
-                    return GSON.fromJson(json, new TypeToken<Map<String, Object>>(){}.getType());
-                } catch (Exception e2) {
-                    return null;
-                }
-            }
-        }
-        
-        // Essayer de sérialiser avec Gson puis désérialiser en Map
-        try {
-            String json = GSON.toJson(encoded);
-            return GSON.fromJson(json, new TypeToken<Map<String, Object>>(){}.getType());
-        } catch (Exception e) {
-            return null;
-        }
-    }
-    
+
     /**
      * Convertit récursivement un BsonDocument en Map<String, Object>.
      */
@@ -1034,7 +1321,7 @@ public final class JsonQualityGenerator {
             if (!Files.exists(manifestPath)) {
                 Map<String, Object> manifest = new java.util.LinkedHashMap<>();
                 manifest.put("Group", "dev.hytalemodding");
-                manifest.put("Name", "RomnasQualityCrafting");
+                manifest.put("Name", "RQCGeneratedFiles");
                 manifest.put("Description", "Quality variants system for Hytale");
                 manifest.put("Version", "1.1.0");
                 manifest.put("ServerVersion", "*");
@@ -1050,21 +1337,107 @@ public final class JsonQualityGenerator {
     }
     
     /**
-     * Trouve le chemin vers Assets.zip dans le dossier d'installation de Hytale.
+     * Trouve le chemin vers Assets.zip (fichier ZIP).
+     * Structure typique: Hytale/UserData/Mods/{mods} et Hytale/install/release/package/game/latest/Assets.zip
+     * On remonte depuis le dossier mods pour trouver le dossier Hytale racine.
      */
     @Nullable
     private static Path findAssetsZipPath() {
+        // D'abord, essayer dans le dossier parent de mods (racine du serveur/monde)
+        if (cachedModsDir != null) {
+            try {
+                Path parentDir = cachedModsDir.getParent();
+                if (parentDir != null) {
+                    Path assetsZipPath = parentDir.resolve("Assets.zip");
+                    if (Files.exists(assetsZipPath) && Files.isRegularFile(assetsZipPath)) {
+                        logVerbose("Found Assets.zip file at: " + assetsZipPath);
+                        return assetsZipPath;
+                    }
+                }
+            } catch (Exception e) {
+                logVerbose("Error searching for Assets.zip in server root: " + e.getMessage());
+            }
+        }
+        
+        // Ensuite, remonter pour trouver le dossier Hytale racine
+        // Structure: Hytale/UserData/Mods/{mods} -> on est dans "mods"
+        // On doit remonter jusqu'à Hytale, puis aller dans install/release/package/game/latest/Assets.zip
+        if (cachedModsDir != null) {
+            try {
+                Path currentDir = cachedModsDir;
+                Path hytaleRootDir = null;
+                
+                // Remonter jusqu'à trouver un dossier qui contient à la fois "UserData" et "install"
+                // C'est le dossier racine de Hytale
+                for (int i = 0; i < 10 && currentDir != null; i++) {
+                    Path userDataDir = currentDir.resolve("UserData");
+                    Path installDir = currentDir.resolve("install");
+                    
+                    if (Files.exists(userDataDir) && Files.isDirectory(userDataDir) &&
+                        Files.exists(installDir) && Files.isDirectory(installDir)) {
+                        // On a trouvé le dossier racine de Hytale
+                        hytaleRootDir = currentDir;
+                        logVerbose("Found Hytale root directory at: " + hytaleRootDir);
+                        break;
+                    }
+                    
+                    currentDir = currentDir.getParent();
+                }
+                
+                // Si on a trouvé le dossier racine, chercher Assets.zip dans install/release/package/game/latest/
+                if (hytaleRootDir != null) {
+                    Path assetsZipPath = hytaleRootDir
+                        .resolve("install")
+                        .resolve("release")
+                        .resolve("package")
+                        .resolve("game")
+                        .resolve("latest")
+                        .resolve("Assets.zip");
+                    
+                    if (Files.exists(assetsZipPath) && Files.isRegularFile(assetsZipPath)) {
+                        logVerbose("Found Assets.zip file at: " + assetsZipPath);
+                        return assetsZipPath;
+                    } else {
+                        logVerbose("Assets.zip not found at expected location: " + assetsZipPath);
+                    }
+                }
+            } catch (Exception e) {
+                logVerbose("Error searching for Assets.zip in Hytale installation: " + e.getMessage());
+            }
+        }
+        return null;
+    }
+    
+    /**
+     * Trouve le chemin vers HytaleAssets ou Assets.zip (comme dossier) dans le dossier parent du dossier mods.
+     * Vérifie d'abord HytaleAssets, puis Assets.zip comme dossier.
+     */
+    @Nullable
+    private static Path findHytaleAssetsPath() {
+        if (cachedModsDir == null) {
+            return null;
+        }
+        
         try {
-            String userHome = System.getProperty("user.home");
-            if (userHome != null) {
-                // Chemin Windows typique : C:\Users\{user}\AppData\Roaming\Hytale\install\release\package\game\latest\Assets.zip
-                Path assetsZipPath = Paths.get(userHome, "AppData", "Roaming", "Hytale", "install", "release", "package", "game", "latest", "Assets.zip");
-                if (Files.exists(assetsZipPath)) {
-                    return assetsZipPath;
+            // Le dossier HytaleAssets ou Assets.zip se trouve dans le dossier parent de mods
+            Path parentDir = cachedModsDir.getParent();
+            if (parentDir != null) {
+                // D'abord, essayer HytaleAssets
+                Path hytaleAssetsPath = parentDir.resolve("HytaleAssets");
+                if (Files.exists(hytaleAssetsPath) && Files.isDirectory(hytaleAssetsPath)) {
+                    logVerbose("Found HytaleAssets at: " + hytaleAssetsPath);
+                    return hytaleAssetsPath;
+                }
+                
+                // Ensuite, essayer Assets.zip comme dossier
+                Path assetsZipDirPath = parentDir.resolve("Assets.zip");
+                if (Files.exists(assetsZipDirPath) && Files.isDirectory(assetsZipDirPath)) {
+                    logVerbose("Found Assets.zip directory at: " + assetsZipDirPath);
+                    return assetsZipDirPath;
                 }
             }
         } catch (Exception e) {
-            logVerbose("Error searching for Assets.zip: " + e.getMessage());
+            logVerbose("Error searching for HytaleAssets/Assets.zip directory: " + e.getMessage());
         }
         return null;
     }
@@ -1134,6 +1507,71 @@ public final class JsonQualityGenerator {
         }
     }
     
+    /**
+     * Reads a JSON file from HytaleAssets or Assets.zip directory (unzipped version of Assets.zip).
+     * Vérifie d'abord HytaleAssets, puis Assets.zip comme dossier dans le parent de mods.
+     * @param itemId The item ID (e.g., "Armor_Adamantite_Chest")
+     * @return The parsed JSON content as a Map, or null if the file doesn't exist
+     */
+    @Nullable
+    private static Map<String, Object> readJsonFromHytaleAssets(@Nonnull String itemId) {
+        Path hytaleAssetsPath = findHytaleAssetsPath();
+        if (hytaleAssetsPath == null || !Files.exists(hytaleAssetsPath)) {
+            logVerbose("HytaleAssets/Assets.zip directory not found");
+            return null;
+        }
+        
+        // Essayer d'abord directement dans Server/Item/Items/
+        Path[] possiblePaths = {
+            hytaleAssetsPath.resolve("Server").resolve("Item").resolve("Items").resolve(itemId + ".json"),
+            hytaleAssetsPath.resolve("Server").resolve("Item").resolve("Items").resolve("Bench").resolve(itemId + ".json"),
+            hytaleAssetsPath.resolve("Server").resolve("Item").resolve("Items").resolve("Tool").resolve(itemId + ".json"),
+            hytaleAssetsPath.resolve("Server").resolve("Item").resolve("Items").resolve("Armor").resolve(itemId + ".json"),
+            hytaleAssetsPath.resolve("Server").resolve("Item").resolve("Items").resolve("Weapon").resolve(itemId + ".json")
+        };
+        
+        for (Path filePath : possiblePaths) {
+            if (Files.exists(filePath) && Files.isRegularFile(filePath)) {
+                try (java.io.FileReader reader = new java.io.FileReader(filePath.toFile(), StandardCharsets.UTF_8)) {
+                    TypeToken<Map<String, Object>> typeToken = new TypeToken<Map<String, Object>>() {};
+                    Map<String, Object> jsonData = GSON.fromJson(reader, typeToken.getType());
+                    logVerbose("JSON read from HytaleAssets: " + hytaleAssetsPath.relativize(filePath));
+                    return jsonData;
+                } catch (Exception e) {
+                    logVerbose("Error reading from HytaleAssets for " + itemId + " at " + filePath + ": " + e.getMessage());
+                }
+            }
+        }
+        
+        // Si aucun chemin direct ne fonctionne, chercher récursivement dans Server/Item/Items/
+        try {
+            Path itemsDir = hytaleAssetsPath.resolve("Server").resolve("Item").resolve("Items");
+            if (Files.exists(itemsDir) && Files.isDirectory(itemsDir)) {
+                try (java.util.stream.Stream<Path> stream = Files.walk(itemsDir)) {
+                    java.util.List<Path> matchingFiles = stream
+                        .filter(Files::isRegularFile)
+                        .filter(p -> p.getFileName().toString().equals(itemId + ".json"))
+                        .collect(java.util.stream.Collectors.toList());
+                    
+                    if (!matchingFiles.isEmpty()) {
+                        Path filePath = matchingFiles.get(0);
+                        try (java.io.FileReader reader = new java.io.FileReader(filePath.toFile(), StandardCharsets.UTF_8)) {
+                            TypeToken<Map<String, Object>> typeToken = new TypeToken<Map<String, Object>>() {};
+                            Map<String, Object> jsonData = GSON.fromJson(reader, typeToken.getType());
+                            logVerbose("JSON read from HytaleAssets: " + hytaleAssetsPath.relativize(filePath));
+                            return jsonData;
+                        }
+                    }
+                }
+            }
+        } catch (Exception e) {
+            logVerbose("Error searching recursively in HytaleAssets for " + itemId + ": " + e.getMessage());
+        }
+        
+        logVerbose("File not found in HytaleAssets for item: " + itemId);
+        return null;
+    }
+
     /**
      * Génère les SalvageRecipe pour chaque qualité d'item.
      * Les recettes sont copiées depuis Assets.zip et modifiées pour référencer les items avec qualité.
@@ -1216,12 +1654,20 @@ public final class JsonQualityGenerator {
     }
     
     /**
-     * Lit une recette de salvage depuis Assets.zip.
+     * Lit une recette de salvage depuis HytaleAssets/Assets.zip (dossier) ou Assets.zip (fichier).
+     * Vérifie d'abord dans HytaleAssets/Assets.zip comme dossier, puis dans Assets.zip comme fichier.
      * @param itemId L'ID de l'item (ex: "Weapon_Sword_Copper")
      * @return Le contenu JSON parsé en Map, ou null si le fichier n'existe pas
      */
     @Nullable
     private static Map<String, Object> readSalvageRecipeFromAssetsZip(@Nonnull String itemId) {
+        // D'abord, essayer depuis HytaleAssets
+        Map<String, Object> result = readSalvageRecipeFromHytaleAssets(itemId);
+        if (result != null) {
+            return result;
+        }
+        
+        // Sinon, essayer depuis Assets.zip
         Path assetsZipPath = findAssetsZipPath();
         if (assetsZipPath == null || !Files.exists(assetsZipPath)) {
             return null;
@@ -1273,6 +1719,73 @@ public final class JsonQualityGenerator {
             logVerbose("Error reading SalvageRecipe for " + itemId + ": " + e.getMessage());
             return null;
         }
+    }
+    
+    /**
+     * Lit une recette de salvage depuis HytaleAssets ou Assets.zip directory.
+     * Vérifie d'abord HytaleAssets, puis Assets.zip comme dossier dans le parent de mods.
+     * @param itemId L'ID de l'item (ex: "Weapon_Sword_Copper")
+     * @return Le contenu JSON parsé en Map, ou null si le fichier n'existe pas
+     */
+    @Nullable
+    private static Map<String, Object> readSalvageRecipeFromHytaleAssets(@Nonnull String itemId) {
+        Path hytaleAssetsPath = findHytaleAssetsPath();
+        if (hytaleAssetsPath == null || !Files.exists(hytaleAssetsPath)) {
+            return null;
+        }
+        
+        // Essayer différents noms de fichiers possibles
+        String[] possibleNames = {
+            "Salvage_" + itemId + ".json",
+            itemId + "_Salvage.json",
+            itemId + ".json"
+        };
+        
+        Path salvageDir = hytaleAssetsPath.resolve("Server").resolve("Item").resolve("Recipes").resolve("Salvage");
+        if (!Files.exists(salvageDir) || !Files.isDirectory(salvageDir)) {
+            return null;
+        }
+        
+        for (String fileName : possibleNames) {
+            Path filePath = salvageDir.resolve(fileName);
+            if (Files.exists(filePath) && Files.isRegularFile(filePath)) {
+                try (java.io.FileReader reader = new java.io.FileReader(filePath.toFile(), StandardCharsets.UTF_8)) {
+                    TypeToken<Map<String, Object>> typeToken = new TypeToken<Map<String, Object>>() {};
+                    Map<String, Object> jsonData = GSON.fromJson(reader, typeToken.getType());
+                    logVerbose("SalvageRecipe read from HytaleAssets: " + hytaleAssetsPath.relativize(filePath));
+                    return jsonData;
+                } catch (Exception e) {
+                    logVerbose("Error reading SalvageRecipe from HytaleAssets for " + itemId + " at " + filePath + ": " + e.getMessage());
+                }
+            }
+        }
+        
+        // Chercher récursivement dans le dossier Salvage
+        try {
+            try (java.util.stream.Stream<Path> stream = Files.walk(salvageDir)) {
+                java.util.List<Path> matchingFiles = stream
+                    .filter(Files::isRegularFile)
+                    .filter(p -> {
+                        String fileName = p.getFileName().toString();
+                        return (fileName.contains(itemId) || fileName.contains("Salvage_" + itemId)) && fileName.endsWith(".json");
+                    })
+                    .collect(java.util.stream.Collectors.toList());
+                
+                if (!matchingFiles.isEmpty()) {
+                    Path filePath = matchingFiles.get(0);
+                    try (java.io.FileReader reader = new java.io.FileReader(filePath.toFile(), StandardCharsets.UTF_8)) {
+                        TypeToken<Map<String, Object>> typeToken = new TypeToken<Map<String, Object>>() {};
+                        Map<String, Object> jsonData = GSON.fromJson(reader, typeToken.getType());
+                        logVerbose("SalvageRecipe read from HytaleAssets: " + hytaleAssetsPath.relativize(filePath));
+                        return jsonData;
+                    }
+                }
+            }
+        } catch (Exception e) {
+            logVerbose("Error searching recursively in HytaleAssets Salvage for " + itemId + ": " + e.getMessage());
+        }
+        
+        return null;
     }
     
     /**
@@ -1342,7 +1855,8 @@ public final class JsonQualityGenerator {
     
     /**
      * Génère les drops modifiés avec les qualités pour chaque item d'arme/armure/outil.
-     * Lit tous les drops depuis Assets.zip et remplace les items par des Choice avec les 6 qualités.
+     * Lit tous les drops depuis HytaleAssets/Assets.zip (dossier) ou Assets.zip (fichier) 
+     * et remplace les items par des Choice avec les 6 qualités.
      */
     private static void generateQualityDrops(@Nonnull JavaPlugin plugin, @Nonnull Map<String, Item> baseItems, @Nonnull Path modsDir) {
         Path dropsDir = modsDir.resolve("Server").resolve("Drops");
@@ -1384,7 +1898,72 @@ public final class JsonQualityGenerator {
         int generatedCount = 0;
         int errorCount = 0;
         
-        // Read all drops from Assets.zip
+        // D'abord, essayer de lire depuis HytaleAssets
+        Path hytaleAssetsPath = findHytaleAssetsPath();
+        if (hytaleAssetsPath != null && Files.exists(hytaleAssetsPath)) {
+            Path dropsSourceDir = hytaleAssetsPath.resolve("Server").resolve("Drops");
+            if (Files.exists(dropsSourceDir) && Files.isDirectory(dropsSourceDir)) {
+                try {
+                    java.util.List<Path> dropFiles;
+                    try (java.util.stream.Stream<Path> stream = Files.walk(dropsSourceDir)) {
+                        dropFiles = stream
+                            .filter(Files::isRegularFile)
+                            .filter(p -> p.toString().endsWith(".json"))
+                            .collect(java.util.stream.Collectors.toList());
+                    }
+                    
+                    for (Path dropFile : dropFiles) {
+                        try (java.io.FileReader reader = new java.io.FileReader(dropFile.toFile(), StandardCharsets.UTF_8)) {
+                            TypeToken<Map<String, Object>> typeToken = new TypeToken<Map<String, Object>>() {};
+                            Map<String, Object> dropData = GSON.fromJson(reader, typeToken.getType());
+                            
+                            // Modifier le drop pour remplacer les items par des Choice avec qualités
+                            boolean modified = modifyDropForQualities(dropData, baseItems);
+                            
+                            if (modified) {
+                                // Calculer le chemin relatif depuis Server/Drops/
+                                Path relativePath = dropsSourceDir.relativize(dropFile);
+                                Path outputFile = dropsDir.resolve(relativePath);
+                                
+                                // Créer les dossiers parents si nécessaire
+                                Files.createDirectories(outputFile.getParent());
+                                
+                                // Normaliser tous les nombres dans le drop (convertir les doubles en entiers si approprié)
+                                normalizeJsonNumbers(dropData);
+                                
+                                // Sauvegarder le drop modifié
+                                writeJsonFile(outputFile, dropData);
+                                generatedCount++;
+                                
+                                if (generatedCount % 10 == 0) {
+                                    logVerbose("Progress: " + generatedCount + " drop file(s) created...");
+                                }
+                            }
+                        } catch (Exception e) {
+                            errorCount++;
+                            logVerbose("Error processing drop " + dropsSourceDir.relativize(dropFile) + ": " + e.getMessage());
+                            if (verboseLogging) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                    
+                    if (generatedCount > 0) {
+                        logVerbose("Processed " + generatedCount + " drop file(s) from HytaleAssets" + (errorCount > 0 ? " (" + errorCount + " error(s))" : ""));
+                        return;
+                    }
+                    // Si aucun drop n'a été trouvé dans HytaleAssets, continuer avec Assets.zip
+                    logVerbose("No drops found in HytaleAssets, trying Assets.zip...");
+                } catch (Exception e) {
+                    logVerbose("Error reading drops from HytaleAssets: " + e.getMessage());
+                    if (verboseLogging) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
+        
+        // Sinon, essayer depuis Assets.zip
         Path assetsZipPath = findAssetsZipPath();
         if (assetsZipPath == null || !Files.exists(assetsZipPath)) {
             logVerbose("Assets.zip not found, unable to generate drops.");
@@ -1606,7 +2185,7 @@ public final class JsonQualityGenerator {
                             Path worldPathObj = worldPath instanceof Path ? (Path) worldPath : Paths.get(worldPath.toString());
                             Path modsPath = worldPathObj.resolve("mods");
                             if (Files.exists(modsPath) || Files.createDirectories(modsPath) != null) {
-                                logVerbose("Mods directory found: " + modsPath);
+                                // Found silently
                                 return modsPath;
                             }
                         }
@@ -1629,7 +2208,7 @@ public final class JsonQualityGenerator {
                                     Path worldPathObj = worldPath instanceof Path ? (Path) worldPath : Paths.get(worldPath.toString());
                                     Path modsPath = worldPathObj.resolve("mods");
                                     if (Files.exists(modsPath) || Files.createDirectories(modsPath) != null) {
-                                        logVerbose("Mods directory found: " + modsPath);
+                                        // Found silently
                                         return modsPath;
                                     }
                                 }
@@ -1665,7 +2244,7 @@ public final class JsonQualityGenerator {
                         File modsDir = new File(worldDir, "mods");
                         Path modsPath = modsDir.toPath();
                         if (modsDir.exists() || modsDir.mkdirs()) {
-                            logVerbose("Mods directory found via getDataFolder: " + modsPath);
+                            // Found silently
                             return modsPath;
                         }
                     }
@@ -1690,7 +2269,7 @@ public final class JsonQualityGenerator {
                             Path worldPathObj = worldPath instanceof Path ? (Path) worldPath : Paths.get(worldPath.toString());
                             Path modsPath = worldPathObj.resolve("mods");
                             if (Files.exists(modsPath) || Files.createDirectories(modsPath) != null) {
-                                logVerbose("Mods directory found: " + modsPath);
+                                // Found silently
                                 return modsPath;
                             }
                         }
@@ -1725,7 +2304,7 @@ public final class JsonQualityGenerator {
                             Path modsPath = testPath.resolve("mods");
                             if (Files.exists(modsPath) || Files.exists(testPath.resolve("config.json"))) {
                                 if (Files.exists(modsPath) || Files.createDirectories(modsPath) != null) {
-                                    logVerbose("Mods directory found: " + modsPath);
+                                    // Found silently
                                     return modsPath;
                                 }
                             }
@@ -1768,7 +2347,7 @@ public final class JsonQualityGenerator {
                     if (latestSave != null) {
                         Path modsPath = latestSave.resolve("mods");
                         if (Files.exists(modsPath) || Files.createDirectories(modsPath) != null) {
-                            logVerbose("Mods directory found via system property (most recent save): " + modsPath);
+                            // Found silently
                             return modsPath;
                         }
                     }
@@ -1806,7 +2385,7 @@ public final class JsonQualityGenerator {
                     if (latestSave != null) {
                         Path modsPath = latestSave.resolve("mods");
                         if (Files.exists(modsPath) || Files.createDirectories(modsPath) != null) {
-                            logVerbose("Mods directory found: " + modsPath);
+                            // Found silently
                             return modsPath;
                         }
                     }
@@ -1852,7 +2431,7 @@ public final class JsonQualityGenerator {
     
     /**
      * Gets the plugin's mod directory within the mods folder.
-     * Looks for directories matching patterns like "dev.hytalemodding_RomnasQualityCrafting".
+     * Looks for directories matching patterns like "RQCGeneratedFiles".
      * @param plugin The plugin instance
      * @param modsDir The mods directory of the save
      * @return The plugin's mod directory, or null if not found
@@ -1876,7 +2455,7 @@ public final class JsonQualityGenerator {
                         if (Files.exists(currentPath.resolve("manifest.json")) || 
                             Files.exists(currentPath.resolve("Server")) ||
                             Files.exists(currentPath.resolve("RomnasQualityCrafting.json"))) {
-                            logVerbose("Found plugin mod directory via getDataFolder: " + currentPath);
+                            // Found silently
                             return currentPath;
                         }
                     }
@@ -1888,6 +2467,23 @@ public final class JsonQualityGenerator {
         }
         
         // Method 2: Search for directories matching common naming patterns
+        // First, try the new name RQCGeneratedFiles
+        try {
+            Path rqcGeneratedPath = modsDir.resolve("RQCGeneratedFiles");
+            if (Files.exists(rqcGeneratedPath) && Files.isDirectory(rqcGeneratedPath)) {
+                // Check if it looks like our mod directory (has config file or Server folder)
+                if (Files.exists(rqcGeneratedPath.resolve("RomnasQualityCrafting.json")) ||
+                    Files.exists(rqcGeneratedPath.resolve("manifest.json")) ||
+                    Files.exists(rqcGeneratedPath.resolve("Server"))) {
+                    // Found silently
+                    return rqcGeneratedPath;
+                }
+            }
+        } catch (Exception e) {
+            logVerbose("Error checking RQCGeneratedFiles directory: " + e.getMessage());
+        }
+        
+        // Then, try old names for backward compatibility (migration support)
         try {
             String[] possibleNames = {
                 "dev.hytalemodding_RomnasQualityCrafting",
@@ -1902,26 +2498,39 @@ public final class JsonQualityGenerator {
                     if (Files.exists(testPath.resolve("RomnasQualityCrafting.json")) ||
                         Files.exists(testPath.resolve("manifest.json")) ||
                         Files.exists(testPath.resolve("Server"))) {
-                        logVerbose("Found plugin mod directory by name: " + testPath);
+                        // Found silently
                         return testPath;
                     }
                 }
             }
             
             // Method 3: Search all directories in modsDir for one containing our config file
+            // Prioritize RQCGeneratedFiles if it exists
+            Path rqcGeneratedPath = modsDir.resolve("RQCGeneratedFiles");
+            if (Files.exists(rqcGeneratedPath) && Files.isDirectory(rqcGeneratedPath)) {
+                if (Files.exists(rqcGeneratedPath.resolve("RomnasQualityCrafting.json"))) {
+                    // Found silently
+                    return rqcGeneratedPath;
+                }
+            }
+            
             try (java.util.stream.Stream<Path> stream = Files.list(modsDir)) {
                 for (Path modPath : stream.filter(Files::isDirectory).collect(java.util.stream.Collectors.toList())) {
                     String modName = modPath.getFileName().toString();
+                    // Skip RQCGeneratedFiles as we already checked it
+                    if (modName.equals("RQCGeneratedFiles")) {
+                        continue;
+                    }
                     // Check if this directory contains our config file
                     if (Files.exists(modPath.resolve("RomnasQualityCrafting.json"))) {
-                        logVerbose("Found plugin mod directory by config file: " + modPath);
+                        // Found silently
                         return modPath;
                     }
-                    // Also check if it contains "RomnasQualityCrafting" in the name
-                    if (modName.contains("RomnasQualityCrafting") || modName.contains("Romnas")) {
+                    // Also check if it contains "RomnasQualityCrafting" or "RQCGeneratedFiles" in the name
+                    if (modName.contains("RomnasQualityCrafting") || modName.contains("Romnas") || modName.contains("RQCGeneratedFiles")) {
                         if (Files.exists(modPath.resolve("manifest.json")) || 
                             Files.exists(modPath.resolve("Server"))) {
-                            logVerbose("Found plugin mod directory by name pattern: " + modPath);
+                            // Found silently
                             return modPath;
                         }
                     }
@@ -1932,7 +2541,7 @@ public final class JsonQualityGenerator {
         }
         
         // Method 4: If not found, create it with the most likely name
-        Path fallbackPath = modsDir.resolve("dev.hytalemodding_RomnasQualityCrafting");
+        Path fallbackPath = modsDir.resolve("RQCGeneratedFiles");
         try {
             Files.createDirectories(fallbackPath);
             logVerbose("Created plugin mod directory: " + fallbackPath);
@@ -1952,32 +2561,14 @@ public final class JsonQualityGenerator {
     private static Map<String, Item> scanExternalModsForItems(@Nonnull JavaPlugin plugin) {
         Map<String, Item> modItems = new java.util.LinkedHashMap<>();
         
-        logVerbose("=== Starting external mods scan ===");
-        
         try {
             // Get the list of actually loaded mods
             java.util.Set<String> loadedModNames = getLoadedModNames(plugin);
-            logVerbose("Loaded mods detected: " + loadedModNames.size() + " mod(s)");
-            if (!loadedModNames.isEmpty()) {
-                logVerbose("List of loaded mods: " + String.join(", ", loadedModNames));
-            } else {
-                logVerbose("No loaded mods detected via detection methods.");
-            }
             
             // Get the global Mods directory (not the save's mods)
             Path globalModsDir = getGlobalModsDirectory();
             if (globalModsDir == null || !Files.exists(globalModsDir)) {
-                logVerbose("Global Mods directory not found, skipping external mods scan.");
-                logVerbose("Expected path: " + (globalModsDir != null ? globalModsDir.toString() : "null"));
                 return modItems;
-            }
-            
-            logVerbose("Global Mods directory found: " + globalModsDir);
-            
-            if (!loadedModNames.isEmpty()) {
-                logVerbose("Scanning loaded external mods (" + loadedModNames.size() + " mod(s)) in: " + globalModsDir);
-            } else {
-                logVerbose("No loaded mods detected, scanning all available mods in: " + globalModsDir);
             }
             
             // Parcourir les mods (peuvent être des dossiers ou des fichiers ZIP/JAR)
@@ -2028,31 +2619,20 @@ public final class JsonQualityGenerator {
     private static void processModDirectory(@Nonnull Path modDir, @Nonnull String modName, 
                                            @Nonnull java.util.Set<String> loadedModNames, 
                                            @Nonnull Map<String, Item> modItems) {
-        // Ignorer notre propre mod source (mais pas le dossier mods lui-même où on génère)
-        if (modName.contains("RomnasQualityCrafting")) {
-            logVerbose("  Mod '" + modName + "' ignored (source mod)");
+        // Ignorer notre propre mod source et le mod généré (mais pas le dossier mods lui-même où on génère)
+        if (modName.contains("RomnasQualityCrafting") || modName.contains("RQCGeneratedFiles")) {
             return;
         }
         
         // Si on a une liste de mods chargés, vérifier si ce mod est chargé
         if (!loadedModNames.isEmpty() && !isModLoaded(modName, loadedModNames)) {
-            logVerbose("  Mod '" + modName + "' ignored (not loaded according to detection)");
             return;
         }
         
         // Chercher les items dans ce mod
         Path modItemsDir = modDir.resolve("Server").resolve("Item").resolve("Items");
-        logVerbose("  Mod items path: " + modItemsDir + " (exists: " + Files.exists(modItemsDir) + ")");
         if (Files.exists(modItemsDir)) {
-            logVerbose("  Scanning mod '" + modName + "'...");
-            int itemsFound = scanModDirectoryForItems(modItemsDir, modItems, modName);
-            if (itemsFound > 0) {
-                logVerbose("  Mod '" + modName + "': " + itemsFound + " item(s) found");
-            } else {
-                logVerbose("  Mod '" + modName + "': no eligible items found");
-            }
-        } else {
-            logVerbose("  Mod '" + modName + "': Server/Item/Items directory not found");
+            scanModDirectoryForItems(modItemsDir, modItems, modName);
         }
     }
     
@@ -2062,21 +2642,21 @@ public final class JsonQualityGenerator {
     private static void processModZipFile(@Nonnull Path zipPath, @Nonnull String modName,
                                          @Nonnull java.util.Set<String> loadedModNames,
                                          @Nonnull Map<String, Item> modItems) {
-        // Ignorer notre propre mod
-        if (modName.contains("RomnasQualityCrafting")) {
-            logVerbose("  ZIP mod '" + modName + "' ignored (source mod)");
+        // Ignorer notre propre mod et le mod généré
+        if (modName.contains("RomnasQualityCrafting") || modName.contains("RQCGeneratedFiles")) {
+            // Ignored silently
             return;
         }
         
         // Si on a une liste de mods chargés, vérifier si ce mod est chargé
         String baseModName = extractBaseModName(modName.replace(".zip", "").replace(".jar", ""));
         if (!loadedModNames.isEmpty() && !isModLoaded(baseModName, loadedModNames)) {
-            logVerbose("  ZIP mod '" + modName + "' ignored (not loaded according to detection)");
+            // Ignored silently
             return;
         }
         
         try (ZipFile zipFile = new ZipFile(zipPath.toFile())) {
-            logVerbose("  Scanning ZIP mod '" + modName + "'...");
+            // Scanning silently
             
             // Parcourir toutes les entrées du ZIP
             java.util.Enumeration<? extends ZipEntry> entries = zipFile.entries();
@@ -2114,7 +2694,7 @@ public final class JsonQualityGenerator {
                                         // Pour l'instant, on stocke juste l'ID et on lira depuis le ZIP plus tard
                                         modItemSourcePaths.put(itemId, zipPath); // On stocke le chemin du ZIP
                                         itemsFound++;
-                                        logVerbose("    Item found: " + itemId + " (file: " + fileName + ")");
+                                        // Item found silently
                                     } else {
                                         logVerbose("    Item not found in Item map: " + itemId + " (file: " + fileName + ")");
                                     }
@@ -2127,11 +2707,9 @@ public final class JsonQualityGenerator {
                 }
             }
             
-            if (filesScanned > 0) {
-                logVerbose("  ZIP mod '" + modName + "': " + filesScanned + " JSON file(s) scanned, " + itemsFound + " eligible item(s) found");
-            }
         } catch (Exception e) {
-            logVerbose("Error scanning ZIP mod '" + modName + "': " + e.getMessage());
+            logEssential("Error scanning mod ZIP file " + zipPath.getFileName() + ": " + e.getMessage());
+            e.printStackTrace();
         }
     }
     
@@ -2196,7 +2774,8 @@ public final class JsonQualityGenerator {
             
             logVerbose("JSON file not found in mod ZIP (" + zipPath.getFileName() + ") for item: " + itemId);
         } catch (Exception e) {
-            logVerbose("Error opening mod ZIP " + zipPath.getFileName() + ": " + e.getMessage());
+            logEssential("Error opening mod ZIP " + zipPath.getFileName() + ": " + e.getMessage());
+            e.printStackTrace();
         }
         return null;
     }
@@ -2460,22 +3039,15 @@ public final class JsonQualityGenerator {
                                 // Stocker le chemin source pour pouvoir le relire plus tard
                                 modItemSourcePaths.put(itemId, jsonFile);
                                 count++;
-                                logVerbose("  Item found: " + itemId + " (file: " + fileName + ")");
-                                    } else {
-                                logVerbose("  Item not found in Item map: " + itemId + " (file: " + fileName + ")");
                             }
                         }
                     } catch (Exception e) {
-                        logVerbose("  Error reading " + jsonFile.getFileName() + ": " + e.getMessage());
+                        // Ignore errors silently
                     }
                 }
             }
-            
-            if (scannedFiles > 0) {
-                logVerbose("Mod '" + modName + "': " + scannedFiles + " JSON file(s) scanned, " + count + " eligible item(s) found");
-            }
         } catch (Exception e) {
-            logVerbose("Error scanning mod '" + modName + "': " + e.getMessage());
+            // Ignore errors silently
         }
         
         return count;
@@ -2496,7 +3068,7 @@ public final class JsonQualityGenerator {
     }
     
     /**
-     * Lit le JSON d'un item depuis différentes sources (Assets.zip ou mods externes).
+     * Lit le JSON d'un item depuis différentes sources (mods externes, HytaleAssets/Assets.zip comme dossier, ou Assets.zip comme fichier).
      */
     @Nullable
     private static Map<String, Object> readJsonForItem(@Nonnull String itemId) {
@@ -2519,7 +3091,13 @@ public final class JsonQualityGenerator {
                 }
             }
         } else if (modSourcePath != null) {
-            logVerbose("Source path exists but file not found for " + itemId + ": " + modSourcePath);
+            logEssential("Source path stored but file not found for " + itemId + ": " + modSourcePath);
+        }
+        
+        // Ensuite, essayer depuis HytaleAssets (dossier parent de mods)
+        Map<String, Object> hytaleAssetsResult = readJsonFromHytaleAssets(itemId);
+        if (hytaleAssetsResult != null) {
+            return hytaleAssetsResult;
         }
         
         // Sinon, essayer depuis Assets.zip
@@ -2538,7 +3116,10 @@ public final class JsonQualityGenerator {
             return true; // Armure
         }
         if (jsonData.containsKey("Tool")) {
-            return true; // Outil
+            return true; // Outil (pickaxes, hatchets, etc.)
+        }
+        if (jsonData.containsKey("BlockSelectorTool")) {
+            return true; // Outil avec BlockSelectorTool (hammers, shovels, multitools, etc.)
         }
         return false;
     }

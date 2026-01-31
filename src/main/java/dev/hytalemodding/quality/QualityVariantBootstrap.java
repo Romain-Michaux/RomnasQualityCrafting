@@ -23,25 +23,8 @@ public final class QualityVariantBootstrap {
 
     private static final String LOG_PREFIX = "[RomnasQualityCrafting] QualityBootstrap: ";
 
-    /** Préfixes d'id à ignorer (runes, bancs, outils du mod, etc.). */
-    private static final String[] EXCLUDED_ID_PREFIXES = {
-        "Rune_",
-        "Bench_",
-        "Weapon_Arrow_",
-        "Weapon_Bomb_",
-        "Weapon_Dart_",
-        "Weapon_Grenade_",
-        "Weapon_Kunai_",
-        "Debug_",
-        "Test_",
-        "Template_"
-    };
-
-    private static final String[] EXCLUDED_ITEMS = {
-        "Weapon_Bomb",
-        "Tool_Reforge_Kit",
-        "Tool_Quality_Viewer"
-    };
+    /** ID prefixes to ignore (benches, mod tools, etc.). */
+    // Excluded lists are now loaded from config, with defaults as fallback
 
     private static boolean alreadyRun = false;
     private static boolean generationHappened = false;
@@ -242,7 +225,7 @@ public final class QualityVariantBootstrap {
      * Construit une liste d'ids à traiter sans garder de référence aux entries de la map,
      * pour éviter tout décalage ou double traitement quand on ajoute des variantes.
      * Filtre strict : armes/armures (via tags ou catégories), vrais outils (Tool + getTool/BlockSelectorTool),
-     * et exclusion des runes, bancs, Reforge_Kit, Quality_Viewer, etc.
+     * et exclusion des bancs, etc.
      */
     @Nonnull
     private static List<String> collectBaseIdsSnapshot(Map<String, Item> map) {
@@ -261,10 +244,15 @@ public final class QualityVariantBootstrap {
 
     private static boolean isExcludedId(String id) {
         if (id == null) return true;
-        for (String prefix : EXCLUDED_ID_PREFIXES) {
+        
+        // Get excluded lists from QualityConfigManager (which loads from JSON)
+        java.util.List<String> excludedPrefixes = dev.hytalemodding.quality.QualityConfigManager.getExcludedIdPrefixes();
+        java.util.List<String> excludedItems = dev.hytalemodding.quality.QualityConfigManager.getExcludedItems();
+        
+        for (String prefix : excludedPrefixes) {
             if (id.startsWith(prefix)) return true;
         }
-        for (String item : EXCLUDED_ITEMS) {
+        for (String item : excludedItems) {
             if (id.equals(item)) return true;
         }
         return false;
