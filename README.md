@@ -1,6 +1,6 @@
 # RomnasQualityCrafting
 
-**Version:** 1.1.4  
+**Version:** 1.2.0 (In Development)  
 **Author:** Romain Michaux  
 **Compatible with:** Hytale Server 1.0-SNAPSHOT
 
@@ -46,7 +46,7 @@ RomnasQualityCrafting is a Hytale mod that adds a dynamic quality system to item
 ## ⚙️ Configuration
 
 ### Configuration File
-The configuration file is located at: `config/RomnasQualityCrafting.json`
+The configuration file is located at: `config/config.json`
 
 ### ⚠️ Important: Exclusion Lists
 The `ExcludedIdPrefixes` and `ExcludedItems` fields must be **manually added** to the config file after the first generation.
@@ -54,6 +54,22 @@ The `ExcludedIdPrefixes` and `ExcludedItems` fields must be **manually added** t
 **Quick solution**: Use the provided `fix_config.ps1` script.
 
 For more details, see **CONFIG_INSTRUCTIONS.md**.
+
+### 🔍 Troubleshooting Asset Detection (NEW in 1.2.0)
+
+If items are not being generated, the mod will provide detailed error messages explaining:
+- Which paths were attempted
+- How to fix the issue with three different solutions
+- Step-by-step instructions
+
+**Quick fix**: Set `CustomAssetsPath` in your config to point to Assets.zip:
+```json
+{
+  "CustomAssetsPath": "C:/Hytale/install/release/package/game/latest/Assets.zip"
+}
+```
+
+For complete troubleshooting guide, see **ASSETS_DETECTION_GUIDE.md**.
 
 ## 📊 Configuration Examples
 

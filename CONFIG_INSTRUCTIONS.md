@@ -4,7 +4,7 @@
 
 When the server starts, Hytale automatically generates a configuration file at:
 ```
-mods/dev.hytalemodding.RomnasQualityCrafting/RomnasQualityCrafting.json
+mods/RomnasQualityCrafting/config.json
 ```
 
 ## Important: ExcludedIdPrefixes and ExcludedItems
@@ -17,7 +17,7 @@ You need to **manually add** these fields to your config file after the first se
 
 ### Example Configuration
 
-After the server generates the initial config file, open `config/RomnasQualityCrafting.json` and add these fields at the end (before the closing brace):
+After the server generates the initial config file, open `config/config.json` and add these fields at the end (before the closing brace):
 
 ```json
 {
@@ -106,6 +106,44 @@ Controls item durability for each quality level:
 ### Other Options
 - `ForceResetAssets`: Set to `true` to force regeneration of all quality items (resets to `false` after)
 - `ExternalModsCompatEnabled`: Set to `true` to scan and create quality variants for items from other mods
+- `CustomAssetsPath`: **NEW in 1.2.0** - Specify custom path to Assets.zip or extracted assets folder (empty by default)
+
+### Assets Detection (NEW in 1.2.0)
+
+The `CustomAssetsPath` field allows you to manually specify where the mod should look for Hytale's asset files:
+
+```json
+{
+  "CustomAssetsPath": ""
+}
+```
+
+**When to use this:**
+- Your Hytale installation is in a non-standard location
+- Items are not being generated
+- You see "Assets.zip not found" errors
+
+**Examples:**
+
+Windows (ZIP file):
+```json
+"CustomAssetsPath": "C:/Hytale/install/release/package/game/latest/Assets.zip"
+```
+
+Windows (extracted folder):
+```json
+"CustomAssetsPath": "C:/Hytale/HytaleAssets"
+```
+
+Linux:
+```json
+"CustomAssetsPath": "/home/user/hytale/install/release/package/game/latest/Assets.zip"
+```
+
+**Important Notes:**
+- Use forward slashes (`/`) even on Windows
+- Leave empty for automatic detection
+- See `ASSETS_DETECTION_GUIDE.md` for more details
 
 ## Example: Custom Configuration
 
@@ -129,6 +167,7 @@ Here's an example of a custom configuration with different values:
   "QualityArmorMultiplierPoor": 0.6,
   "QualityArmorMultiplierLegendary": 2.5,
   
+  "CustomAssetsPath": "",
   "ExternalModsCompatEnabled": true,
   
   "ExcludedIdPrefixes": [

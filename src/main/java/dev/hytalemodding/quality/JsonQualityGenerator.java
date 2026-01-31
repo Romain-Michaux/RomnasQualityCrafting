@@ -58,6 +58,57 @@ public final class JsonQualityGenerator {
     // Store mods folder path to be able to find HytaleAssets
     private static Path cachedModsDir = null;
     
+    // Store custom assets path from config (if provided)
+    private static String customAssetsPath = null;
+    
+    // Store custom global mods path from config (if provided)
+    private static String customGlobalModsPath = null;
+    
+    // Track attempted paths for logging
+    private static final java.util.List<String> attemptedAssetPaths = new java.util.ArrayList<>();
+    
+    // Track if asset detection failed
+    private static boolean assetDetectionFailed = false;
+    
+    // Cache for Assets.zip path to avoid repeated detection
+    private static Path cachedAssetsZipPath = null;
+    private static boolean assetsPathInitialized = false;
+    
+    // Cache for external mods to avoid repeated scans
+    private static Map<String, Item> cachedModItems = null;
+    private static boolean modScanCompleted = false;
+    
+    /**
+     * Result of JSON generation with detailed status information.
+     */
+    public static class GenerationResult {
+        public final boolean success;
+        public final boolean failed;
+        public final String failureReason;
+        public final int generatedCount;
+        public final int errorCount;
+        
+        public GenerationResult(boolean success, boolean failed, String failureReason, int generatedCount, int errorCount) {
+            this.success = success;
+            this.failed = failed;
+            this.failureReason = failureReason;
+            this.generatedCount = generatedCount;
+            this.errorCount = errorCount;
+        }
+        
+        public static GenerationResult success(int generatedCount, int errorCount) {
+            return new GenerationResult(true, false, null, generatedCount, errorCount);
+        }
+        
+        public static GenerationResult failure(String reason) {
+            return new GenerationResult(false, true, reason, 0, 0);
+        }
+        
+        public static GenerationResult skipped() {
+            return new GenerationResult(false, false, null, 0, 0);
+        }
+    }
+    
     /**
      * Initializes logging configuration from the config object.
      * @param plugin The plugin instance
@@ -66,6 +117,22 @@ public final class JsonQualityGenerator {
     public static void initializeLogging(@Nonnull JavaPlugin plugin, @Nonnull dev.hytalemodding.config.RomnasQualityCraftingConfig configData) {
         // Note: VerboseLogging has been removed from config, keeping this method for compatibility
         // but it no longer does anything since we only have quality weights now
+        
+        // Load custom assets path if provided
+        if (configData != null) {
+            String configPath = configData.getCustomAssetsPath();
+            if (configPath != null && !configPath.trim().isEmpty()) {
+                customAssetsPath = configPath.trim();
+                logEssential("Custom assets path loaded from config: " + customAssetsPath);
+            }
+            
+            // Load custom global mods path if provided
+            String modsPath = configData.getCustomGlobalModsPath();
+            if (modsPath != null && !modsPath.trim().isEmpty()) {
+                customGlobalModsPath = modsPath.trim();
+                logEssential("Custom global mods path loaded from config: " + customGlobalModsPath);
+            }
+        }
     }
     
     /**
@@ -153,9 +220,9 @@ public final class JsonQualityGenerator {
      * @param plugin Le plugin Java pour obtenir le chemin du serveur
      * @param baseItems La map des items de base à traiter
      * @param bootEvent L'événement BootEvent pour obtenir le chemin du monde (peut être null)
-     * @return true si la génération a eu lieu, false si le mod existait déjà
+     * @return GenerationResult avec le statut et les détails de la génération
      */
-    public static boolean generateJsonFiles(@Nonnull JavaPlugin plugin, @Nonnull Map<String, Item> baseItems, @Nullable Object bootEvent) {
+    public static GenerationResult generateJsonFiles(@Nonnull JavaPlugin plugin, @Nonnull Map<String, Item> baseItems, @Nullable Object bootEvent) {
         // Initialize logging configuration from plugin's config
         try {
             if (plugin instanceof dev.hytalemodding.RomnasQualityCrafting) {
@@ -170,7 +237,7 @@ public final class JsonQualityGenerator {
         Path modsDir = getModsDirectory(plugin, bootEvent);
         if (modsDir == null) {
             logEssential("Unable to determine mods directory, skipping JSON generation.");
-            return false;
+            return GenerationResult.failure("Unable to determine mods directory");
         }
         
         // Stocker le chemin du dossier mods pour pouvoir trouver HytaleAssets
@@ -190,11 +257,16 @@ public final class JsonQualityGenerator {
         
         boolean externalModsCompatEnabled = configData == null || configData.isExternalModsCompatEnabled();
         if (externalModsCompatEnabled) {
-            Map<String, Item> modItems = scanExternalModsForItems(plugin);
-            if (!modItems.isEmpty()) {
-                logEssential("Found " + modItems.size() + " item(s) in external mods.");
+            // Use cached mod items if already scanned
+            if (!modScanCompleted) {
+                cachedModItems = scanExternalModsForItems(plugin);
+                modScanCompleted = true;
+            }
+            
+            if (cachedModItems != null && !cachedModItems.isEmpty()) {
+                logEssential("Using " + cachedModItems.size() + " item(s) from external mods (cached).");
                 // Add mod items to the base items map
-                baseItems.putAll(modItems);
+                baseItems.putAll(cachedModItems);
             }
         }
         
@@ -202,7 +274,7 @@ public final class JsonQualityGenerator {
         Path pluginModDir = getPluginModDirectory(plugin, modsDir);
         if (pluginModDir == null) {
             logEssential("Unable to find plugin mod directory in: " + modsDir);
-            return false;
+            return GenerationResult.failure("Unable to find plugin mod directory");
         }
         
         Path itemsDir = pluginModDir.resolve("Server").resolve("Item").resolve("Items");
@@ -221,7 +293,7 @@ public final class JsonQualityGenerator {
                 
                 if (fileCount > 0) {
                     logEssential("Generated mod already exists (" + fileCount + " item file(s)). Generation skipped.");
-                    return false;
+                    return GenerationResult.skipped();
                 }
             } catch (IOException e) {
                 // Continue with generation on error
@@ -236,14 +308,14 @@ public final class JsonQualityGenerator {
             createManifestFile(pluginModDir);
         } catch (IOException e) {
             logEssential("Error creating directory: " + e.getMessage());
-            return false;
+            return GenerationResult.failure("Error creating directory: " + e.getMessage());
         }
         
         // Delete all content in the mod directory if ForceResetAssets is enabled
         if (forceResetAssets) {
             try {
                 if (Files.exists(pluginModDir)) {
-                    // Delete everything except manifest.json and RomnasQualityCrafting.json (config file)
+                    // Delete everything except manifest.json and config.json (config file)
                     java.util.List<Path> itemsToDelete = new java.util.ArrayList<>();
                     try (java.util.stream.Stream<Path> stream = Files.walk(pluginModDir)) {
                         stream.forEach(path -> {
@@ -253,9 +325,9 @@ public final class JsonQualityGenerator {
                             }
                             Path relativePath = pluginModDir.relativize(path);
                             String relativePathStr = relativePath.toString().replace("\\", "/");
-                            // Preserve manifest.json and RomnasQualityCrafting.json
+                            // Preserve manifest.json and config.json
                             if (relativePathStr.equals("manifest.json") || relativePathStr.endsWith("/manifest.json") ||
-                                relativePathStr.equals("RomnasQualityCrafting.json") || relativePathStr.endsWith("/RomnasQualityCrafting.json")) {
+                                relativePathStr.equals("config.json") || relativePathStr.endsWith("/config.json")) {
                                 return;
                             }
                             itemsToDelete.add(path);
@@ -299,7 +371,7 @@ public final class JsonQualityGenerator {
                 logEssential("Items directory recreated after force reset.");
             } catch (IOException e) {
                 logEssential("Error recreating items directory after force reset: " + e.getMessage());
-                return false;
+                return GenerationResult.failure("Error recreating items directory after force reset: " + e.getMessage());
             }
         }
         
@@ -347,6 +419,24 @@ public final class JsonQualityGenerator {
         
         logEssential("Generation completed: " + generatedCount + " JSON file(s) created, " + errorCount + " error(s)");
         
+        // If asset detection failed and there are errors, show the warning again
+        if (assetDetectionFailed && errorCount > 0) {
+            logEssential("");
+            logEssential("╔═══════════════════════════════════════════════════════════════════╗");
+            logEssential("║                      GENERATION WARNING                           ║");
+            logEssential("╚═══════════════════════════════════════════════════════════════════╝");
+            logEssential("");
+            logEssential("Generation completed with " + errorCount + " error(s).");
+            logEssential("Assets.zip was not detected during generation, which likely caused");
+            logEssential("these errors. Items may be missing or incomplete.");
+            logEssential("");
+            logEssential("To fix this issue, please configure the CustomAssetsPath in your");
+            logEssential("config file (see instructions above) and restart the server.");
+            logEssential("");
+            logEssential("═══════════════════════════════════════════════════════════════════");
+            logEssential("");
+        }
+        
         // Copier les dossiers complets depuis les mods sources (only if external mods compat is enabled)
         if (externalModsCompatEnabled) {
             copyAssetDirectoriesFromSourceMods(plugin, pluginModDir);
@@ -381,7 +471,15 @@ public final class JsonQualityGenerator {
         // Générer les drops modifiés avec les qualités
         generateQualityDrops(plugin, baseItems, pluginModDir);
         
-        return true;
+        // Return result based on generation status
+        if (assetDetectionFailed && errorCount > generatedCount / 2) {
+            // If asset detection failed and we have more errors than half of successes, consider it a failure
+            return GenerationResult.failure("Assets.zip not found - items could not be generated properly. See logs for details.");
+        } else if (generatedCount > 0) {
+            return GenerationResult.success(generatedCount, errorCount);
+        } else {
+            return GenerationResult.failure("No items were generated");
+        }
     }
 
     /**
@@ -1343,42 +1441,95 @@ public final class JsonQualityGenerator {
      */
     @Nullable
     private static Path findAssetsZipPath() {
-        // D'abord, essayer dans le dossier parent de mods (racine du serveur/monde)
+        // Return cached result if already initialized
+        if (assetsPathInitialized) {
+            return cachedAssetsZipPath;
+        }
+        
+        // Clear previous attempts for new search
+        attemptedAssetPaths.clear();
+        assetDetectionFailed = false;
+        
+        logEssential("═══════════════════════════════════════════════════════════════════");
+        logEssential("║  STARTING ASSETS.ZIP DETECTION                                 ║");
+        logEssential("═══════════════════════════════════════════════════════════════════");
+        logEssential("");
+        
+        // Priority 1: Check custom assets path from config
+        if (customAssetsPath != null && !customAssetsPath.isEmpty()) {
+            try {
+                Path customPath = Paths.get(customAssetsPath);
+                attemptedAssetPaths.add("[CUSTOM CONFIG] " + customPath.toAbsolutePath());
+                
+                if (Files.exists(customPath)) {
+                    if (Files.isRegularFile(customPath) && customPath.toString().endsWith(".zip")) {
+                        logEssential("✓ SUCCESS: Found Assets.zip at custom path: " + customPath.toAbsolutePath());
+                        cachedAssetsZipPath = customPath;
+                        assetsPathInitialized = true;
+                        return customPath;
+                    } else if (Files.isDirectory(customPath)) {
+                        logEssential("✓ SUCCESS: Found assets directory at custom path: " + customPath.toAbsolutePath());
+                        logEssential("  Note: This is a directory, not a ZIP file. Will use directory-based asset loading.");
+                        cachedAssetsZipPath = customPath;
+                        assetsPathInitialized = true;
+                        return customPath;
+                    } else {
+                        logEssential("✗ FAILED: Custom path exists but is not a ZIP file or directory: " + customPath.toAbsolutePath());
+                    }
+                } else {
+                    logEssential("✗ FAILED: Custom path does not exist: " + customPath.toAbsolutePath());
+                }
+            } catch (Exception e) {
+                logEssential("✗ FAILED: Error accessing custom path: " + e.getMessage());
+            }
+        } else {
+            logEssential("No custom assets path configured (CustomAssetsPath is empty)");
+        }
+        
+        // Priority 2: Try server root directory (parent of mods folder)
         if (cachedModsDir != null) {
             try {
                 Path parentDir = cachedModsDir.getParent();
                 if (parentDir != null) {
                     Path assetsZipPath = parentDir.resolve("Assets.zip");
+                    attemptedAssetPaths.add("[SERVER ROOT] " + assetsZipPath.toAbsolutePath());
+                    
                     if (Files.exists(assetsZipPath) && Files.isRegularFile(assetsZipPath)) {
-                        logVerbose("Found Assets.zip file at: " + assetsZipPath);
+                        logEssential("✓ SUCCESS: Found Assets.zip at server root: " + assetsZipPath.toAbsolutePath());
+                        cachedAssetsZipPath = assetsZipPath;
+                        assetsPathInitialized = true;
                         return assetsZipPath;
+                    } else {
+                        logEssential("✗ FAILED: Assets.zip not found at server root: " + assetsZipPath.toAbsolutePath());
                     }
                 }
             } catch (Exception e) {
-                logVerbose("Error searching for Assets.zip in server root: " + e.getMessage());
+                logEssential("✗ FAILED: Error searching server root: " + e.getMessage());
             }
         }
         
-        // Ensuite, remonter pour trouver le dossier Hytale racine
-        // Structure: Hytale/UserData/Mods/{mods} -> on est dans "mods"
-        // On doit remonter jusqu'à Hytale, puis aller dans install/release/package/game/latest/Assets.zip
+        // Priority 3: Try to find Hytale installation directory
         if (cachedModsDir != null) {
             try {
                 Path currentDir = cachedModsDir;
                 Path hytaleRootDir = null;
                 
+                logEssential("Searching for Hytale root directory...");
+                
                 // Remonter jusqu'à trouver un dossier qui contient à la fois "UserData" et "install"
-                // C'est le dossier racine de Hytale
                 for (int i = 0; i < 10 && currentDir != null; i++) {
                     Path userDataDir = currentDir.resolve("UserData");
                     Path installDir = currentDir.resolve("install");
                     
+                    attemptedAssetPaths.add("[HYTALE ROOT SEARCH #" + (i+1) + "] " + currentDir.toAbsolutePath());
+                    
                     if (Files.exists(userDataDir) && Files.isDirectory(userDataDir) &&
                         Files.exists(installDir) && Files.isDirectory(installDir)) {
-                        // On a trouvé le dossier racine de Hytale
                         hytaleRootDir = currentDir;
-                        logVerbose("Found Hytale root directory at: " + hytaleRootDir);
+                        logEssential("✓ Found Hytale root directory at: " + hytaleRootDir.toAbsolutePath());
                         break;
+                    } else {
+                        logVerbose("  Not Hytale root (missing UserData or install): " + currentDir.toAbsolutePath());
                     }
                     
                     currentDir = currentDir.getParent();
@@ -1394,28 +1545,99 @@ public final class JsonQualityGenerator {
                         .resolve("latest")
                         .resolve("Assets.zip");
                     
+                    attemptedAssetPaths.add("[HYTALE INSTALL] " + assetsZipPath.toAbsolutePath());
+                    
                     if (Files.exists(assetsZipPath) && Files.isRegularFile(assetsZipPath)) {
-                        logVerbose("Found Assets.zip file at: " + assetsZipPath);
+                        logEssential("✓ SUCCESS: Found Assets.zip in Hytale installation: " + assetsZipPath.toAbsolutePath());
+                        cachedAssetsZipPath = assetsZipPath;
+                        assetsPathInitialized = true;
                         return assetsZipPath;
                     } else {
-                        logVerbose("Assets.zip not found at expected location: " + assetsZipPath);
+                        logEssential("✗ FAILED: Assets.zip not found at expected Hytale location: " + assetsZipPath.toAbsolutePath());
                     }
+                } else {
+                    logEssential("✗ FAILED: Could not find Hytale root directory (no directory with both UserData and install folders)");
                 }
             } catch (Exception e) {
-                logVerbose("Error searching for Assets.zip in Hytale installation: " + e.getMessage());
+                logEssential("✗ FAILED: Error searching Hytale installation: " + e.getMessage());
             }
         }
+        
+        // All detection methods failed
+        assetDetectionFailed = true;
+        logEssential("=== Assets.zip Detection FAILED ===");
+        logEssential("");
+        logEssential("╔═══════════════════════════════════════════════════════════════════╗");
+        logEssential("║                   ASSETS DETECTION FAILED                         ║");
+        logEssential("╚═══════════════════════════════════════════════════════════════════╝");
+        logEssential("");
+        logEssential("The mod could not find the Hytale Assets.zip file or assets directory.");
+        logEssential("Attempted paths:");
+        for (String path : attemptedAssetPaths) {
+            logEssential("  - " + path);
+        }
+        logEssential("");
+        logEssential("╔═══════════════════════════════════════════════════════════════════╗");
+        logEssential("║                     HOW TO FIX THIS ISSUE                         ║");
+        logEssential("╚═══════════════════════════════════════════════════════════════════╝");
+        logEssential("");
+        logEssential("SOLUTION 1: Specify custom path in config");
+        logEssential("  1. Open: config/config.json");
+        logEssential("  2. Find the 'CustomAssetsPath' field");
+        logEssential("  3. Set it to your Assets.zip location, for example:");
+        logEssential("     Windows: \"CustomAssetsPath\": \"C:/Hytale/install/release/package/game/latest/Assets.zip\"");
+        logEssential("     Linux:   \"CustomAssetsPath\": \"/home/user/hytale/install/release/package/game/latest/Assets.zip\"");
+        logEssential("  4. OR point to an extracted assets folder:");
+        logEssential("     \"CustomAssetsPath\": \"C:/Hytale/HytaleAssets\"");
+        logEssential("  5. Save the file and restart the server");
+        logEssential("");
+        logEssential("SOLUTION 2: Place Assets.zip next to mods folder");
+        logEssential("  1. Copy Assets.zip from your Hytale installation");
+        logEssential("  2. Place it in your server's root directory (same level as 'mods' folder)");
+        logEssential("  3. Restart the server");
+        logEssential("");
+        logEssential("SOLUTION 3: Extract Assets.zip");
+        logEssential("  1. Extract Assets.zip to a folder named 'HytaleAssets'");
+        logEssential("  2. Place the 'HytaleAssets' folder next to your 'mods' folder");
+        logEssential("  3. Restart the server");
+        logEssential("");
+        logEssential("Assets.zip typical location:");
+        logEssential("  Hytale/install/release/package/game/latest/Assets.zip");
+        logEssential("");
+        logEssential("═══════════════════════════════════════════════════════════════════");
+        logEssential("");
+        
+        // Mark detection as complete (even though it failed)
+        assetsPathInitialized = true;
+        cachedAssetsZipPath = null;
+        assetDetectionFailed = true;
+        
         return null;
     }
     
     /**
      * Trouve le chemin vers HytaleAssets ou Assets.zip (comme dossier) dans le dossier parent du dossier mods.
      * Vérifie d'abord HytaleAssets, puis Assets.zip comme dossier.
+     * Utilise également le chemin personnalisé si configuré.
      */
     @Nullable
     private static Path findHytaleAssetsPath() {
         if (cachedModsDir == null) {
             return null;
+        }
+        
+        // Priority 1: Check custom assets path from config
+        if (customAssetsPath != null && !customAssetsPath.isEmpty()) {
+            try {
+                Path customPath = Paths.get(customAssetsPath);
+                
+                if (Files.exists(customPath) && Files.isDirectory(customPath)) {
+                    logVerbose("Using custom assets directory: " + customPath.toAbsolutePath());
+                    return customPath;
+                }
+            } catch (Exception e) {
+                logVerbose("Error accessing custom assets path as directory: " + e.getMessage());
+            }
         }
         
         try {
@@ -2454,7 +2676,7 @@ public final class JsonQualityGenerator {
                         // Check if it contains a manifest.json or Server folder
                         if (Files.exists(currentPath.resolve("manifest.json")) || 
                             Files.exists(currentPath.resolve("Server")) ||
-                            Files.exists(currentPath.resolve("RomnasQualityCrafting.json"))) {
+                            Files.exists(currentPath.resolve("config.json"))) {
                             // Found silently
                             return currentPath;
                         }
@@ -2472,7 +2694,7 @@ public final class JsonQualityGenerator {
             Path rqcGeneratedPath = modsDir.resolve("RQCGeneratedFiles");
             if (Files.exists(rqcGeneratedPath) && Files.isDirectory(rqcGeneratedPath)) {
                 // Check if it looks like our mod directory (has config file or Server folder)
-                if (Files.exists(rqcGeneratedPath.resolve("RomnasQualityCrafting.json")) ||
+                if (Files.exists(rqcGeneratedPath.resolve("config.json")) ||
                     Files.exists(rqcGeneratedPath.resolve("manifest.json")) ||
                     Files.exists(rqcGeneratedPath.resolve("Server"))) {
                     // Found silently
@@ -2487,7 +2709,7 @@ public final class JsonQualityGenerator {
         try {
             String[] possibleNames = {
                 "dev.hytalemodding_RomnasQualityCrafting",
-                "dev.hytalemodding.RomnasQualityCrafting",
+                "RomnasQualityCrafting",
                 "RomnasQualityCrafting"
             };
             
@@ -2495,7 +2717,7 @@ public final class JsonQualityGenerator {
                 Path testPath = modsDir.resolve(name);
                 if (Files.exists(testPath) && Files.isDirectory(testPath)) {
                     // Check if it looks like our mod directory (has config file or Server folder)
-                    if (Files.exists(testPath.resolve("RomnasQualityCrafting.json")) ||
+                    if (Files.exists(testPath.resolve("config.json")) ||
                         Files.exists(testPath.resolve("manifest.json")) ||
                         Files.exists(testPath.resolve("Server"))) {
                         // Found silently
@@ -2508,7 +2730,7 @@ public final class JsonQualityGenerator {
             // Prioritize RQCGeneratedFiles if it exists
             Path rqcGeneratedPath = modsDir.resolve("RQCGeneratedFiles");
             if (Files.exists(rqcGeneratedPath) && Files.isDirectory(rqcGeneratedPath)) {
-                if (Files.exists(rqcGeneratedPath.resolve("RomnasQualityCrafting.json"))) {
+                if (Files.exists(rqcGeneratedPath.resolve("config.json"))) {
                     // Found silently
                     return rqcGeneratedPath;
                 }
@@ -2522,7 +2744,7 @@ public final class JsonQualityGenerator {
                         continue;
                     }
                     // Check if this directory contains our config file
-                    if (Files.exists(modPath.resolve("RomnasQualityCrafting.json"))) {
+                    if (Files.exists(modPath.resolve("config.json"))) {
                         // Found silently
                         return modPath;
                     }
@@ -2562,24 +2784,50 @@ public final class JsonQualityGenerator {
         Map<String, Item> modItems = new java.util.LinkedHashMap<>();
         
         try {
+            logEssential("═══════════════════════════════════════════════════════════════════");
+            logEssential("║  SCANNING EXTERNAL MODS FOR ITEMS                              ║");
+            logEssential("═══════════════════════════════════════════════════════════════════");
+            logEssential("");
+            
             // Get the list of actually loaded mods
             java.util.Set<String> loadedModNames = getLoadedModNames(plugin);
+            if (!loadedModNames.isEmpty()) {
+                logEssential("Detected " + loadedModNames.size() + " loaded mod(s): " + loadedModNames);
+            } else {
+                logEssential("No loaded mods detected via reflection (normal if no mods are loaded)");
+            }
+            logEssential("");
             
             // Get the global Mods directory (not the save's mods)
             Path globalModsDir = getGlobalModsDirectory();
             if (globalModsDir == null || !Files.exists(globalModsDir)) {
+                logEssential("No global mods directory found - external mod compatibility disabled");
+                logEssential("═══════════════════════════════════════════════════════════════════");
+                logEssential("");
                 return modItems;
             }
             
+            logEssential("Scanning global mods directory: " + globalModsDir.toAbsolutePath());
+            logEssential("");
+            
             // Parcourir les mods (peuvent être des dossiers ou des fichiers ZIP/JAR)
             int modsScanned = 0;
+            int modsSkipped = 0;
+            int modsProcessed = 0;
+            int totalItemsFound = 0;
+            
             try (java.util.stream.Stream<Path> modPaths = Files.list(globalModsDir)) {
                 java.util.List<Path> modPathsList = modPaths.collect(java.util.stream.Collectors.toList());
-                logVerbose("Number of elements found in Mods directory: " + modPathsList.size());
+                logEssential("Found " + modPathsList.size() + " element(s) in global mods directory");
+                logEssential("Found " + modPathsList.size() + " element(s) in global mods directory");
+                logEssential("");
                 
                 // List all elements for debug
                 for (Path path : modPathsList) {
-                    logVerbose("  Element found: " + path.getFileName() + " (directory: " + Files.isDirectory(path) + ", file: " + Files.isRegularFile(path) + ")");
+                    String filename = path.getFileName().toString();
+                    boolean isDir = Files.isDirectory(path);
+                    boolean isFile = Files.isRegularFile(path);
+                    logVerbose("  Element: " + filename + " (dir: " + isDir + ", file: " + isFile + ")");
                 }
                 
                 for (Path modPath : modPathsList) {
@@ -2588,26 +2836,62 @@ public final class JsonQualityGenerator {
                     
                     // Mods can be directories or ZIP/JAR files
                     if (Files.isDirectory(modPath)) {
+                        logEssential("Processing directory mod: " + modName);
+                        int itemsBefore = modItems.size();
                         // It's a directory, we can scan directly
                         Path modDir = modPath;
                         processModDirectory(modDir, modName, loadedModNames, modItems);
+                        int itemsAdded = modItems.size() - itemsBefore;
+                        
+                        if (itemsAdded > 0) {
+                            logEssential("  → Added " + itemsAdded + " item(s) from this mod");
+                            modsProcessed++;
+                            totalItemsFound += itemsAdded;
+                        } else {
+                            logEssential("  → No items found or mod not loaded");
+                            modsSkipped++;
+                        }
                     } else if (modName.endsWith(".zip") || modName.endsWith(".jar")) {
+                        logEssential("Processing ZIP/JAR mod: " + modName);
+                        int itemsBefore = modItems.size();
                         // It's a ZIP/JAR file, we need to extract or scan it as a ZIP
-                        logVerbose("Processing ZIP/JAR mod: " + modName);
                         processModZipFile(modPath, modName, loadedModNames, modItems);
+                        int itemsAdded = modItems.size() - itemsBefore;
+                        
+                        if (itemsAdded > 0) {
+                            logEssential("  → Added " + itemsAdded + " item(s) from this mod");
+                            modsProcessed++;
+                            totalItemsFound += itemsAdded;
+                        } else {
+                            logEssential("  → No items found or mod not loaded");
+                            modsSkipped++;
+                        }
                     } else {
-                        logVerbose("Element ignored (not a directory/ZIP/JAR): " + modName);
+                        logVerbose("  Skipped (unsupported format): " + modName);
+                        modsSkipped++;
                     }
                 }
             } catch (Exception e) {
-                logVerbose("Error traversing mods: " + e.getMessage());
+                logEssential("Error traversing mods: " + e.getMessage());
                 if (verboseLogging) {
                     e.printStackTrace();
                 }
             }
-            logVerbose("Scan completed: " + modsScanned + " mod(s) examined, " + modItems.size() + " item(s) found total");
+            
+            // Final statistics
+            logEssential("");
+            logEssential("═══════════════════════════════════════════════════════════════════");
+            logEssential("║  EXTERNAL MODS SCAN COMPLETE                                   ║");
+            logEssential("═══════════════════════════════════════════════════════════════════");
+            logEssential("Mods scanned:      " + modsScanned);
+            logEssential("Mods processed:    " + modsProcessed);
+            logEssential("Mods skipped:      " + modsSkipped);
+            logEssential("Total items found: " + totalItemsFound);
+            logEssential("Unique items:      " + modItems.size());
+            logEssential("═══════════════════════════════════════════════════════════════════");
+            logEssential("");
         } catch (Exception e) {
-            logVerbose("Error scanning external mods: " + e.getMessage());
+            logEssential("Error scanning external mods: " + e.getMessage());
         }
         
         return modItems;
@@ -2615,48 +2899,76 @@ public final class JsonQualityGenerator {
     
     /**
      * Traite un mod qui est un dossier.
+     * Avec validation de structure et logging détaillé.
      */
     private static void processModDirectory(@Nonnull Path modDir, @Nonnull String modName, 
                                            @Nonnull java.util.Set<String> loadedModNames, 
                                            @Nonnull Map<String, Item> modItems) {
         // Ignorer notre propre mod source et le mod généré (mais pas le dossier mods lui-même où on génère)
         if (modName.contains("RomnasQualityCrafting") || modName.contains("RQCGeneratedFiles")) {
+            logVerbose("    Skipping (own mod): " + modName);
             return;
         }
         
         // Si on a une liste de mods chargés, vérifier si ce mod est chargé
         if (!loadedModNames.isEmpty() && !isModLoaded(modName, loadedModNames)) {
+            logVerbose("    Skipping (not loaded): " + modName);
+            return;
+        }
+        
+        // Validation de structure: vérifier que le mod a une structure valide
+        Path modItemsDir = modDir.resolve("Server").resolve("Item").resolve("Items");
+        if (!Files.exists(modItemsDir) || !Files.isDirectory(modItemsDir)) {
+            logVerbose("    Invalid mod structure (no Server/Item/Items/ directory): " + modName);
             return;
         }
         
         // Chercher les items dans ce mod
-        Path modItemsDir = modDir.resolve("Server").resolve("Item").resolve("Items");
-        if (Files.exists(modItemsDir)) {
-            scanModDirectoryForItems(modItemsDir, modItems, modName);
-        }
+        logVerbose("    Scanning items in: " + modItemsDir.toAbsolutePath());
+        int itemsBefore = modItems.size();
+        scanModDirectoryForItems(modItemsDir, modItems, modName);
+        int itemsAdded = modItems.size() - itemsBefore;
+        logVerbose("    Found " + itemsAdded + " item(s) in directory mod: " + modName);
     }
     
     /**
      * Traite un mod qui est un fichier ZIP/JAR.
+     * Avec validation de structure et logging détaillé.
      */
     private static void processModZipFile(@Nonnull Path zipPath, @Nonnull String modName,
                                          @Nonnull java.util.Set<String> loadedModNames,
                                          @Nonnull Map<String, Item> modItems) {
         // Ignorer notre propre mod et le mod généré
         if (modName.contains("RomnasQualityCrafting") || modName.contains("RQCGeneratedFiles")) {
-            // Ignored silently
+            logVerbose("    Skipping (own mod): " + modName);
             return;
         }
         
         // Si on a une liste de mods chargés, vérifier si ce mod est chargé
         String baseModName = extractBaseModName(modName.replace(".zip", "").replace(".jar", ""));
         if (!loadedModNames.isEmpty() && !isModLoaded(baseModName, loadedModNames)) {
-            // Ignored silently
+            logVerbose("    Skipping (not loaded): " + modName);
             return;
         }
         
         try (ZipFile zipFile = new ZipFile(zipPath.toFile())) {
-            // Scanning silently
+            // Vérifier que le ZIP contient une structure de mod valide
+            boolean hasValidStructure = false;
+            java.util.Enumeration<? extends ZipEntry> preCheck = zipFile.entries();
+            while (preCheck.hasMoreElements()) {
+                ZipEntry entry = preCheck.nextElement();
+                if (entry.getName().startsWith("Server/Item/Items/")) {
+                    hasValidStructure = true;
+                    break;
+                }
+            }
+            
+            if (!hasValidStructure) {
+                logVerbose("    Invalid mod structure (no Server/Item/Items/ in ZIP): " + modName);
+                return;
+            }
+            
+            logVerbose("    Scanning ZIP/JAR contents: " + modName);
             
             // Parcourir toutes les entrées du ZIP
             java.util.Enumeration<? extends ZipEntry> entries = zipFile.entries();
@@ -2694,22 +3006,28 @@ public final class JsonQualityGenerator {
                                         // Pour l'instant, on stocke juste l'ID et on lira depuis le ZIP plus tard
                                         modItemSourcePaths.put(itemId, zipPath); // On stocke le chemin du ZIP
                                         itemsFound++;
-                                        // Item found silently
+                                        logVerbose("      Found item: " + itemId);
                                     } else {
-                                        logVerbose("    Item not found in Item map: " + itemId + " (file: " + fileName + ")");
+                                        logVerbose("      Item not in global registry: " + itemId);
                                     }
+                                } else {
+                                    logVerbose("      Skipped (not weapon/armor/tool): " + itemId);
                                 }
                             }
                         }
                     } catch (Exception e) {
-                        logVerbose("    Error reading " + entryName + ": " + e.getMessage());
+                        logVerbose("      Error reading " + entryName + ": " + e.getMessage());
                     }
                 }
             }
             
+            logVerbose("    Scanned " + filesScanned + " file(s), found " + itemsFound + " valid item(s) in: " + modName);
+            
         } catch (Exception e) {
             logEssential("Error scanning mod ZIP file " + zipPath.getFileName() + ": " + e.getMessage());
-            e.printStackTrace();
+            if (verboseLogging) {
+                e.printStackTrace();
+            }
         }
     }
     
@@ -2973,30 +3291,141 @@ public final class JsonQualityGenerator {
     
     /**
      * Extrait le nom de base d'un mod (sans version).
-     * Ex: "Wans_Wonder_Weapon1.0.6" -> "Wans_Wonder_Weapon"
+     * Améliore la reconnaissance des patterns: "Mod_v1.2.3", "Mod-1.2.3", "Mod1.2.3", "Mod_1.2.3"
      */
     @Nonnull
     private static String extractBaseModName(@Nonnull String modName) {
-        // Enlever les numéros de version à la fin (ex: "1.0.6", "1.0", etc.)
-        return modName.replaceAll("\\d+\\.\\d+(\\.\\d+)?$", "").trim();
+        // Nettoyer les extensions
+        String cleaned = modName.replaceAll("\\.(zip|jar)$", "");
+        
+        // Pattern 1: Version avec préfixe "v" ou "V" (ex: "Mod_v1.2.3", "ModV1.0")
+        cleaned = cleaned.replaceAll("[_-]?[vV]\\d+\\.\\d+(\\.\\d+)?$", "");
+        
+        // Pattern 2: Version avec séparateurs (ex: "Mod_1.2.3", "Mod-1.0.6")
+        cleaned = cleaned.replaceAll("[_-]\\d+\\.\\d+(\\.\\d+)?$", "");
+        
+        // Pattern 3: Version collée (ex: "Mod1.2.3", "Mod1.0")
+        cleaned = cleaned.replaceAll("\\d+\\.\\d+(\\.\\d+)?$", "");
+        
+        // Pattern 4: Version sans points (ex: "Mod123", "Mod10")
+        // Attention: on garde seulement si 2+ chiffres pour éviter de retirer des noms comme "Mod1"
+        // cleaned = cleaned.replaceAll("\\d{2,}$", "");
+        
+        // Nettoyer les tirets/underscores finaux
+        cleaned = cleaned.replaceAll("[_-]+$", "");
+        
+        return cleaned.trim();
     }
     
     /**
-     * Obtient le dossier Mods global (C:\Users\{user}\AppData\Roaming\Hytale\UserData\Mods).
+     * Obtient le dossier Mods global avec détection multi-plateforme et logging détaillé.
+     * Priority: CustomGlobalModsPath > Windows AppData > Linux/Mac paths
      */
     @Nullable
     private static Path getGlobalModsDirectory() {
-        try {
-            String userHome = System.getProperty("user.home");
-            if (userHome != null) {
-                Path globalModsDir = Paths.get(userHome).resolve("AppData").resolve("Roaming").resolve("Hytale").resolve("UserData").resolve("Mods");
-                if (Files.exists(globalModsDir)) {
-                    return globalModsDir;
+        java.util.List<String> attemptedPaths = new java.util.ArrayList<>();
+        
+        logEssential("=== Starting Global Mods Directory Detection ===");
+        
+        // Priority 1: Custom path from config
+        if (customGlobalModsPath != null && !customGlobalModsPath.isEmpty()) {
+            try {
+                Path customPath = Paths.get(customGlobalModsPath);
+                attemptedPaths.add("[CUSTOM CONFIG] " + customPath.toAbsolutePath());
+                
+                if (Files.exists(customPath) && Files.isDirectory(customPath)) {
+                    logEssential("✓ SUCCESS: Found global mods directory at custom path: " + customPath.toAbsolutePath());
+                    return customPath;
+                } else {
+                    logEssential("✗ FAILED: Custom path does not exist or is not a directory: " + customPath.toAbsolutePath());
+                }
+            } catch (Exception e) {
+                logEssential("✗ FAILED: Error accessing custom global mods path: " + e.getMessage());
+            }
+        } else {
+            logEssential("No custom global mods path configured (CustomGlobalModsPath is empty)");
+        }
+        
+        // Priority 2: Platform-specific default paths
+        String userHome = System.getProperty("user.home");
+        String osName = System.getProperty("os.name").toLowerCase();
+        
+        if (userHome != null) {
+            java.util.List<Path> pathsToTry = new java.util.ArrayList<>();
+            
+            if (osName.contains("win")) {
+                // Windows paths
+                pathsToTry.add(Paths.get(userHome, "AppData", "Roaming", "Hytale", "UserData", "Mods"));
+                pathsToTry.add(Paths.get(userHome, "AppData", "Local", "Hytale", "UserData", "Mods"));
+                attemptedPaths.add("[WINDOWS ROAMING] " + pathsToTry.get(0).toAbsolutePath());
+                attemptedPaths.add("[WINDOWS LOCAL] " + pathsToTry.get(1).toAbsolutePath());
+            } else if (osName.contains("mac") || osName.contains("darwin")) {
+                // macOS paths
+                pathsToTry.add(Paths.get(userHome, "Library", "Application Support", "Hytale", "UserData", "Mods"));
+                pathsToTry.add(Paths.get(userHome, ".hytale", "UserData", "Mods"));
+                attemptedPaths.add("[MACOS APP SUPPORT] " + pathsToTry.get(0).toAbsolutePath());
+                attemptedPaths.add("[MACOS HIDDEN] " + pathsToTry.get(1).toAbsolutePath());
+            } else if (osName.contains("nix") || osName.contains("nux") || osName.contains("aix")) {
+                // Linux paths
+                pathsToTry.add(Paths.get(userHome, ".local", "share", "Hytale", "UserData", "Mods"));
+                pathsToTry.add(Paths.get(userHome, ".hytale", "UserData", "Mods"));
+                attemptedPaths.add("[LINUX LOCAL SHARE] " + pathsToTry.get(0).toAbsolutePath());
+                attemptedPaths.add("[LINUX HIDDEN] " + pathsToTry.get(1).toAbsolutePath());
+            }
+            
+            // Try all platform-specific paths
+            for (Path path : pathsToTry) {
+                try {
+                    if (Files.exists(path) && Files.isDirectory(path)) {
+                        logEssential("✓ SUCCESS: Found global mods directory at: " + path.toAbsolutePath());
+                        return path;
+                    } else {
+                        logVerbose("✗ Path does not exist: " + path.toAbsolutePath());
+                    }
+                } catch (Exception e) {
+                    logVerbose("✗ Error checking path: " + path.toAbsolutePath() + " - " + e.getMessage());
                 }
             }
-        } catch (Exception ignored) {
-            // Erreur silencieuse
         }
+        
+        // Priority 3: Try relative to current directory (for dedicated servers)
+        try {
+            Path currentDir = Paths.get(System.getProperty("user.dir"));
+            Path[] relativePaths = {
+                currentDir.resolve("Mods"),
+                currentDir.resolve("mods"),
+                currentDir.resolve("UserData").resolve("Mods")
+            };
+            
+            for (Path path : relativePaths) {
+                attemptedPaths.add("[RELATIVE] " + path.toAbsolutePath());
+                if (Files.exists(path) && Files.isDirectory(path)) {
+                    logEssential("✓ SUCCESS: Found global mods directory (relative): " + path.toAbsolutePath());
+                    return path;
+                }
+            }
+        } catch (Exception e) {
+            logVerbose("Error trying relative paths: " + e.getMessage());
+        }
+        
+        // All detection methods failed
+        logEssential("=== Global Mods Directory Detection FAILED ===");
+        logEssential("");
+        logEssential("Could not find the global Mods directory for external mod scanning.");
+        logEssential("Attempted paths:");
+        for (String path : attemptedPaths) {
+            logEssential("  - " + path);
+        }
+        logEssential("");
+        logEssential("To fix this, set 'CustomGlobalModsPath' in your config:");
+        logEssential("  Windows: \"CustomGlobalModsPath\": \"C:/Users/YourName/AppData/Roaming/Hytale/UserData/Mods\"");
+        logEssential("  Linux:   \"CustomGlobalModsPath\": \"/home/username/.local/share/Hytale/UserData/Mods\"");
+        logEssential("  macOS:   \"CustomGlobalModsPath\": \"/Users/username/Library/Application Support/Hytale/UserData/Mods\"");
+        logEssential("");
+        logEssential("Note: External mod compatibility will be disabled without this directory.");
+        logEssential("═══════════════════════════════════════════════════════════════════");
+        logEssential("");
+        
         return null;
     }
     

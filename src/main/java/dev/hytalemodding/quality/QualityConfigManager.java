@@ -109,7 +109,7 @@ public class QualityConfigManager {
                 java.lang.reflect.Method getDataFolder = plugin.getClass().getMethod("getDataFolder");
                 File dataFolder = (File) getDataFolder.invoke(plugin);
                 if (dataFolder != null) {
-                    File configFile = new File(dataFolder, "RomnasQualityCrafting.json");
+                    File configFile = new File(dataFolder, "config.json");
                     if (configFile.exists()) {
                         return configFile.toPath();
                     }
@@ -121,9 +121,9 @@ public class QualityConfigManager {
         
         // Try common config locations
         String[] possiblePaths = {
-            "config/RomnasQualityCrafting.json",
-            "RomnasQualityCrafting.json",
-            System.getProperty("user.dir") + "/config/RomnasQualityCrafting.json"
+            "config/config.json",
+            "config.json",
+            System.getProperty("user.dir") + "/config/config.json"
         };
         
         for (String pathStr : possiblePaths) {

@@ -1,4 +1,22 @@
+
 # Changelog - RomnasQualityCrafting
+
+
+## Version 1.2.0 (2026-01-31)
+
+### Nouveautés principales
+- Détection et compatibilité améliorées pour les mods externes
+- Configuration et logs simplifiés
+- Correction de bugs majeurs sur la génération et la détection d’assets
+
+
+## Version 1.2.0 (In Development)
+
+### 🆕 New Features
+
+### 🐛 Bug Fixes
+
+### 🎮 User Experience
 
 ## Version 1.1.4 (January 29, 2026)
 
@@ -33,7 +51,7 @@ Multipliers are now separated for each equipment type, allowing finer balance tu
 
 ### 🐛 Known Issue: Exclusion Lists
 
-**Important**: Due to a limitation in Hytale's CODEC system, the `ExcludedIdPrefixes` and `ExcludedItems` fields are **not automatically generated** in the `config/RomnasQualityCrafting.json` file.
+**Important**: Due to a limitation in Hytale's CODEC system, the `ExcludedIdPrefixes` and `ExcludedItems` fields are **not automatically generated** in the `config/config.json` file.
 
 **Solutions**:
 1. Use the `fix_config.ps1` script to automatically add these lists

@@ -5,7 +5,7 @@
   "QualityWeightRare": 10,
   "QualityWeightEpic": 4,
   "QualityWeightLegendary": 1,
-  "ExternalModsCompatEnabled": false,
+  "ExternalModsCompatEnabled": true,
   "QualityDamageMultiplierPoor": 0.7,
   "QualityDamageMultiplierCommon": 1.0,
   "QualityDamageMultiplierUncommon": 1.2,

@@ -28,6 +28,10 @@ public final class QualityVariantBootstrap {
 
     private static boolean alreadyRun = false;
     private static boolean generationHappened = false;
+    private static boolean generationFailed = false;
+    private static String generationFailureReason = null;
+    private static int generatedFileCount = 0;
+    private static int errorFileCount = 0;
 
     /**
      * À appeler quand les assets Item sont chargés (ex. BootEvent). Pour chaque arme/outil/armure
@@ -44,24 +48,25 @@ public final class QualityVariantBootstrap {
         if (alreadyRun) {
             return;
         }
-        alreadyRun = true;
+        // Don't set alreadyRun = true yet - only after successful generation or if files already exist
         
 
         Object assetMap = getItemAssetMapRaw();
         if (assetMap == null) {
-            log("Impossible d’obtenir la map d’assets Item, abandon.");
-            return;
+            log("Impossible d’obtenir la map d’assets Item, abandon.");            generationFailed = true;
+            generationFailureReason = "Unable to obtain Item asset map";            return;
         }
 
         Map<String, Item> mutableMap = resolveMutableMap(assetMap);
         if (mutableMap == null) {
-            log("La map d’assets Item n’est pas modifiable, abandon.");
-            return;
+            log("La map d’assets Item n’est pas modifiable, abandon.");            generationFailed = true;
+            generationFailureReason = "Item asset map is not mutable";            return;
         }
 
         // Snapshot des ids uniquement : on n'itère pas sur la map pendant qu'on y écrit.
         List<String> baseIds = collectBaseIdsSnapshot(mutableMap);
         if (baseIds.isEmpty()) {
+            alreadyRun = true; // Mark as run since there's nothing to generate
             return;
         }
 
@@ -77,12 +82,33 @@ public final class QualityVariantBootstrap {
 
         // Générer les fichiers JSON dans le dossier mods
         if (plugin != null && !baseItemsForJson.isEmpty()) {
-            generationHappened = JsonQualityGenerator.generateJsonFiles(plugin, baseItemsForJson, bootEvent);
+            JsonQualityGenerator.GenerationResult result = JsonQualityGenerator.generateJsonFiles(plugin, baseItemsForJson, bootEvent);
+            generationHappened = result.success;
+            generationFailed = result.failed;
+            generationFailureReason = result.failureReason;
+            generatedFileCount = result.generatedCount;
+            errorFileCount = result.errorCount;
+            
+            // Only mark as already run if generation succeeded or was skipped (files already exist)
+            // If it failed, allow retry on next server start
+            if (result.success || (!result.failed && !result.success)) {
+                // Success or skipped (already exists)
+                alreadyRun = true;
+            } else {
+                // Failed - don't mark as run so it retries next time
+                alreadyRun = false;
+            }
         }
 
         if (generationHappened) {
             System.out.println("[RomnasQualityCrafting] Quality variant generation completed. Files created in save's mods directory.");
             System.out.println("[RomnasQualityCrafting] WARNING: A server restart is required to load the new JSON files.");
+        } else if (generationFailed) {
+            System.out.println("[RomnasQualityCrafting] Quality variant generation FAILED.");
+            if (generationFailureReason != null) {
+                System.out.println("[RomnasQualityCrafting] Reason: " + generationFailureReason);
+            }
+            System.out.println("[RomnasQualityCrafting] Generation will retry on next server restart.");
         }
     }
     
@@ -91,6 +117,35 @@ public final class QualityVariantBootstrap {
      */
     public static boolean wasGenerationPerformed() {
         return generationHappened;
+    }
+    
+    /**
+     * Retourne true si une génération a échoué lors de ce démarrage.
+     */
+    public static boolean didGenerationFail() {
+        return generationFailed;
+    }
+    
+    /**
+     * Retourne la raison de l'échec de génération, ou null si pas d'échec.
+     */
+    @Nullable
+    public static String getGenerationFailureReason() {
+        return generationFailureReason;
+    }
+    
+    /**
+     * Retourne le nombre de fichiers générés avec succès.
+     */
+    public static int getGeneratedFileCount() {
+        return generatedFileCount;
+    }
+    
+    /**
+     * Retourne le nombre d'erreurs lors de la génération.
+     */
+    public static int getErrorFileCount() {
+        return errorFileCount;
     }
 
     /**
@@ -282,3 +337,5 @@ public final class QualityVariantBootstrap {
         System.out.println(LOG_PREFIX + msg);
     }
 }
+
+

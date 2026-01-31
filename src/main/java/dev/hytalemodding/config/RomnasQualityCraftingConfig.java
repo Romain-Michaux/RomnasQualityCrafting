@@ -117,6 +117,14 @@ public class RomnasQualityCraftingConfig {
         .append(new KeyedCodec<Double>("QualityArmorMultiplierLegendary", Codec.DOUBLE),
                 (config, value) -> config.qualityArmorMultiplierLegendary = value,
                 (config) -> config.qualityArmorMultiplierLegendary).add()
+        // Custom path to Assets.zip or assets folder (optional, empty by default)
+        .append(new KeyedCodec<String>("CustomAssetsPath", Codec.STRING),
+                (config, value) -> config.customAssetsPath = value,
+                (config) -> config.customAssetsPath).add()
+        // Custom path to global Mods directory (optional, empty by default)
+        .append(new KeyedCodec<String>("CustomGlobalModsPath", Codec.STRING),
+                (config, value) -> config.customGlobalModsPath = value,
+                (config) -> config.customGlobalModsPath).add()
         .build();
     
     // Quality weights (default values: Poor=25, Common=40, Uncommon=20, Rare=10, Epic=4, Legendary=1)
@@ -131,7 +139,7 @@ public class RomnasQualityCraftingConfig {
     private boolean forceResetAssets = false;
     
     // External mods compatibility flag
-    private boolean externalModsCompatEnabled = false;
+    private boolean externalModsCompatEnabled = true;
     
     // Quality damage multipliers (default values matching ItemQuality enum)
     private double qualityDamageMultiplierPoor = 0.7;
@@ -164,6 +172,12 @@ public class RomnasQualityCraftingConfig {
     private double qualityArmorMultiplierRare = 1.4;
     private double qualityArmorMultiplierEpic = 1.6;
     private double qualityArmorMultiplierLegendary = 2.0;
+    
+    // Custom path to Assets.zip or assets folder (empty by default)
+    private String customAssetsPath = "";
+    
+    // Custom path to global Mods directory (empty by default)
+    private String customGlobalModsPath = "";
     
     // Note: ExcludedIdPrefixes and ExcludedItems are loaded directly from JSON
     // via QualityConfigManager, not through the codec (as list codecs are not available)
@@ -436,6 +450,24 @@ public class RomnasQualityCraftingConfig {
     
     public void setQualityArmorMultiplierLegendary(double qualityArmorMultiplierLegendary) {
         this.qualityArmorMultiplierLegendary = qualityArmorMultiplierLegendary;
+    }
+    
+    // Getter and setter for custom assets path
+    public String getCustomAssetsPath() {
+        return customAssetsPath;
+    }
+    
+    public void setCustomAssetsPath(String customAssetsPath) {
+        this.customAssetsPath = customAssetsPath;
+    }
+    
+    // Getter and setter for custom global mods path
+    public String getCustomGlobalModsPath() {
+        return customGlobalModsPath;
+    }
+    
+    public void setCustomGlobalModsPath(String customGlobalModsPath) {
+        this.customGlobalModsPath = customGlobalModsPath;
     }
     
     // Note: Excluded lists are accessed via QualityConfigManager.getExcludedIdPrefixes() 
