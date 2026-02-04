@@ -8,7 +8,18 @@
 - Détection et compatibilité améliorées pour les mods externes
 - Configuration et logs simplifiés
 - Correction de bugs majeurs sur la génération et la détection d’assets
+### 🐛 Bug Fixes
 
+#### Fixed External Mod Detection (Critical)
+- **Fixed**: The mod was creating quality variants for items from ALL mods in the shared mods folder, even if those mods were not enabled on the server
+- **Solution**: Simplified the logic to only process items that are actually loaded by the game engine
+- Instead of scanning mod directories and trying to detect which mods are enabled, the mod now works directly with the items that Hytale has already loaded
+- This is more reliable because it uses the game's own mod loading system as the source of truth
+- Example: If you have 6 mods in your shared folder but only 3 enabled on your server, only items from those 3 loaded mods will have quality variants created
+
+**Technical Details**: Removed the complex external mod scanning logic that tried to detect enabled mods by examining directories. The game engine already provides a complete list of loaded items (vanilla + enabled mods), so we use that directly.
+
+**Impact**: This significantly reduces unnecessary file generation, prevents items from disabled mods from appearing in-game with quality variants, and makes the mod more reliable and maintainable.
 
 ## Version 1.2.0 (In Development)
 

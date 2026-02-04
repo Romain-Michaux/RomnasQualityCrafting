@@ -244,8 +244,10 @@ public final class JsonQualityGenerator {
         cachedModsDir = modsDir;
         
         logEssential("Starting quality variant generation...");
+        logEssential("Processing " + baseItems.size() + " loaded item(s) (includes vanilla + all enabled mods)");
+        logEssential("Note: Only items from enabled mods are included in this count");
         
-        // Scan external mods BEFORE generation to find items and their source files (only if enabled)
+        // Get config for other settings
         dev.hytalemodding.config.RomnasQualityCraftingConfig configData = null;
         try {
             if (plugin instanceof dev.hytalemodding.RomnasQualityCrafting) {
@@ -255,20 +257,9 @@ public final class JsonQualityGenerator {
             // Ignore
         }
         
-        boolean externalModsCompatEnabled = configData == null || configData.isExternalModsCompatEnabled();
-        if (externalModsCompatEnabled) {
-            // Use cached mod items if already scanned
-            if (!modScanCompleted) {
-                cachedModItems = scanExternalModsForItems(plugin);
-                modScanCompleted = true;
-            }
-            
-            if (cachedModItems != null && !cachedModItems.isEmpty()) {
-                logEssential("Using " + cachedModItems.size() + " item(s) from external mods (cached).");
-                // Add mod items to the base items map
-                baseItems.putAll(cachedModItems);
-            }
-        }
+        // Note: We no longer scan external mods separately because baseItems already contains
+        // all items that are loaded by the game (vanilla + enabled mods). This is more reliable
+        // than trying to detect which mods are enabled by scanning directories.
         
         // Find the plugin's mod directory (e.g., RQCGeneratedFiles)
         Path pluginModDir = getPluginModDirectory(plugin, modsDir);
@@ -437,10 +428,9 @@ public final class JsonQualityGenerator {
             logEssential("");
         }
         
-        // Copier les dossiers complets depuis les mods sources (only if external mods compat is enabled)
-        if (externalModsCompatEnabled) {
-            copyAssetDirectoriesFromSourceMods(plugin, pluginModDir);
-        }
+        // Copy asset directories from source mods
+        // Note: We still need to copy VFX, particles, etc. from the loaded items' source mods
+        copyAssetDirectoriesFromSourceMods(plugin, pluginModDir);
         
         // Reset ForceResetAssets flag after successful generation
         if (forceResetAssets && configData != null) {
@@ -2789,13 +2779,51 @@ public final class JsonQualityGenerator {
             logEssential("═══════════════════════════════════════════════════════════════════");
             logEssential("");
             
-            // Get the list of actually loaded mods
+            // Get the save's mods directory to determine which mods are enabled
+            Path saveModsDir = cachedModsDir; // This is set in generateJsonFiles()
+            java.util.Set<String> enabledModNames = new java.util.HashSet<>();
+            
+            if (saveModsDir != null && Files.exists(saveModsDir)) {
+                try {
+                    // List all mods in the save's mods directory
+                    // These are symlinks/copies of enabled mods
+                    try (java.util.stream.Stream<Path> modPaths = Files.list(saveModsDir)) {
+                        for (Path modPath : modPaths.filter(p -> Files.isDirectory(p)).collect(java.util.stream.Collectors.toList())) {
+                            String modName = modPath.getFileName().toString();
+                            // Skip our own generated mod
+                            if (!modName.contains("RomnasQualityCrafting") && !modName.contains("RQCGeneratedFiles")) {
+                                enabledModNames.add(modName);
+                            }
+                        }
+                    }
+                    
+                    if (!enabledModNames.isEmpty()) {
+                        logEssential("Detected " + enabledModNames.size() + " enabled mod(s) in save: " + enabledModNames);
+                    } else {
+                        logEssential("No external mods enabled in this save (only vanilla items will have quality variants)");
+                    }
+                } catch (Exception e) {
+                    logEssential("Warning: Could not list enabled mods in save directory: " + e.getMessage());
+                }
+            } else {
+                logEssential("Warning: Save's mods directory not available, cannot determine enabled mods");
+            }
+            
+            // Also try reflection-based detection as fallback
             java.util.Set<String> loadedModNames = getLoadedModNames(plugin);
             if (!loadedModNames.isEmpty()) {
-                logEssential("Detected " + loadedModNames.size() + " loaded mod(s): " + loadedModNames);
-            } else {
-                logEssential("No loaded mods detected via reflection (normal if no mods are loaded)");
+                logEssential("Also detected " + loadedModNames.size() + " loaded mod(s) via reflection: " + loadedModNames);
+                enabledModNames.addAll(loadedModNames);
             }
+            
+            // If no enabled mods detected at all, we won't process any external mods
+            if (enabledModNames.isEmpty()) {
+                logEssential("No enabled mods detected - only vanilla items will have quality variants");
+                logEssential("═══════════════════════════════════════════════════════════════════");
+                logEssential("");
+                return modItems;
+            }
+            
             logEssential("");
             
             // Get the global Mods directory (not the save's mods)
@@ -2819,7 +2847,6 @@ public final class JsonQualityGenerator {
             try (java.util.stream.Stream<Path> modPaths = Files.list(globalModsDir)) {
                 java.util.List<Path> modPathsList = modPaths.collect(java.util.stream.Collectors.toList());
                 logEssential("Found " + modPathsList.size() + " element(s) in global mods directory");
-                logEssential("Found " + modPathsList.size() + " element(s) in global mods directory");
                 logEssential("");
                 
                 // List all elements for debug
@@ -2840,7 +2867,7 @@ public final class JsonQualityGenerator {
                         int itemsBefore = modItems.size();
                         // It's a directory, we can scan directly
                         Path modDir = modPath;
-                        processModDirectory(modDir, modName, loadedModNames, modItems);
+                        processModDirectory(modDir, modName, enabledModNames, modItems);
                         int itemsAdded = modItems.size() - itemsBefore;
                         
                         if (itemsAdded > 0) {
@@ -2848,14 +2875,14 @@ public final class JsonQualityGenerator {
                             modsProcessed++;
                             totalItemsFound += itemsAdded;
                         } else {
-                            logEssential("  → No items found or mod not loaded");
+                            logEssential("  → No items found or mod not enabled");
                             modsSkipped++;
                         }
                     } else if (modName.endsWith(".zip") || modName.endsWith(".jar")) {
                         logEssential("Processing ZIP/JAR mod: " + modName);
                         int itemsBefore = modItems.size();
                         // It's a ZIP/JAR file, we need to extract or scan it as a ZIP
-                        processModZipFile(modPath, modName, loadedModNames, modItems);
+                        processModZipFile(modPath, modName, enabledModNames, modItems);
                         int itemsAdded = modItems.size() - itemsBefore;
                         
                         if (itemsAdded > 0) {
@@ -2863,7 +2890,7 @@ public final class JsonQualityGenerator {
                             modsProcessed++;
                             totalItemsFound += itemsAdded;
                         } else {
-                            logEssential("  → No items found or mod not loaded");
+                            logEssential("  → No items found or mod not enabled");
                             modsSkipped++;
                         }
                     } else {
@@ -2902,7 +2929,7 @@ public final class JsonQualityGenerator {
      * Avec validation de structure et logging détaillé.
      */
     private static void processModDirectory(@Nonnull Path modDir, @Nonnull String modName, 
-                                           @Nonnull java.util.Set<String> loadedModNames, 
+                                           @Nonnull java.util.Set<String> enabledModNames, 
                                            @Nonnull Map<String, Item> modItems) {
         // Ignorer notre propre mod source et le mod généré (mais pas le dossier mods lui-même où on génère)
         if (modName.contains("RomnasQualityCrafting") || modName.contains("RQCGeneratedFiles")) {
@@ -2910,9 +2937,10 @@ public final class JsonQualityGenerator {
             return;
         }
         
-        // Si on a une liste de mods chargés, vérifier si ce mod est chargé
-        if (!loadedModNames.isEmpty() && !isModLoaded(modName, loadedModNames)) {
-            logVerbose("    Skipping (not loaded): " + modName);
+        // Vérifier si ce mod est dans la liste des mods activés
+        // Now we ALWAYS check, regardless of whether the list is empty
+        if (!isModEnabled(modName, enabledModNames)) {
+            logEssential("    Skipping (not enabled in save): " + modName);
             return;
         }
         
@@ -2936,7 +2964,7 @@ public final class JsonQualityGenerator {
      * Avec validation de structure et logging détaillé.
      */
     private static void processModZipFile(@Nonnull Path zipPath, @Nonnull String modName,
-                                         @Nonnull java.util.Set<String> loadedModNames,
+                                         @Nonnull java.util.Set<String> enabledModNames,
                                          @Nonnull Map<String, Item> modItems) {
         // Ignorer notre propre mod et le mod généré
         if (modName.contains("RomnasQualityCrafting") || modName.contains("RQCGeneratedFiles")) {
@@ -2944,10 +2972,13 @@ public final class JsonQualityGenerator {
             return;
         }
         
-        // Si on a une liste de mods chargés, vérifier si ce mod est chargé
+        // Extraire le nom de base (sans extension .zip/.jar) pour la comparaison
         String baseModName = extractBaseModName(modName.replace(".zip", "").replace(".jar", ""));
-        if (!loadedModNames.isEmpty() && !isModLoaded(baseModName, loadedModNames)) {
-            logVerbose("    Skipping (not loaded): " + modName);
+        
+        // Vérifier si ce mod est dans la liste des mods activés
+        // Now we ALWAYS check, regardless of whether the list is empty
+        if (!isModEnabled(baseModName, enabledModNames)) {
+            logEssential("    Skipping (not enabled in save): " + modName);
             return;
         }
         
@@ -3287,6 +3318,21 @@ public final class JsonQualityGenerator {
         }
         
         return false;
+    }
+    
+    /**
+     * Vérifie si un mod est activé pour la sauvegarde actuelle.
+     * Utilise la même logique que isModLoaded mais avec un nom de méthode plus explicite.
+     * Si la liste est vide, retourne false (aucun mod externe activé).
+     */
+    private static boolean isModEnabled(@Nonnull String modDirName, @Nonnull java.util.Set<String> enabledModNames) {
+        // Si la liste est vide, aucun mod externe n'est activé
+        if (enabledModNames.isEmpty()) {
+            return false;
+        }
+        
+        // Sinon, utiliser la même logique que isModLoaded
+        return isModLoaded(modDirName, enabledModNames);
     }
     
     /**
