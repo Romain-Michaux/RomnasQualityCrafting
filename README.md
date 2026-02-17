@@ -1,148 +1,127 @@
 # RomnasQualityCrafting
 
-**Version:** 1.2.0 (In Development)  
+**Version:** 2.0.0  
 **Author:** Romain Michaux  
 **Compatible with:** Hytale Server 1.0-SNAPSHOT
 
 ## 📖 Description
 
-RomnasQualityCrafting is a Hytale mod that adds a dynamic quality system to items. Each time an item is crafted, it receives a random quality that affects its statistics (damage, efficiency, durability, resistance).
+RomnasQualityCrafting adds an RPG-style quality system to Hytale. Every time a weapon, armor piece, or tool is crafted or looted, it receives a random quality tier that modifies its stats.
 
-### Available Qualities
-- ⚫ **Poor (Junk)** - Below average quality
-- ⚪ **Common** - Standard quality
-- 🟢 **Uncommon** - Uncommon quality
-- 🔵 **Rare** - Rare quality
-- 🟣 **Epic** - Epic quality
-- 🟠 **Legendary** - Legendary quality
-
-## ✨ Features
-
-### Separate Multipliers by Equipment Type
-- **Weapons**: Controls combat damage
-- **Tools**: Controls mining/harvesting efficiency
-- **Armor**: Controls resistance and stat bonuses
-- **Durability**: Applies to all items
-
-### Flexible Configuration
-- Adjust the chances of obtaining each quality
-- Customize multipliers for each equipment type
-- Exclude certain items or prefixes from quality generation
-- External mod support
-
-### Automatic Generation
-- Quality variants are automatically generated at startup
-- Support for custom textures and models
-- Compatible with items from other mods (if enabled)
+### Quality Tiers
+| Tier | Color | Damage | Tool Efficiency | Armor | Durability |
+|------|-------|--------|----------------|-------|------------|
+| ⚫ **Poor (Junk)** | Gray | 0.7× | 0.7× | 0.7× | 0.7× |
+| ⚪ **Common** | White | 1.0× | 1.0× | 1.0× | 1.0× |
+| 🟢 **Uncommon** | Green | 1.2× | 1.2× | 1.2× | 1.15× |
+| 🔵 **Rare** | Blue | 1.4× | 1.4× | 1.4× | 1.3× |
+| 🟣 **Epic** | Purple | 1.6× | 1.6× | 1.6× | 1.5× |
+| 🟠 **Legendary** | Orange | 2.0× | 2.0× | 2.0× | 2.0× |
 
 ## 🚀 Installation
 
-1. Download the `RomnasQualityCrafting-x.x.x.jar` file
-2. Place it in the `mods/` folder of your Hytale server
+1. Download `RomnasQualityCrafting-2.0.0.jar`
+2. Place it in your server's `mods/` folder
 3. Start the server
-4. The mod will automatically generate configuration files and assets
-5. ⚠️⚠️ Restart the server/save to fully load the newly generated JSON items
+4. **Done!** Quality variants are generated in memory — no restart needed.
 
-## ⚙️ Configuration
+That's it. No configuration required. No extra setup steps.
 
-### Configuration File
-The configuration file is located at: `config/config.json`
+## ⚙️ Configuration (Optional)
 
-### ⚠️ Important: Exclusion Lists
-The `ExcludedIdPrefixes` and `ExcludedItems` fields must be **manually added** to the config file after the first generation.
+A config file is auto-generated at `config/config.json`. You can customize:
 
-**Quick solution**: Use the provided `fix_config.ps1` script.
-
-For more details, see **CONFIG_INSTRUCTIONS.md**.
-
-### 🔍 Troubleshooting Asset Detection (NEW in 1.2.0)
-
-If items are not being generated, the mod will provide detailed error messages explaining:
-- Which paths were attempted
-- How to fix the issue with three different solutions
-- Step-by-step instructions
-
-**Quick fix**: Set `CustomAssetsPath` in your config to point to Assets.zip:
+### Quality Weights (Drop Chances)
 ```json
 {
-  "CustomAssetsPath": "C:/Hytale/install/release/package/game/latest/Assets.zip"
+  "WeightPoor": 25,
+  "WeightCommon": 40,
+  "WeightUncommon": 20,
+  "WeightRare": 10,
+  "WeightEpic": 4,
+  "WeightLegendary": 1
 }
 ```
 
-For complete troubleshooting guide, see **ASSETS_DETECTION_GUIDE.md**.
+### Stat Multipliers
+Each equipment type has independent multipliers:
 
-## 📊 Configuration Examples
+- **`DamageMultiplier*`** — Weapon damage scaling
+- **`ToolMultiplier*`** — Mining/harvesting efficiency scaling
+- **`ArmorMultiplier*`** — Damage resistance scaling
+- **`DurabilityMultiplier*`** — Durability scaling (all item types)
 
-### Balanced Configuration (default)
+Example: Make Legendary weapons extremely powerful but tools only slightly better:
 ```json
 {
-  "QualityWeightCommon": 40,
-  "QualityDamageMultiplierLegendary": 2.0,
-  "QualityToolEfficiencyMultiplierLegendary": 2.0,
-  "QualityArmorMultiplierLegendary": 2.0
+  "DamageMultiplierLegendary": 3.0,
+  "ToolMultiplierLegendary": 1.5,
+  "ArmorMultiplierLegendary": 2.5,
+  "DurabilityMultiplierLegendary": 2.0
 }
 ```
 
-### PvP-Focused Configuration (powerful weapons)
-```json
-{
-  "QualityWeightRare": 15,
-  "QualityWeightEpic": 8,
-  "QualityDamageMultiplierLegendary": 3.0,
-  "QualityToolEfficiencyMultiplierLegendary": 1.5,
-  "QualityArmorMultiplierLegendary": 2.5
-}
+**Note:** Config changes require a server restart to take effect.
+
+## 📋 Commands
+
+| Command | Description |
+|---------|-------------|
+| `/rqc info` | Show quality info of held item |
+| `/rqc stats` | Show registration and migration statistics |
+
+## 🔄 Upgrading from v1.x
+
+v2.0 is a complete rewrite. Key changes:
+
+- **No more Assets.zip scanning** — quality variants are generated from the loaded item registry
+- **No more JSON file generation** — everything happens in memory
+- **No more server restart required** after first install
+- **Automatic migration** — old v1.x quality items are converted on player join
+
+### What happens to existing quality items?
+When a player with v1.x quality items joins the server:
+1. Items with matching v2.0 variants → automatically migrated with metadata
+2. Items without matching variants → reverted to base item (safe fallback)
+3. Durability ratio is preserved during migration
+
+### Removed config fields
+These v1.x config fields are no longer needed and are silently ignored:
+- `CustomAssetsPath`
+- `CustomGlobalModsPath`
+- `ExternalModsCompatEnabled`
+- `ForceResetAssets`
+- `ExcludedIdPrefixes`
+- `ExcludedItems`
+
+### Removed files
+You can safely delete:
+- `RQCGeneratedFiles/` folder in your save directory
+- `ASSETS_DETECTION_GUIDE.md`
+- `EXTERNAL_MODS_GUIDE.md`
+- `CONFIG_INSTRUCTIONS.md`
+- `fix_config.ps1`
+- `cleanup_script.ps1`
+
+## 🏗️ Architecture (for developers)
+
+```
+RomnasQualityCrafting.java     — Main plugin entry point
+├── config/
+│   └── QualityConfig.java     — CODEC-based config (weights + multipliers)
+├── quality/
+│   ├── ItemQuality.java       — Quality enum with multiplier logic
+│   ├── QualityItemFactory.java — In-memory item cloning + stat modification
+│   ├── QualityRegistry.java   — Startup variant registration in asset map
+│   └── QualityAssigner.java   — ECS event handlers for runtime assignment
+├── migration/
+│   └── QualityMigration.java  — v1.x → v2.0 automatic migration
+└── commands/
+    └── QualityCommands.java   — /rqc admin commands
 ```
 
-### Casual Configuration (less RNG)
-```json
-{
-  "QualityWeightPoor": 10,
-  "QualityWeightCommon": 60,
-  "QualityWeightUncommon": 20,
-  "QualityDamageMultiplierPoor": 0.9,
-  "QualityDamageMultiplierLegendary": 1.5
-}
-```
+Total: ~800 lines of Java (down from ~5,000+ in v1.x)
 
-## 📚 Documentation
+## 📄 License
 
-- **CHANGELOG.md** - Version history and new features
-- **CONFIG_INSTRUCTIONS.md** - Complete configuration guide
-- **fix_config.ps1** - PowerShell script to fix the config file
-
-## 🐛 Known Issues
-
-### Exclusion Lists Not Generated
-**Problem**: The `ExcludedIdPrefixes` and `ExcludedItems` fields are not automatically generated in the config file due to a limitation in Hytale's CODEC system.
-
-**Solution**: 
-1. Use the `fix_config.ps1` script
-2. Or add them manually (see CONFIG_INSTRUCTIONS.md)
-3. The mod will use default values if these fields are missing
-
-## 🔧 Commands
-
-No commands are required. The mod works automatically.
-
-## 📝 Notes
-
-- Qualities are assigned when crafting or generated in chests
-- A server restart is required to apply config changes
-- Setting `ForceResetAssets` to `true` forces asset regeneration
-
-## 🤝 Support
-
-To report a bug or request a feature, please join my Discord server: https://discord.gg/PMUuxH2ueW
-
-## 📜 License
-
-All rights reserved
-
-## 🙏 Acknowledgments
-
-Thanks to the Hytale community for the support and feedback!
-
----
-
-**Developed with ❤️ for the Hytale community**
+MIT License

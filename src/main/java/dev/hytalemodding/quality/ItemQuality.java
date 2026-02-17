@@ -1,200 +1,266 @@
 package dev.hytalemodding.quality;
 
-import dev.hytalemodding.config.RomnasQualityCraftingConfig;
+import dev.hytalemodding.config.QualityConfig;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+/**
+ * Represents the quality tiers an item can have.
+ * Each quality modifies weapon damage, tool efficiency, armor resistance, and durability.
+ */
 public enum ItemQuality {
-    POOR("Junk", 0.7f, 0.7f),
-    COMMON("Common", 1.0f, 1.0f),
-    UNCOMMON("Uncommon", 1.2f, 1.15f),
-    RARE("Rare", 1.4f, 1.3f),
-    EPIC("Epic", 1.6f, 1.5f),
-    LEGENDARY("Legendary", 2.0f, 2.0f);
+    POOR("Junk", 0.7f, 0.7f, 0.7f, 0.7f, 1.3f),
+    COMMON("Common", 1.0f, 1.0f, 1.0f, 1.0f, 1.0f),
+    UNCOMMON("Uncommon", 1.2f, 1.2f, 1.2f, 1.15f, 0.85f),
+    RARE("Rare", 1.4f, 1.4f, 1.4f, 1.3f, 0.7f),
+    EPIC("Epic", 1.6f, 1.6f, 1.6f, 1.5f, 0.6f),
+    LEGENDARY("Legendary", 2.0f, 2.0f, 2.0f, 2.0f, 0.5f);
 
     private final String displayName;
     private final float defaultDamageMultiplier;
+    private final float defaultToolMultiplier;
+    private final float defaultArmorMultiplier;
     private final float defaultDurabilityMultiplier;
+    private final float defaultSignatureMultiplier;
 
-    ItemQuality(String displayName, float defaultDamageMultiplier, float defaultDurabilityMultiplier) {
+    ItemQuality(String displayName, float damage, float tool, float armor, float durability, float signature) {
         this.displayName = displayName;
-        this.defaultDamageMultiplier = defaultDamageMultiplier;
-        this.defaultDurabilityMultiplier = defaultDurabilityMultiplier;
+        this.defaultDamageMultiplier = damage;
+        this.defaultToolMultiplier = tool;
+        this.defaultArmorMultiplier = armor;
+        this.defaultDurabilityMultiplier = durability;
+        this.defaultSignatureMultiplier = signature;
     }
 
+    /** Display name used in item IDs and UI (e.g. "Legendary", "Junk"). */
+    @Nonnull
     public String getDisplayName() {
         return displayName;
     }
 
-    /**
-     * Gets the damage multiplier for this quality, using config if available, otherwise default value.
-     */
-    public float getDamageMultiplier() {
-        RomnasQualityCraftingConfig config = QualityConfigManager.getConfig();
-        if (config != null) {
-            switch (this) {
-                case POOR:
-                    return (float) config.getQualityDamageMultiplierPoor();
-                case COMMON:
-                    return (float) config.getQualityDamageMultiplierCommon();
-                case UNCOMMON:
-                    return (float) config.getQualityDamageMultiplierUncommon();
-                case RARE:
-                    return (float) config.getQualityDamageMultiplierRare();
-                case EPIC:
-                    return (float) config.getQualityDamageMultiplierEpic();
-                case LEGENDARY:
-                    return (float) config.getQualityDamageMultiplierLegendary();
-            }
+    // ── Multiplier accessors (config-aware with defaults) ──
+
+    public float getDamageMultiplier(@Nullable QualityConfig config) {
+        if (config == null) return defaultDamageMultiplier;
+        switch (this) {
+            case POOR:      return (float) config.getDamageMultiplierPoor();
+            case COMMON:    return (float) config.getDamageMultiplierCommon();
+            case UNCOMMON:  return (float) config.getDamageMultiplierUncommon();
+            case RARE:      return (float) config.getDamageMultiplierRare();
+            case EPIC:      return (float) config.getDamageMultiplierEpic();
+            case LEGENDARY: return (float) config.getDamageMultiplierLegendary();
+            default:        return defaultDamageMultiplier;
         }
-        return defaultDamageMultiplier;
     }
 
-    /**
-     * Gets the durability multiplier for this quality, using config if available, otherwise default value.
-     */
-    public float getDurabilityMultiplier() {
-        RomnasQualityCraftingConfig config = QualityConfigManager.getConfig();
-        if (config != null) {
-            switch (this) {
-                case POOR:
-                    return (float) config.getQualityDurabilityMultiplierPoor();
-                case COMMON:
-                    return (float) config.getQualityDurabilityMultiplierCommon();
-                case UNCOMMON:
-                    return (float) config.getQualityDurabilityMultiplierUncommon();
-                case RARE:
-                    return (float) config.getQualityDurabilityMultiplierRare();
-                case EPIC:
-                    return (float) config.getQualityDurabilityMultiplierEpic();
-                case LEGENDARY:
-                    return (float) config.getQualityDurabilityMultiplierLegendary();
-            }
+    public float getToolMultiplier(@Nullable QualityConfig config) {
+        if (config == null) return defaultToolMultiplier;
+        switch (this) {
+            case POOR:      return (float) config.getToolMultiplierPoor();
+            case COMMON:    return (float) config.getToolMultiplierCommon();
+            case UNCOMMON:  return (float) config.getToolMultiplierUncommon();
+            case RARE:      return (float) config.getToolMultiplierRare();
+            case EPIC:      return (float) config.getToolMultiplierEpic();
+            case LEGENDARY: return (float) config.getToolMultiplierLegendary();
+            default:        return defaultToolMultiplier;
         }
-        return defaultDurabilityMultiplier;
     }
 
-    /**
-     * Gets the tool efficiency multiplier for this quality, using config if available, otherwise default damage multiplier.
-     * This is used for tool power/efficiency instead of damage.
-     */
-    public float getToolEfficiencyMultiplier() {
-        RomnasQualityCraftingConfig config = QualityConfigManager.getConfig();
-        if (config != null) {
-            switch (this) {
-                case POOR:
-                    return (float) config.getQualityToolEfficiencyMultiplierPoor();
-                case COMMON:
-                    return (float) config.getQualityToolEfficiencyMultiplierCommon();
-                case UNCOMMON:
-                    return (float) config.getQualityToolEfficiencyMultiplierUncommon();
-                case RARE:
-                    return (float) config.getQualityToolEfficiencyMultiplierRare();
-                case EPIC:
-                    return (float) config.getQualityToolEfficiencyMultiplierEpic();
-                case LEGENDARY:
-                    return (float) config.getQualityToolEfficiencyMultiplierLegendary();
-            }
+    public float getArmorMultiplier(@Nullable QualityConfig config) {
+        if (config == null) return defaultArmorMultiplier;
+        switch (this) {
+            case POOR:      return (float) config.getArmorMultiplierPoor();
+            case COMMON:    return (float) config.getArmorMultiplierCommon();
+            case UNCOMMON:  return (float) config.getArmorMultiplierUncommon();
+            case RARE:      return (float) config.getArmorMultiplierRare();
+            case EPIC:      return (float) config.getArmorMultiplierEpic();
+            case LEGENDARY: return (float) config.getArmorMultiplierLegendary();
+            default:        return defaultArmorMultiplier;
         }
-        return defaultDamageMultiplier;
     }
+
+    public float getDurabilityMultiplier(@Nullable QualityConfig config) {
+        if (config == null) return defaultDurabilityMultiplier;
+        switch (this) {
+            case POOR:      return (float) config.getDurabilityMultiplierPoor();
+            case COMMON:    return (float) config.getDurabilityMultiplierCommon();
+            case UNCOMMON:  return (float) config.getDurabilityMultiplierUncommon();
+            case RARE:      return (float) config.getDurabilityMultiplierRare();
+            case EPIC:      return (float) config.getDurabilityMultiplierEpic();
+            case LEGENDARY: return (float) config.getDurabilityMultiplierLegendary();
+            default:        return defaultDurabilityMultiplier;
+        }
+    }
+
+    public float getSignatureMultiplier(@Nullable QualityConfig config) {
+        if (config == null) return defaultSignatureMultiplier;
+        switch (this) {
+            case POOR:      return (float) config.getSignatureMultiplierPoor();
+            case COMMON:    return (float) config.getSignatureMultiplierCommon();
+            case UNCOMMON:  return (float) config.getSignatureMultiplierUncommon();
+            case RARE:      return (float) config.getSignatureMultiplierRare();
+            case EPIC:      return (float) config.getSignatureMultiplierEpic();
+            case LEGENDARY: return (float) config.getSignatureMultiplierLegendary();
+            default:        return defaultSignatureMultiplier;
+        }
+    }
+
+    // ── Weighted random quality selection ──
 
     /**
-     * Gets the armor multiplier for this quality, using config if available, otherwise default damage multiplier.
-     * This is used for armor resistance and stats.
+     * Rolls a random quality using config weights (crafting context).
+     * Falls back to hardcoded defaults if config is null.
      */
-    public float getArmorMultiplier() {
-        RomnasQualityCraftingConfig config = QualityConfigManager.getConfig();
+    @Nonnull
+    public static ItemQuality random(@Nullable QualityConfig config) {
+        int wPoor, wCommon, wUncommon, wRare, wEpic, wLegendary;
+
         if (config != null) {
-            switch (this) {
-                case POOR:
-                    return (float) config.getQualityArmorMultiplierPoor();
-                case COMMON:
-                    return (float) config.getQualityArmorMultiplierCommon();
-                case UNCOMMON:
-                    return (float) config.getQualityArmorMultiplierUncommon();
-                case RARE:
-                    return (float) config.getQualityArmorMultiplierRare();
-                case EPIC:
-                    return (float) config.getQualityArmorMultiplierEpic();
-                case LEGENDARY:
-                    return (float) config.getQualityArmorMultiplierLegendary();
-            }
+            wPoor      = config.getWeightPoor();
+            wCommon    = config.getWeightCommon();
+            wUncommon  = config.getWeightUncommon();
+            wRare      = config.getWeightRare();
+            wEpic      = config.getWeightEpic();
+            wLegendary = config.getWeightLegendary();
+        } else {
+            wPoor = 25; wCommon = 40; wUncommon = 20; wRare = 10; wEpic = 4; wLegendary = 1;
         }
-        return defaultDamageMultiplier;
+
+        return rollFromWeights(wPoor, wCommon, wUncommon, wRare, wEpic, wLegendary);
     }
 
-    /** 
-     * Poids par défaut (40% Common, 25% Poor, 20% Uncommon, 10% Rare, 4% Epic, 1% Legendary).
-     * Utilisé comme fallback si la config n'est pas disponible.
+    /**
+     * Rolls a random quality using loot-specific weights (drop context).
+     * Loot weights are typically more generous than crafting weights.
+     * Falls back to hardcoded loot defaults if config is null.
      */
-    public static ItemQuality random() {
-        double rand = Math.random();
-        if (rand < 0.40) return COMMON;      // 40%
-        if (rand < 0.65) return POOR;        // 25%
-        if (rand < 0.85) return UNCOMMON;    // 20%
-        if (rand < 0.95) return RARE;        // 10%
-        if (rand < 0.99) return EPIC;        // 4%
-        return LEGENDARY;                     // 1%
+    @Nonnull
+    public static ItemQuality randomLoot(@Nullable QualityConfig config) {
+        int wPoor, wCommon, wUncommon, wRare, wEpic, wLegendary;
+
+        if (config != null) {
+            wPoor      = config.getLootWeightPoor();
+            wCommon    = config.getLootWeightCommon();
+            wUncommon  = config.getLootWeightUncommon();
+            wRare      = config.getLootWeightRare();
+            wEpic      = config.getLootWeightEpic();
+            wLegendary = config.getLootWeightLegendary();
+        } else {
+            wPoor = 10; wCommon = 30; wUncommon = 30; wRare = 18; wEpic = 9; wLegendary = 3;
+        }
+
+        return rollFromWeights(wPoor, wCommon, wUncommon, wRare, wEpic, wLegendary);
     }
 
-    /** 
-     * Génère une qualité aléatoire en utilisant les poids de la configuration.
-     * Utilise QualityConfigManager pour obtenir la config.
-     * @return Une qualité aléatoire basée sur les poids de la config, ou random() si la config n'est pas disponible
+    /**
+     * Returns the loot weight for this quality tier from config.
+     * Used by LootDropModifier to set ChoiceItemDropContainer weights.
      */
-    public static ItemQuality randomFromConfig() {
-        RomnasQualityCraftingConfig config = QualityConfigManager.getConfig();
-        return random(config);
-    }
-    
-    /** 
-     * Génère une qualité aléatoire en utilisant les poids de la configuration.
-     * @param config La configuration contenant les poids des qualités
-     * @return Une qualité aléatoire basée sur les poids de la config, ou random() si la config est null
-     */
-    public static ItemQuality random(@Nullable RomnasQualityCraftingConfig config) {
+    public double getLootWeight(@Nullable QualityConfig config) {
         if (config == null) {
-            return random(); // Fallback to default if config is null
+            switch (this) {
+                case POOR:      return 10;
+                case COMMON:    return 30;
+                case UNCOMMON:  return 30;
+                case RARE:      return 18;
+                case EPIC:      return 9;
+                case LEGENDARY: return 3;
+                default:        return 30;
+            }
         }
-        
-        // Récupérer les poids depuis la config
-        int weightPoor = config.getQualityWeightPoor();
-        int weightCommon = config.getQualityWeightCommon();
-        int weightUncommon = config.getQualityWeightUncommon();
-        int weightRare = config.getQualityWeightRare();
-        int weightEpic = config.getQualityWeightEpic();
-        int weightLegendary = config.getQualityWeightLegendary();
-        
-        // Calculer le total des poids
-        int totalWeight = weightPoor + weightCommon + weightUncommon + weightRare + weightEpic + weightLegendary;
-        
-        if (totalWeight <= 0) {
-            // Si tous les poids sont à 0 ou négatifs, utiliser les valeurs par défaut
-            return random();
+        switch (this) {
+            case POOR:      return config.getLootWeightPoor();
+            case COMMON:    return config.getLootWeightCommon();
+            case UNCOMMON:  return config.getLootWeightUncommon();
+            case RARE:      return config.getLootWeightRare();
+            case EPIC:      return config.getLootWeightEpic();
+            case LEGENDARY: return config.getLootWeightLegendary();
+            default:        return config.getLootWeightCommon();
         }
-        
-        // Générer un nombre aléatoire entre 0 et totalWeight
-        double rand = Math.random() * totalWeight;
-        
-        // Déterminer quelle qualité choisir en fonction des poids
+    }
+
+    /**
+     * Internal helper: rolls from explicit weights.
+     */
+    @Nonnull
+    private static ItemQuality rollFromWeights(int wPoor, int wCommon, int wUncommon,
+                                                int wRare, int wEpic, int wLegendary) {
+        int total = wPoor + wCommon + wUncommon + wRare + wEpic + wLegendary;
+        if (total <= 0) return COMMON;
+
+        double rand = Math.random() * total;
         int cumulative = 0;
-        
-        cumulative += weightPoor;
+
+        cumulative += wPoor;
         if (rand < cumulative) return POOR;
-        
-        cumulative += weightCommon;
+
+        cumulative += wCommon;
         if (rand < cumulative) return COMMON;
-        
-        cumulative += weightUncommon;
+
+        cumulative += wUncommon;
         if (rand < cumulative) return UNCOMMON;
-        
-        cumulative += weightRare;
+
+        cumulative += wRare;
         if (rand < cumulative) return RARE;
-        
-        cumulative += weightEpic;
+
+        cumulative += wEpic;
         if (rand < cumulative) return EPIC;
-        
+
         return LEGENDARY;
+    }
+
+    // ── Utility methods ──
+
+    /**
+     * Checks if a given item ID already has a quality suffix.
+     * Example: "Weapon_Sword_Copper_Legendary" → true
+     */
+    public static boolean hasQualitySuffix(@Nonnull String itemId) {
+        for (ItemQuality q : values()) {
+            if (itemId.endsWith("_" + q.displayName)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Extracts the base item ID from a quality item ID.
+     * Example: "Weapon_Sword_Copper_Legendary" → "Weapon_Sword_Copper"
+     * Returns the original ID if no quality suffix is found.
+     */
+    @Nonnull
+    public static String extractBaseId(@Nonnull String itemId) {
+        for (ItemQuality q : values()) {
+            String suffix = "_" + q.displayName;
+            if (itemId.endsWith(suffix)) {
+                return itemId.substring(0, itemId.length() - suffix.length());
+            }
+        }
+        return itemId;
+    }
+
+    /**
+     * Attempts to parse a quality from a quality item ID suffix.
+     * Returns null if no quality suffix is found.
+     */
+    @Nullable
+    public static ItemQuality fromItemId(@Nonnull String itemId) {
+        for (ItemQuality q : values()) {
+            if (itemId.endsWith("_" + q.displayName)) {
+                return q;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Builds the quality variant ID for a given base item and quality.
+     * Example: ("Weapon_Sword_Copper", LEGENDARY) → "Weapon_Sword_Copper_Legendary"
+     */
+    @Nonnull
+    public static String qualityItemId(@Nonnull String baseId, @Nonnull ItemQuality quality) {
+        return baseId + "_" + quality.displayName;
     }
 }

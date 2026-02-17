@@ -1,8 +1,8 @@
 {
   "Group": "dev.hytalemodding",
   "Name": "RomnasQualityCrafting",
-  "Version": "${version}",
-  "Description": "Adds random quality tiers to crafted and looted items, affecting their damage, protection, and durability stats. Features 6 quality levels (Poor, Common, Uncommon, Rare, Epic, Legendary) with balanced probabilities. Makes every craft unique and exciting!",
+  "Version": "${project.version}",
+  "Description": "Zero-setup quality system for Hytale. Adds 6 quality tiers (Poor, Common, Uncommon, Rare, Epic, Legendary) to weapons, armor, and tools. Quality is assigned randomly on craft/loot with configurable weights and stat multipliers. Just install and play!",
   "Authors": [
     {
       "Name": "Romna",
@@ -15,6 +15,6 @@
   "Dependencies": {},
   "OptionalDependencies": {},
   "DisabledByDefault": false,
-  "IncludesAssetPack": true,
+  "IncludesAssetPack": false,
   "Main": "dev.hytalemodding.RomnasQualityCrafting"
 }
