@@ -48,7 +48,6 @@ public final class QualityItemFactory {
             }
         }
         cachedIgnorePrefixes = prefixes;
-        System.out.println("[RQC] Ignore prefixes: " + prefixes);
     }
 
     /**

@@ -1,94 +1,41 @@
-# Changelog — RomnasQualityCrafting
+# Changelog
 
-## Version 2.0.0 (February 15, 2026)
+## v2.0.0 — Full Rewrite
 
-### 🚀 Complete Rewrite — Zero-Setup Architecture
+Complete architecture rewrite. Quality is now baked into variant items at startup instead of applied at runtime.
 
-v2.0 is a ground-up rewrite that eliminates all setup complexity. The mod now generates quality variants entirely in memory at startup, with no file I/O, no Assets.zip scanning, and no server restart required.
+### ✨ New
+- **In-memory variant system** — creates 2,500+ variant items (6 tiers × 419 items) at startup with correct stats
+- **Hytale-native quality colors** — items show colored names using Hytale's built-in quality tier system
+- **Weapon damage baking** — damage values are cloned into variant interaction chains (DamageEntityInteraction)
+- **Tool efficiency scaling** — pickaxe/axe/shovel speed and power scale with quality tier
+- **Armor stat scaling** — damage resistance, knockback, stat modifiers all scale correctly
+- **Signature Energy scaling** — inverted multiplier (better quality = lower cost)
+- **Salvage recipe cloning** — quality variants work on salvage benches automatically
+- **Loot drop quality** — drop tables modified at startup with separate configurable weights
+- **Ignore list** — configurable item prefix filter to exclude consumables (arrows, bombs, darts, spellbooks, feedbags)
+- **v1.x auto-migration** — old quality items are seamlessly upgraded on player join
+- **Old file cleanup** — v1.x `RQCGeneratedFiles/` folder auto-deleted on startup
+- **Admin commands** — `/rqc status` and `/rqc migrate`
+- **French localization** — `fr-FR` language file included
 
-### ✨ What's New
+### 🔧 Fixed (from v1.x)
+- Unmodifiable asset map crash when injecting variant items
+- Zero durability on cloned items (copy constructor missing fields)
+- Shared object references between variants causing stat bleed
+- Armor tooltip showing base stats instead of quality-adjusted values
+- Tool efficiency not scaling with quality
+- Weapon damage not reflecting quality tier in combat
 
-#### Zero-Setup Installation
-- **Install and play** — drop the JAR in your mods folder, start the server, done
-- No more `Assets.zip` path configuration
-- No more `fix_config.ps1` scripts
-- No more server restart after first install
-- No more `RQCGeneratedFiles` folder
-
-#### In-Memory Quality Registration
-- Quality variants are generated from the loaded item registry at startup
-- Uses Hytale's Asset Registry pattern for proper item registration
-- All weapons, armor, and tools automatically get 6 quality variants
-- No JSON files written to disk
-
-#### Metadata-Based Quality Tracking
-- Quality is stored as item metadata (`rqc_quality`) for reliable tracking
-- Quality also encoded in item ID for visual color display
-- Dual-source lookup (metadata first, ID fallback) for maximum compatibility
-
-#### ECS Event System
-- Uses modern Hytale ECS events (`LivingEntityInventoryChangeEvent`)
-- Handles crafting, looting, trading, and manual pickup
-- Replaces deprecated event handlers from v1.x
-
-#### Automatic v1.x Migration
-- Old quality items are automatically converted on player join
-- Durability ratio preserved during migration
-- Items without matching v2.0 variants safely revert to base item
-- Migration status shown to player in chat
-
-#### Admin Commands
-- `/rqc info` — Show quality info of held item
-- `/rqc stats` — Show registration and migration statistics
-
-### 📐 Simplified Configuration
-
-Config fields renamed for clarity:
-| v1.x Field | v2.0 Field |
-|-----------|-----------|
-| `QualityWeightPoor` | `WeightPoor` |
-| `QualityDamageMultiplierPoor` | `DamageMultiplierPoor` |
-| `QualityToolEfficiencyMultiplierPoor` | `ToolMultiplierPoor` |
-| `QualityArmorMultiplierPoor` | `ArmorMultiplierPoor` |
-| `QualityDurabilityMultiplierPoor` | `DurabilityMultiplierPoor` |
-
-Removed fields (no longer needed):
-- `CustomAssetsPath`
-- `CustomGlobalModsPath`
-- `ExternalModsCompatEnabled`
-- `ForceResetAssets`
-
-### 📉 Code Reduction
-
-| Component | v1.x | v2.0 |
-|-----------|------|------|
-| Total Java lines | ~5,000+ | ~800 |
-| Config fields | 30+ | 24 |
-| Documentation files | 5 | 1 (README) |
-| Required setup steps | 5 | 1 (install) |
-| External scripts | 2 | 0 |
-
-### ⚠️ Breaking Changes
-
-- Config field names changed (see table above). Old fields are silently ignored.
-- `RQCGeneratedFiles` folder is no longer created or used. Can be safely deleted.
-- Old quality items are automatically migrated on first player join.
+### 🗑️ Removed
+- On-disk JSON file generation (replaced by in-memory variants)
+- Runtime ECS damage system (all stats now baked into items)
+- Per-item verbose debug logging (cleaned for release)
 
 ---
 
-## Version 1.2.0 (January 31, 2026)
+## v1.x — Initial Release
 
-- Fixed external mod detection (only process items from loaded mods)
-- Improved asset detection and generation
-- Simplified configuration and logging
-
-## Version 1.1.4 (January 29, 2026)
-
-- Added separate multipliers per equipment type (weapon/tool/armor/durability)
-- Added `CONFIG_INSTRUCTIONS.md` and `fix_config.ps1`
-
-## Version 1.1.3 and earlier
-
-- Added external mod support
-- Improved asset generation
-- Various bug fixes
+- Quality assigned via item ID suffix (e.g. `Weapon_Sword_Copper_Legendary`)
+- Stats applied at runtime via JSON asset files generated on disk
+- Basic crafting weight configuration

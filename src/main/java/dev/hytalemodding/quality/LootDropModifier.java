@@ -300,11 +300,6 @@ public final class LootDropModifier {
 
         dropsReplaced++;
 
-        if (dropsReplaced <= 5) {
-            System.out.println(LOG_PREFIX + "  Replaced drop: " + baseItemId
-                    + " → 6 quality choices (weight=" + outerWeight + ")");
-        }
-
         return qualityChoice;
     }
 

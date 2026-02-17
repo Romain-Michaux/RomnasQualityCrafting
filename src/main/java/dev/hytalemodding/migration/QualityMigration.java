@@ -64,7 +64,6 @@ public final class QualityMigration {
         UUID uuid = player.getUuid();
         if (migratedPlayers.contains(uuid)) return;
 
-        System.out.println(LOG_PREFIX + "Scanning player " + player.getDisplayName() + " for v1.x items...");
 
         int migrated = migratePlayer(player);
         migratedPlayers.add(uuid);
@@ -79,8 +78,6 @@ public final class QualityMigration {
             }
         }
 
-        System.out.println(LOG_PREFIX + "Player " + player.getDisplayName()
-                + ": migrated=" + migrated + " items to metadata format");
     }
 
     /**
@@ -135,14 +132,8 @@ public final class QualityMigration {
                 String itemId = item.getItemId();
                 if (itemId == null) continue;
 
-                boolean isValid = true;
-                try { isValid = item.isValid(); } catch (Exception ignored) {}
                 boolean hasMeta = QualityAssigner.hasQualityMetadata(item);
                 boolean isVariant = tierMapper.isVariant(itemId);
-                System.out.println(LOG_PREFIX + "  [" + sectionName + "] slot " + slot
-                        + ": id=" + itemId + " qty=" + item.getQuantity()
-                        + " valid=" + isValid + " hasMeta=" + hasMeta
-                        + " isVariant=" + isVariant);
 
                 // Skip items that are already quality variants with metadata
                 if (isVariant && hasMeta) {
@@ -155,8 +146,6 @@ public final class QualityMigration {
                     String baseId = ItemQuality.extractBaseId(itemId);
                     String targetId = tierMapper.isInitialized()
                             ? tierMapper.getVariantId(baseId, quality) : baseId;
-                    System.out.println(LOG_PREFIX + "    -> v1.x suffixed ID! quality=" + quality.name()
-                            + " baseId=" + baseId + " targetId=" + targetId + " — migrating...");
 
                     ItemStack migratedItem = new ItemStack(targetId, item.getQuantity());
 
@@ -172,7 +161,6 @@ public final class QualityMigration {
                     container.setItemStackForSlot(slot, migratedItem);
                     migrated++;
                     totalReverted++;
-                    System.out.println(LOG_PREFIX + "    -> migrated v1.x → variant!");
                     continue;
                 }
 
@@ -182,8 +170,6 @@ public final class QualityMigration {
                     if (metaQuality != null && metaQuality != ItemQuality.COMMON) {
                         String baseId = QualityAssigner.getBaseItemId(item);
                         String targetId = tierMapper.getVariantId(baseId, metaQuality);
-                        System.out.println(LOG_PREFIX + "    -> upgrading metadata-only → variant: "
-                                + itemId + " → " + targetId);
 
                         ItemStack upgraded = new ItemStack(targetId, item.getQuantity());
                         BsonDocument metadata = item.getMetadata();
@@ -195,7 +181,6 @@ public final class QualityMigration {
 
                         container.setItemStackForSlot(slot, upgraded);
                         migrated++;
-                        System.out.println(LOG_PREFIX + "    -> upgraded to variant!");
                         continue;
                     }
                 }

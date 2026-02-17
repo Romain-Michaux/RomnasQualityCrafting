@@ -102,9 +102,7 @@ public final class QualityRegistry {
                 Method getMapMethod = assetMapObj.getClass().getMethod("getAssetMap");
                 Object mapObj = getMapMethod.invoke(assetMapObj);
                 if (mapObj instanceof Map) {
-                    Map<String, Item> map = (Map<String, Item>) mapObj;
-                    System.out.println(LOG_PREFIX + "Got item map (read-only), size=" + map.size());
-                    return map;
+                    return (Map<String, Item>) mapObj;
                 }
             } catch (Exception ignored) {
             }
@@ -117,9 +115,7 @@ public final class QualityRegistry {
                     assetMapField.setAccessible(true);
                     Object value = assetMapField.get(assetMapObj);
                     if (value instanceof Map) {
-                        Map<String, Item> map = (Map<String, Item>) value;
-                        System.out.println(LOG_PREFIX + "Got item map via field, size=" + map.size());
-                        return map;
+                        return (Map<String, Item>) value;
                     }
                 } catch (NoSuchFieldException ignored) {
                 }

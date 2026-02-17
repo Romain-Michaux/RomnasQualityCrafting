@@ -1,127 +1,104 @@
-# RomnasQualityCrafting
+# ⚔️ Romna's Quality Crafting
 
-**Version:** 2.0.0  
-**Author:** Romain Michaux  
-**Compatible with:** Hytale Server 1.0-SNAPSHOT
+**RPG-style quality tiers for Hytale — just drop in the JAR and play.**
 
-## 📖 Description
+Every weapon, armor piece, and tool you craft or loot rolls a random quality tier that affects its stats. Higher quality = better damage, armor, durability, and efficiency.
 
-RomnasQualityCrafting adds an RPG-style quality system to Hytale. Every time a weapon, armor piece, or tool is crafted or looted, it receives a random quality tier that modifies its stats.
+---
 
-### Quality Tiers
-| Tier | Color | Damage | Tool Efficiency | Armor | Durability |
-|------|-------|--------|----------------|-------|------------|
-| ⚫ **Poor (Junk)** | Gray | 0.7× | 0.7× | 0.7× | 0.7× |
-| ⚪ **Common** | White | 1.0× | 1.0× | 1.0× | 1.0× |
-| 🟢 **Uncommon** | Green | 1.2× | 1.2× | 1.2× | 1.15× |
-| 🔵 **Rare** | Blue | 1.4× | 1.4× | 1.4× | 1.3× |
-| 🟣 **Epic** | Purple | 1.6× | 1.6× | 1.6× | 1.5× |
-| 🟠 **Legendary** | Orange | 2.0× | 2.0× | 2.0× | 2.0× |
+## 🎲 Quality Tiers
 
-## 🚀 Installation
+| Tier | Color | Damage | Armor | Tool Speed | Durability | Sig. Energy |
+|------|-------|--------|-------|------------|------------|-------------|
+| **Poor** | Gray | ×0.7 | ×0.7 | ×0.7 | ×0.7 | ×1.3 *(worse)* |
+| **Common** | White | ×1.0 | ×1.0 | ×1.0 | ×1.0 | ×1.0 |
+| **Uncommon** | Green | ×1.2 | ×1.2 | ×1.2 | ×1.15 | ×0.85 |
+| **Rare** | Blue | ×1.4 | ×1.4 | ×1.4 | ×1.3 | ×0.7 |
+| **Epic** | Purple | ×1.6 | ×1.6 | ×1.6 | ×1.5 | ×0.6 |
+| **Legendary** | Gold | ×2.0 | ×2.0 | ×2.0 | ×2.0 | ×0.5 |
+
+> Signature Energy uses an **inverted** multiplier — better quality = lower energy cost.
+
+---
+
+## 📦 Installation
 
 1. Download `RomnasQualityCrafting-2.0.0.jar`
-2. Place it in your server's `mods/` folder
-3. Start the server
-4. **Done!** Quality variants are generated in memory — no restart needed.
+2. Place it in your Hytale server's `Mods/` folder
+3. Start the server — a `config.json` is generated automatically
+4. Done! Quality tiers are applied to all eligible items
 
-That's it. No configuration required. No extra setup steps.
+---
 
-## ⚙️ Configuration (Optional)
+## ⚙️ Configuration
 
-A config file is auto-generated at `config/config.json`. You can customize:
+The config file is auto-generated on first run. All values are fully customizable.
 
-### Quality Weights (Drop Chances)
-```json
-{
-  "WeightPoor": 25,
-  "WeightCommon": 40,
-  "WeightUncommon": 20,
-  "WeightRare": 10,
-  "WeightEpic": 4,
-  "WeightLegendary": 1
-}
-```
+### Crafting Roll Weights
+Control how often each tier appears when crafting:
+
+| Setting | Default | Description |
+|---------|---------|-------------|
+| `WeightPoor` | 25 | Weight for Poor quality |
+| `WeightCommon` | 40 | Weight for Common quality |
+| `WeightUncommon` | 20 | Weight for Uncommon quality |
+| `WeightRare` | 10 | Weight for Rare quality |
+| `WeightEpic` | 4 | Weight for Epic quality |
+| `WeightLegendary` | 1 | Weight for Legendary quality |
+
+### Loot Drop Weights
+Separate weights for loot drops (more rewarding by default):
+
+| Setting | Default |
+|---------|---------|
+| `LootWeightPoor` | 10 |
+| `LootWeightCommon` | 30 |
+| `LootWeightUncommon` | 30 |
+| `LootWeightRare` | 18 |
+| `LootWeightEpic` | 9 |
+| `LootWeightLegendary` | 3 |
 
 ### Stat Multipliers
-Each equipment type has independent multipliers:
+Each stat category has per-tier multipliers (e.g. `DamageMultiplierLegendary`, `ArmorMultiplierPoor`).
+See `config.json` for the full list.
 
-- **`DamageMultiplier*`** — Weapon damage scaling
-- **`ToolMultiplier*`** — Mining/harvesting efficiency scaling
-- **`ArmorMultiplier*`** — Damage resistance scaling
-- **`DurabilityMultiplier*`** — Durability scaling (all item types)
+### Other Settings
 
-Example: Make Legendary weapons extremely powerful but tools only slightly better:
-```json
-{
-  "DamageMultiplierLegendary": 3.0,
-  "ToolMultiplierLegendary": 1.5,
-  "ArmorMultiplierLegendary": 2.5,
-  "DurabilityMultiplierLegendary": 2.0
-}
-```
+| Setting | Default | Description |
+|---------|---------|-------------|
+| `LootQualityEnabled` | `true` | Enable quality on loot drops |
+| `IgnoredItemPrefixes` | `["Weapon_Bomb", "Weapon_Arrow", ...]` | Item ID prefixes to exclude (consumables, ammo) |
 
-**Note:** Config changes require a server restart to take effect.
+---
 
-## 📋 Commands
+## 🔧 Features
+
+- **Zero setup** — works out of the box with any items from any mod
+- **Client-side colors** — quality tier shows as colored item name (uses Hytale's built-in quality system)
+- **All stats baked** — damage, armor, tool speed, durability, and signature energy are baked into variant items
+- **Salvage recipes** — quality variants work correctly on salvage benches
+- **Loot drops** — drop tables automatically include quality variants with separate configurable weights
+- **Ignore list** — exclude consumables (arrows, bombs, darts, etc.) via config
+- **v1.x migration** — existing saves with v1.x quality items are automatically upgraded on player join
+- **Old file cleanup** — v1.x generated JSON files are auto-deleted on startup
+
+---
+
+## 🛠️ Commands
 
 | Command | Description |
 |---------|-------------|
-| `/rqc info` | Show quality info of held item |
-| `/rqc stats` | Show registration and migration statistics |
+| `/rqc status` | Show quality system status and stats |
+| `/rqc migrate` | Force-migrate your inventory to v2.0 format |
 
-## 🔄 Upgrading from v1.x
+---
 
-v2.0 is a complete rewrite. Key changes:
+## 📋 Compatibility
 
-- **No more Assets.zip scanning** — quality variants are generated from the loaded item registry
-- **No more JSON file generation** — everything happens in memory
-- **No more server restart required** after first install
-- **Automatic migration** — old v1.x quality items are converted on player join
+- **Hytale Server** 1.0-SNAPSHOT+
+- **Java** 25+
+- Works alongside other mods — any new weapons/armor/tools are automatically included
 
-### What happens to existing quality items?
-When a player with v1.x quality items joins the server:
-1. Items with matching v2.0 variants → automatically migrated with metadata
-2. Items without matching variants → reverted to base item (safe fallback)
-3. Durability ratio is preserved during migration
+---
 
-### Removed config fields
-These v1.x config fields are no longer needed and are silently ignored:
-- `CustomAssetsPath`
-- `CustomGlobalModsPath`
-- `ExternalModsCompatEnabled`
-- `ForceResetAssets`
-- `ExcludedIdPrefixes`
-- `ExcludedItems`
-
-### Removed files
-You can safely delete:
-- `RQCGeneratedFiles/` folder in your save directory
-- `ASSETS_DETECTION_GUIDE.md`
-- `EXTERNAL_MODS_GUIDE.md`
-- `CONFIG_INSTRUCTIONS.md`
-- `fix_config.ps1`
-- `cleanup_script.ps1`
-
-## 🏗️ Architecture (for developers)
-
-```
-RomnasQualityCrafting.java     — Main plugin entry point
-├── config/
-│   └── QualityConfig.java     — CODEC-based config (weights + multipliers)
-├── quality/
-│   ├── ItemQuality.java       — Quality enum with multiplier logic
-│   ├── QualityItemFactory.java — In-memory item cloning + stat modification
-│   ├── QualityRegistry.java   — Startup variant registration in asset map
-│   └── QualityAssigner.java   — ECS event handlers for runtime assignment
-├── migration/
-│   └── QualityMigration.java  — v1.x → v2.0 automatic migration
-└── commands/
-    └── QualityCommands.java   — /rqc admin commands
-```
-
-Total: ~800 lines of Java (down from ~5,000+ in v1.x)
-
-## 📄 License
-
-MIT License
+*Made by Romna* ❤️

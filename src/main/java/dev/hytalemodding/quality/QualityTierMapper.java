@@ -62,12 +62,7 @@ public final class QualityTierMapper {
         discoverHytaleTiers();
         initialized = true;
 
-        System.out.println(LOG_PREFIX + "Quality tier mapping complete:");
-        for (ItemQuality q : ItemQuality.values()) {
-            Integer idx = qualityToIndex.get(q);
-            String hytaleId = qualityToHytaleId.get(q);
-            System.out.println(LOG_PREFIX + "  " + q.name() + " -> index=" + idx + " hytaleId=" + hytaleId);
-        }
+        System.out.println(LOG_PREFIX + "Quality tier mapping complete (" + qualityToIndex.size() + " tiers mapped).");
     }
 
     /**
@@ -155,12 +150,7 @@ public final class QualityTierMapper {
                     variantToQuality.put(variantId, quality);
                     created++;
 
-                    // Log the first few successes
-                    if (created <= 3) {
-                        System.out.println(LOG_PREFIX + "  Created variant: " + variantId
-                                + " (qualityIdx=" + hytaleIdx + ", qualityId=" + hytaleQualityId
-                                + ", maxDur=" + variant.getMaxDurability() + ")");
-                    }
+
                 } catch (Exception e) {
                     failed++;
                     if (failed <= 6) {
@@ -233,7 +223,6 @@ public final class QualityTierMapper {
 
             List<CraftingRecipe> pendingRecipes = new ArrayList<>();
             int clonedCount = 0;
-            int logCount = 0;
 
             for (Map.Entry<String, List<CraftingRecipe>> entry : baseToRecipes.entrySet()) {
                 String baseId = entry.getKey();
@@ -277,17 +266,9 @@ public final class QualityTierMapper {
                             pendingRecipes.add(cloned);
                             clonedCount++;
 
-                            if (logCount < 5) {
-                                System.out.println(LOG_PREFIX + "  Cloned recipe: " + originalId
-                                        + " → " + clonedRecipeId + " (input: " + variantId + ")");
-                                logCount++;
-                            }
+
                         } catch (Exception e) {
-                            if (logCount < 10) {
-                                System.out.println(LOG_PREFIX + "  Failed to clone recipe "
-                                        + originalId + " for " + variantId + ": " + e.getMessage());
-                                logCount++;
-                            }
+
                         }
                     }
                 }
@@ -678,41 +659,13 @@ public final class QualityTierMapper {
             // Replace the variant's tool with our scaled clone
             setFieldValue(variant, "tool", clonedTool);
 
-            if (toolLogCount < 15) {
-                String variantId = (String) getFieldValue(variant, "id");
-                StringBuilder sb = new StringBuilder();
-                sb.append(LOG_PREFIX).append("  Tool scaled: ").append(variantId)
-                        .append(" speed=").append(speed).append("->").append(newSpeed)
-                        .append(" (x").append(multiplier).append(")");
 
-                // Log spec powers: show ORIGINAL base power → scaled power
-                Object newSpecsObj = getFieldValue(clonedTool, "specs");
-                if (newSpecsObj != null && newSpecsObj.getClass().isArray()) {
-                    Object[] newSpecs = (Object[]) newSpecsObj;
-                    sb.append(" specs=[");
-                    for (int i = 0; i < Math.min(newSpecs.length, 3); i++) {
-                        if (i > 0) sb.append(", ");
-                        if (newSpecs[i] != null) {
-                            String gt = (String) getFieldValue(newSpecs[i], "gatherType");
-                            float p = (float) getFieldValue(newSpecs[i], "power");
-                            // Recover original base value: scaled / multiplier
-                            float origPower = p / multiplier;
-                            sb.append(gt).append("=").append(String.format("%.3f", origPower))
-                              .append("->").append(String.format("%.3f", p));
-                        }
-                    }
-                    if (newSpecs.length > 3) sb.append(", ...+").append(newSpecs.length - 3);
-                    sb.append("]");
-                }
-                System.out.println(sb.toString());
-                toolLogCount++;
-            }
         } catch (Exception e) {
             System.out.println(LOG_PREFIX + "WARNING: Failed to apply tool multiplier: " + e.getMessage());
             e.printStackTrace();
         }
     }
-    private static int toolLogCount = 0;
+
 
     /**
      * Applies the quality damage multiplier to the variant Item's weapon interactions.
@@ -765,19 +718,13 @@ public final class QualityTierMapper {
                 applyWeaponDamageBaked(variant, quality, damageMultiplier);
             }
 
-            if (weaponLogCount < 5) {
-                String variantId = (String) getFieldValue(variant, "id");
-                System.out.println(LOG_PREFIX + "  Weapon scaled: " + variantId
-                        + " sigEnergy x" + sigMultiplier
-                        + " dmg x" + quality.getDamageMultiplier(config));
-                weaponLogCount++;
-            }
+
         } catch (Exception e) {
             System.out.println(LOG_PREFIX + "WARNING: Failed to apply weapon multiplier: " + e.getMessage());
             e.printStackTrace();
         }
     }
-    private static int weaponLogCount = 0;
+
 
     /**
      * Pending cloned RootInteractions and Interactions to register in batch
@@ -866,11 +813,7 @@ public final class QualityTierMapper {
                         }
                     }
                 } catch (Exception e) {
-                    if (weaponDamageLogCount < 5) {
-                        System.out.println(LOG_PREFIX + "  Failed to clone interaction for var '"
-                                + varName + "' in " + variantId + ": " + e.getMessage());
-                        weaponDamageLogCount++;
-                    }
+                    // Interaction clone failed — variant uses base interaction
                 }
             }
 
@@ -880,13 +823,10 @@ public final class QualityTierMapper {
                 try { setFieldValue(variant, "cachedPacket", null); } catch (Exception ignored) {}
             }
         } catch (Exception e) {
-            if (weaponDamageLogCount < 5) {
-                System.out.println(LOG_PREFIX + "WARNING: Failed to bake weapon damage: " + e.getMessage());
-                weaponDamageLogCount++;
-            }
+            System.out.println(LOG_PREFIX + "WARNING: Failed to bake weapon damage: " + e.getMessage());
         }
     }
-    private static int weaponDamageLogCount = 0;
+
 
     /**
      * Checks if an Interaction is a DamageEntityInteraction by class name.
@@ -956,11 +896,6 @@ public final class QualityTierMapper {
 
             return cloned;
         } catch (Exception e) {
-            if (weaponDamageLogCount < 5) {
-                System.out.println(LOG_PREFIX + "  Failed to clone DamageEntityInteraction: " + e.getMessage());
-                e.printStackTrace();
-                weaponDamageLogCount++;
-            }
             return null;
         }
     }
@@ -989,10 +924,6 @@ public final class QualityTierMapper {
 
             return cloned;
         } catch (Exception e) {
-            if (weaponDamageLogCount < 5) {
-                System.out.println(LOG_PREFIX + "  Failed to clone RootInteraction: " + e.getMessage());
-                weaponDamageLogCount++;
-            }
             return null;
         }
     }
@@ -1411,8 +1342,6 @@ public final class QualityTierMapper {
                     f.setAccessible(true);
                     Object val = f.get(assetMapObj);
                     if (val instanceof Map) {
-                        System.out.println(LOG_PREFIX + "Accessed mutable assetMap field ("
-                                + val.getClass().getName() + "), size=" + ((Map<?, ?>) val).size());
                         return (Map<String, Item>) val;
                     }
                 } catch (NoSuchFieldException ignored) {}

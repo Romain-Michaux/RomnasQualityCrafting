@@ -187,9 +187,7 @@ public final class QualityAssigner {
                     migrated = migrated.withMaxDurability(tgtMax).withDurability(tgtMax * ratio);
                 }
 
-                container.setItemStackForSlot(slot, migrated);
-                System.out.println(LOG_PREFIX + "live-migrated v1.x item " + itemId
-                        + " → " + targetId + " (" + v1Quality.name() + ")");
+                container.setItemStackForSlot(slot, migrated);;
             } catch (Exception e) {
                 System.out.println(LOG_PREFIX + "failed to live-migrate " + itemId + ": " + e.getMessage());
             }
