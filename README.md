@@ -86,9 +86,14 @@ See `config.json` for the full list.
 
 ##  Compatibility
 
-- **Hytale Server** 1.0-SNAPSHOT+
-- **Java** 25+
 - Works alongside other mods — any new weapons/armor/tools are automatically included
+
+---
+
+##  Support and questions
+
+- Comments disabled because it's way harder to track than with Discord.
+- **Discord Server:** https://discord.gg/Y7e6hrjqVz
 
 ---
 
