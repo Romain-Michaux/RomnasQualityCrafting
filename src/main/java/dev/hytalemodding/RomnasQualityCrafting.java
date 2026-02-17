@@ -7,7 +7,6 @@ import dev.hytalemodding.config.QualityConfig;
 import dev.hytalemodding.migration.QualityMigration;
 import dev.hytalemodding.quality.LootDropModifier;
 import dev.hytalemodding.quality.QualityAssigner;
-import dev.hytalemodding.quality.QualityDamageSystem;
 import dev.hytalemodding.quality.QualityItemFactory;
 import dev.hytalemodding.quality.QualityRegistry;
 import dev.hytalemodding.quality.QualityTierMapper;
@@ -31,7 +30,7 @@ import java.nio.file.attribute.BasicFileAttributes;
  *   - Quality stored as BsonDocument metadata on ItemStack ("rqc_quality")
  *   - Item ID swapped to a quality variant for correct client visuals (colors, tooltips)
  *   - Variant items cloned from base items with correct Hytale qualityIndex
- *   - Damage/armor effects applied at runtime via QualityDamageSystem (ECS)
+ *   - All stat multipliers (damage, armor, tools, durability) baked into variants
  *   - Durability multiplier applied on item acquisition
  *   - Migration from v1.x (ID suffix) and v2.0 (metadata-only) to variant system
  *
@@ -45,7 +44,6 @@ public class RomnasQualityCrafting extends JavaPlugin {
     private QualityConfig config;
     private QualityRegistry registry;
     private QualityAssigner assigner;
-    private QualityDamageSystem damageSystem;
     private QualityTierMapper tierMapper;
     private QualityMigration migration;
     private LootDropModifier lootDropModifier;
@@ -82,23 +80,12 @@ public class RomnasQualityCrafting extends JavaPlugin {
         assigner.registerEvents(this.getEventRegistry());
         System.out.println(LOG_PREFIX + "Quality assignment events registered.");
 
-        // ── 6. Register damage system (ECS) for runtime stat effects ──
-        try {
-            damageSystem = new QualityDamageSystem(config);
-            this.getEntityStoreRegistry().registerSystem(damageSystem);
-            System.out.println(LOG_PREFIX + "Damage system registered (ECS).");
-        } catch (Exception e) {
-            System.out.println(LOG_PREFIX + "Warning: Could not register damage system: "
-                    + e.getClass().getSimpleName() + " - " + e.getMessage());
-            System.out.println(LOG_PREFIX + "Quality will still be assigned but damage/armor multipliers will not apply.");
-        }
-
-        // ── 7. Set up v1.x → v2.0 migration on player join ──
+        // ── 6. Set up v1.x → v2.0 migration on player join ──
         migration = new QualityMigration(registry, tierMapper);
         migration.registerEvents(this.getEventRegistry());
         System.out.println(LOG_PREFIX + "Migration handler registered.");
 
-        // ── 8. Defer item scanning until assets are fully loaded ──
+        // ── 7. Defer item scanning until assets are fully loaded ──
         this.getEventRegistry().register(
             LoadAssetEvent.PRIORITY_LOAD_LATE,
             LoadAssetEvent.class,

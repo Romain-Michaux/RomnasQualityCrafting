@@ -27,8 +27,8 @@ import java.util.List;
  * - Item ID is swapped to a quality variant (e.g. "Weapon_Sword_Copper__rqc_Rare")
  *   so that the client shows the correct quality color and tooltip
  * - Base item ID is stored in metadata ("rqc_base_id") for reverse lookup
- * - Stat multipliers (damage, armor) are applied at runtime via QualityDamageSystem
- * - Durability multiplier is applied here since it's an ItemStack property
+ * - All stat multipliers are baked into variant Item assets by QualityTierMapper
+ * - Durability multiplier is also applied here on item acquisition
  */
 public final class QualityAssigner {
 

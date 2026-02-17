@@ -13,9 +13,7 @@ import java.util.Set;
 /**
  * Utility class for item quality eligibility checks.
  *
- * In v2.0 metadata-only mode, we no longer clone items or modify stats via reflection.
- * Stats are applied at runtime by the QualityDamageSystem.
- * This class only provides the eligibility check used by QualityRegistry and QualityAssigner.
+ * Provides eligibility checks used by QualityRegistry and QualityAssigner.
  */
 public final class QualityItemFactory {
 

@@ -28,7 +28,8 @@ Complete architecture rewrite. Quality is now baked into variant items at startu
 
 ### 🗑️ Removed
 - On-disk JSON file generation (replaced by in-memory variants)
-- Runtime ECS damage system (all stats now baked into items)
+- Runtime ECS damage system (was no-op — all stats baked into variants)
+- Admin commands (`/rqc`)
 - Per-item verbose debug logging (cleaned for release)
 
 ---
