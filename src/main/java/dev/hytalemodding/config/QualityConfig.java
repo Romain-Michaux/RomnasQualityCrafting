@@ -179,7 +179,8 @@ public class QualityConfig {
             "Weapon_Arrow",
             "Weapon_Dart",
             "Weapon_Spellbook",
-            "Tool_Feedbag"
+            "Tool_Feedbag",
+            "Tool_Watering_Can"
     };
 
     public QualityConfig() {}

@@ -1,5 +1,11 @@
 # Changelog
 
+## v2.0.1 — Compatibility Update
+
+### 🔧 Fixed
+- Updated `ServerVersion` to `2026.02.17-255364b8e` for Hytale Update 3 compatibility
+- Adde watering can to the base ignore list
+
 ## v2.0.0 — Full Rewrite
 
 Complete architecture rewrite. Quality is now baked into variant items at startup instead of applied at runtime.
