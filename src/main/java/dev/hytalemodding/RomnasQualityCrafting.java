@@ -3,7 +3,6 @@ package dev.hytalemodding;
 import com.hypixel.hytale.server.core.asset.LoadAssetEvent;
 import com.hypixel.hytale.server.core.plugin.JavaPlugin;
 import com.hypixel.hytale.server.core.plugin.JavaPluginInit;
-import dev.hytalemodding.commands.QualityCommands;
 import dev.hytalemodding.config.QualityConfig;
 import dev.hytalemodding.migration.QualityMigration;
 import dev.hytalemodding.quality.LootDropModifier;
@@ -49,7 +48,6 @@ public class RomnasQualityCrafting extends JavaPlugin {
     private QualityDamageSystem damageSystem;
     private QualityTierMapper tierMapper;
     private QualityMigration migration;
-    private QualityCommands commands;
     private LootDropModifier lootDropModifier;
 
     public RomnasQualityCrafting(@Nonnull JavaPluginInit init) {
@@ -100,16 +98,7 @@ public class RomnasQualityCrafting extends JavaPlugin {
         migration.registerEvents(this.getEventRegistry());
         System.out.println(LOG_PREFIX + "Migration handler registered.");
 
-        // ── 8. Register admin commands ──
-        try {
-            commands = new QualityCommands(registry, migration);
-            commands.registerCommands(this.getCommandRegistry());
-            System.out.println(LOG_PREFIX + "Commands registered.");
-        } catch (Exception e) {
-            System.out.println(LOG_PREFIX + "Warning: Could not register commands: " + e.getMessage());
-        }
-
-        // ── 9. Defer item scanning until assets are fully loaded ──
+        // ── 8. Defer item scanning until assets are fully loaded ──
         this.getEventRegistry().register(
             LoadAssetEvent.PRIORITY_LOAD_LATE,
             LoadAssetEvent.class,

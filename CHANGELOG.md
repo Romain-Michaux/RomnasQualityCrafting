@@ -16,7 +16,6 @@ Complete architecture rewrite. Quality is now baked into variant items at startu
 - **Ignore list** — configurable item prefix filter to exclude consumables (arrows, bombs, darts, spellbooks, feedbags)
 - **v1.x auto-migration** — old quality items are seamlessly upgraded on player join
 - **Old file cleanup** — v1.x `RQCGeneratedFiles/` folder auto-deleted on startup
-- **Admin commands** — `/rqc status` and `/rqc migrate`
 - **French localization** — `fr-FR` language file included
 
 ### 🔧 Fixed (from v1.x)

@@ -84,16 +84,7 @@ See `config.json` for the full list.
 
 ---
 
-## 🛠️ Commands
-
-| Command | Description |
-|---------|-------------|
-| `/rqc status` | Show quality system status and stats |
-| `/rqc migrate` | Force-migrate your inventory to v2.0 format |
-
----
-
-## 📋 Compatibility
+##  Compatibility
 
 - **Hytale Server** 1.0-SNAPSHOT+
 - **Java** 25+
