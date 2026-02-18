@@ -1,17 +1,17 @@
 package dev.hytalemodding.quality;
 
-import com.hypixel.hytale.server.core.asset.type.item.config.Item;
 import com.hypixel.hytale.server.core.entity.LivingEntity;
 import com.hypixel.hytale.event.EventRegistry;
 import com.hypixel.hytale.server.core.event.events.entity.LivingEntityInventoryChangeEvent;
 import com.hypixel.hytale.server.core.inventory.ItemStack;
 import com.hypixel.hytale.server.core.inventory.container.ItemContainer;
+import com.hypixel.hytale.server.core.inventory.transaction.ItemStackSlotTransaction;
+import com.hypixel.hytale.server.core.inventory.transaction.ItemStackTransaction;
+import com.hypixel.hytale.server.core.inventory.transaction.MoveTransaction;
 import com.hypixel.hytale.server.core.inventory.transaction.SlotTransaction;
 import com.hypixel.hytale.server.core.inventory.transaction.ListTransaction;
 import com.hypixel.hytale.server.core.inventory.transaction.Transaction;
 import dev.hytalemodding.config.QualityConfig;
-import org.bson.BsonDocument;
-import org.bson.BsonString;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -19,22 +19,24 @@ import java.lang.reflect.Field;
 import java.util.List;
 
 /**
- * Listens to inventory change events and assigns a random quality to newly
- * acquired eligible items.
+ * Assigns a random quality tier to newly acquired eligible items.
  *
- * v2.0 approach:
- * - Quality is stored as metadata on the ItemStack ("rqc_quality")
- * - Item ID is swapped to a quality variant (e.g. "Weapon_Sword_Copper__rqc_Rare")
- *   so that the client shows the correct quality color and tooltip
- * - Base item ID is stored in metadata ("rqc_base_id") for reverse lookup
- * - All stat multipliers are baked into variant Item assets by QualityTierMapper
- * - Durability multiplier is also applied here on item acquisition
+ * Quality is determined entirely by the item ID:
+ * - Base items (e.g. "Weapon_Sword_Copper") are swapped to quality variants
+ *   (e.g. "Weapon_Sword_Copper__rqc_Legendary") so the client shows the
+ *   correct quality color/tooltip.
+ * - All stat multipliers (damage, armor, tools, durability) are baked into
+ *   variant Item assets by QualityTierMapper at startup.
+ * - No metadata (BsonDocument) is used — quality can be read back from the item ID.
+ *
+ * Event handling:
+ * - This class uses LivingEntityInventoryChangeEvent to catch all item
+ *   acquisition sources (crafting, loot pickup, trades, etc.).
+ * - Slot modifications are done synchronously on the game thread.
  */
 public final class QualityAssigner {
 
     private static final String LOG_PREFIX = "[RQC] Assigner: ";
-    public static final String METADATA_KEY = "rqc_quality";
-    public static final String BASE_ID_KEY = "rqc_base_id";
 
     private final QualityRegistry registry;
     private final QualityConfig config;
@@ -49,17 +51,20 @@ public final class QualityAssigner {
     }
 
     /**
-     * Registers all event handlers with the event registry.
+     * Registers the inventory change event handler with the event registry.
+     * This single handler covers all item acquisition sources (crafting, loot,
+     * trades, etc.) by modifying slots synchronously on the game thread.
      */
     public void registerEvents(@Nonnull EventRegistry eventRegistry) {
-        // Primary handler: inventory changes (catches crafting, loot, trades, etc.)
         eventRegistry.registerGlobal(
             LivingEntityInventoryChangeEvent.class,
             this::onInventoryChange
         );
     }
 
-    // ── Inventory change handler ──
+    // ═══════════════════════════════════════════════════════════════════════════
+    //  LivingEntityInventoryChangeEvent handler — all item acquisition sources
+    // ═══════════════════════════════════════════════════════════════════════════
 
     private void onInventoryChange(@Nonnull LivingEntityInventoryChangeEvent event) {
         Transaction transaction = event.getTransaction();
@@ -68,10 +73,27 @@ public final class QualityAssigner {
         LivingEntity entity = event.getEntity();
         ItemContainer container = event.getItemContainer();
 
-        if (transaction instanceof SlotTransaction) {
-            handleSlotTransaction((SlotTransaction) transaction, container);
-        } else if (transaction instanceof ListTransaction) {
-            handleListTransaction((ListTransaction<?>) transaction, container);
+        System.out.println(LOG_PREFIX + ">>> InventoryChange: entity=" + entity.getClass().getSimpleName()
+                + " tx=" + transaction.getClass().getSimpleName()
+                + " container=" + container.getClass().getSimpleName());
+
+        if (transaction instanceof SlotTransaction slotTx) {
+            // Covers SlotTransaction AND ItemStackSlotTransaction (subclass)
+            handleSlotTransaction(slotTx, container);
+        } else if (transaction instanceof ItemStackTransaction itemStackTx) {
+            // Crafting and item-add operations — has getSlotTransactions()
+            handleItemStackTransaction(itemStackTx, container);
+        } else if (transaction instanceof MoveTransaction<?> moveTx) {
+            // Item movement between containers
+            handleMoveTransaction(moveTx, container);
+        } else if (transaction instanceof ListTransaction<?> listTx) {
+            // Batch transaction — contains a list of inner transactions
+            handleListTransaction(listTx, container);
+        } else {
+            // Unknown transaction type — try scanning all slots
+            System.out.println(LOG_PREFIX + "Unknown tx type: " + transaction.getClass().getName()
+                    + " — falling back to full container scan");
+            scanContainerForUnqualifiedItems(container);
         }
     }
 
@@ -81,6 +103,48 @@ public final class QualityAssigner {
         if (itemAfter == null || itemAfter.isEmpty()) return;
 
         tryAssignQuality(itemAfter, container, slotTx.getSlot());
+    }
+
+    /**
+     * Handles ItemStackTransaction — the main transaction type for crafting
+     * and adding items to inventory. Contains a list of ItemStackSlotTransactions.
+     */
+    private void handleItemStackTransaction(@Nonnull ItemStackTransaction itemStackTx,
+                                             @Nonnull ItemContainer container) {
+        List<ItemStackSlotTransaction> slotTxList = itemStackTx.getSlotTransactions();
+        if (slotTxList == null || slotTxList.isEmpty()) return;
+
+        for (ItemStackSlotTransaction slotTx : slotTxList) {
+            if (!slotTx.succeeded()) continue;
+
+            ItemStack itemAfter = slotTx.getSlotAfter();
+            if (itemAfter == null || itemAfter.isEmpty()) continue;
+
+            tryAssignQuality(itemAfter, container, slotTx.getSlot());
+        }
+    }
+
+    /**
+     * Handles MoveTransaction — item movement between containers.
+     * The "add" part goes to the destination container.
+     */
+    @SuppressWarnings("unchecked")
+    private void handleMoveTransaction(@Nonnull MoveTransaction<?> moveTx,
+                                        @Nonnull ItemContainer container) {
+        Transaction addTx = moveTx.getAddTransaction();
+        if (addTx == null || !addTx.succeeded()) return;
+
+        ItemContainer destContainer = moveTx.getOtherContainer();
+        if (destContainer == null) destContainer = container;
+
+        if (addTx instanceof SlotTransaction slotTx) {
+            ItemStack itemAfter = slotTx.getSlotAfter();
+            if (itemAfter != null && !itemAfter.isEmpty()) {
+                tryAssignQuality(itemAfter, destContainer, slotTx.getSlot());
+            }
+        } else if (addTx instanceof ItemStackTransaction itemStackTx) {
+            handleItemStackTransaction(itemStackTx, destContainer);
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -94,59 +158,48 @@ public final class QualityAssigner {
             if (transactions == null) return;
 
             for (Object txObj : transactions) {
-                SlotTransaction slotTx = extractSlotTransaction(txObj);
-                if (slotTx == null || !slotTx.succeeded()) continue;
-
-                ItemStack itemAfter = slotTx.getSlotAfter();
-                if (itemAfter == null || itemAfter.isEmpty()) continue;
-
-                tryAssignQuality(itemAfter, container, slotTx.getSlot());
-            }
-        } catch (Exception ignored) {
-            // Reflection failed — can't process list transaction
-        }
-    }
-
-    /**
-     * Attempts to extract a SlotTransaction from a potentially wrapped transaction object.
-     */
-    @SuppressWarnings("unchecked")
-    private SlotTransaction extractSlotTransaction(Object txObj) {
-        if (txObj instanceof SlotTransaction) {
-            return (SlotTransaction) txObj;
-        }
-
-        // Try getSlotTransaction() method
-        try {
-            java.lang.reflect.Method m = txObj.getClass().getMethod("getSlotTransaction");
-            return (SlotTransaction) m.invoke(txObj);
-        } catch (Exception ignored) {
-        }
-
-        // Try slotTransactions field
-        try {
-            Field f = txObj.getClass().getDeclaredField("slotTransactions");
-            f.setAccessible(true);
-            List<SlotTransaction> list = (List<SlotTransaction>) f.get(txObj);
-            if (list != null) {
-                for (SlotTransaction st : list) {
-                    if (st.succeeded()) return st;
+                if (txObj instanceof SlotTransaction slotTx) {
+                    if (!slotTx.succeeded()) continue;
+                    ItemStack itemAfter = slotTx.getSlotAfter();
+                    if (itemAfter == null || itemAfter.isEmpty()) continue;
+                    tryAssignQuality(itemAfter, container, slotTx.getSlot());
+                } else if (txObj instanceof ItemStackTransaction itemStackTx) {
+                    if (!itemStackTx.succeeded()) continue;
+                    handleItemStackTransaction(itemStackTx, container);
+                } else if (txObj instanceof MoveTransaction<?> moveTx) {
+                    if (!moveTx.succeeded()) continue;
+                    handleMoveTransaction(moveTx, container);
                 }
             }
-        } catch (Exception ignored) {
+        } catch (Exception e) {
+            System.out.println(LOG_PREFIX + "ListTransaction reflection failed: " + e.getMessage());
         }
-
-        return null;
     }
 
-    // ── Quality assignment logic ──
+    /**
+     * Fallback: Scans all slots in a container for unqualified eligible items.
+     * Used when we encounter an unknown transaction type.
+     */
+    private void scanContainerForUnqualifiedItems(@Nonnull ItemContainer container) {
+        try {
+            short capacity = container.getCapacity();
+            for (short slot = 0; slot < capacity; slot++) {
+                ItemStack item = container.getItemStack(slot);
+                if (item == null || item.isEmpty()) continue;
+                tryAssignQuality(item, container, slot);
+            }
+        } catch (Exception e) {
+            System.out.println(LOG_PREFIX + "Container scan failed: " + e.getMessage());
+        }
+    }
+
+    // ═══════════════════════════════════════════════════════════════════════════
+    //  Synchronous quality assignment
+    // ═══════════════════════════════════════════════════════════════════════════
 
     /**
-     * Core quality assignment logic.
-     * Checks eligibility, rolls quality, stores as metadata, and swaps item ID
-     * to a quality variant so the client shows the correct quality color/tooltip.
-     *
-     * Also handles on-the-fly migration of v1.x items (ID suffix → variant + metadata).
+     * Checks if this item needs quality assignment and, if so, swaps it
+     * to a quality variant immediately on the game thread.
      */
     private void tryAssignQuality(@Nonnull ItemStack itemStack,
                                    @Nonnull ItemContainer container,
@@ -154,200 +207,111 @@ public final class QualityAssigner {
         String itemId = itemStack.getItemId();
         if (itemId == null || itemId.isEmpty()) return;
 
-        // Skip if already has quality metadata (already assigned or migrated)
-        if (hasQualityMetadata(itemStack)) return;
+        // Already a quality variant — nothing to do
+        if (tierMapper.isVariant(itemId)) return;
 
-        // Skip our own variant items — but add metadata if missing (e.g. from loot drops)
-        if (tierMapper.isVariant(itemId)) {
-            addMetadataToVariant(itemStack, container, slot, itemId);
-            return;
-        }
+        // v1.x item (has quality suffix like _Legendary) — migrate to variant
+        boolean isV1Item = ItemQuality.fromItemId(itemId) != null;
 
-        // ── Check for v1.x item (has quality suffix in ID) → migrate to variant ──
-        ItemQuality v1Quality = ItemQuality.fromItemId(itemId);
-        if (v1Quality != null) {
-            try {
-                String baseId = ItemQuality.extractBaseId(itemId);
-                // Use the variant ID if tier mapper is ready, otherwise just use baseId
-                String targetId = tierMapper.isInitialized()
-                        ? tierMapper.getVariantId(baseId, v1Quality) : baseId;
+        // Eligible base item — assign random quality
+        boolean isEligibleBase = !isV1Item && registry.isEligible(itemId);
 
-                ItemStack migrated = new ItemStack(targetId, itemStack.getQuantity());
-                BsonDocument metadata = itemStack.getMetadata();
-                BsonDocument newMeta = (metadata != null) ? metadata.clone() : new BsonDocument();
-                newMeta.put(METADATA_KEY, new BsonString(v1Quality.name()));
-                newMeta.put(BASE_ID_KEY, new BsonString(baseId));
-                newMeta.put("rqc_migrated", new BsonString("v1_live"));
-                migrated = migrated.withMetadata(newMeta);
+        if (!isV1Item && !isEligibleBase) return;
 
-                double srcMax = itemStack.getMaxDurability();
-                double tgtMax = migrated.getMaxDurability();
-                if (srcMax > 0 && tgtMax > 0) {
-                    double ratio = itemStack.getDurability() / srcMax;
-                    migrated = migrated.withMaxDurability(tgtMax).withDurability(tgtMax * ratio);
-                }
+        System.out.println(LOG_PREFIX + "tryAssign: " + itemId + " slot=" + slot
+                + " v1=" + isV1Item + " eligible=" + isEligibleBase);
 
-                container.setItemStackForSlot(slot, migrated);;
-            } catch (Exception e) {
-                System.out.println(LOG_PREFIX + "failed to live-migrate " + itemId + ": " + e.getMessage());
+        try {
+            if (isV1Item) {
+                migrateV1Item(itemStack, container, slot, itemId);
+            } else {
+                assignNewQuality(itemStack, container, slot, itemId);
             }
-            return;
+        } catch (Exception e) {
+            System.out.println(LOG_PREFIX + "FAILED slot " + slot + ": "
+                    + e.getClass().getSimpleName() + " - " + e.getMessage());
+        }
+    }
+
+    /**
+     * Migrates a v1.x item (quality suffix in ID) to a proper variant.
+     */
+    private void migrateV1Item(@Nonnull ItemStack item,
+                                @Nonnull ItemContainer container,
+                                short slot,
+                                @Nonnull String itemId) {
+        ItemQuality v1Quality = ItemQuality.fromItemId(itemId);
+        if (v1Quality == null) return;
+
+        String baseId = ItemQuality.extractBaseId(itemId);
+        String targetId = tierMapper.isInitialized()
+                ? tierMapper.getVariantId(baseId, v1Quality) : baseId;
+
+        ItemStack migrated = new ItemStack(targetId, item.getQuantity());
+
+        double srcMax = item.getMaxDurability();
+        double tgtMax = migrated.getMaxDurability();
+        if (srcMax > 0 && tgtMax > 0) {
+            double ratio = item.getDurability() / srcMax;
+            migrated = migrated.withDurability(tgtMax * ratio);
         }
 
-        // Skip if this item ID is not eligible
-        if (!registry.isEligible(itemId)) return;
+        container.setItemStackForSlot(slot, migrated);
+        System.out.println(LOG_PREFIX + "MIGRATED " + itemId + " -> " + targetId);
+    }
 
-        // Roll a random quality
+    /**
+     * Assigns a random quality to an eligible base item.
+     */
+    private void assignNewQuality(@Nonnull ItemStack item,
+                                   @Nonnull ItemContainer container,
+                                   short slot,
+                                   @Nonnull String itemId) {
         ItemQuality quality = ItemQuality.random(config);
 
-        try {
-            // Determine target item ID: use variant with correct quality tier
-            String targetId = tierMapper.isInitialized()
-                    ? tierMapper.getVariantId(itemId, quality) : itemId;
+        String targetId = tierMapper.isInitialized()
+                ? tierMapper.getVariantId(itemId, quality) : itemId;
 
-            // Create new ItemStack with variant ID + quality metadata
-            ItemStack modified = new ItemStack(targetId, itemStack.getQuantity());
-            BsonDocument metadata = itemStack.getMetadata();
-            BsonDocument newMetadata = (metadata != null) ? metadata.clone() : new BsonDocument();
-            newMetadata.put(METADATA_KEY, new BsonString(quality.name()));
-            newMetadata.put(BASE_ID_KEY, new BsonString(itemId));
-            modified = modified.withMetadata(newMetadata);
+        ItemStack modified = new ItemStack(targetId, item.getQuantity());
 
-            // Apply durability multiplier (this IS an ItemStack property we can modify)
-            float durMultiplier = quality.getDurabilityMultiplier(config);
-            if (durMultiplier != 1.0f) {
-                double baseMax = modified.getMaxDurability();
-                if (baseMax > 0) {
-                    double newMax = baseMax * durMultiplier;
-                    modified = modified.withMaxDurability(newMax).withDurability(newMax);
-                }
-            }
-
-            // Place the modified item back in the container
-            container.setItemStackForSlot(slot, modified);
-        } catch (Exception e) {
-            // Silently fail — don't break the game
+        // Durability is already baked into the variant Item asset by
+        // QualityTierMapper.applyDurabilityMultiplier(). Just set current
+        // durability to the variant's (already-scaled) maxDurability.
+        double variantMax = modified.getMaxDurability();
+        if (variantMax > 0) {
+            modified = modified.withDurability(variantMax);
         }
+
+        container.setItemStackForSlot(slot, modified);
+        System.out.println(LOG_PREFIX + "ASSIGNED " + itemId + " -> " + targetId
+                + " (" + quality + ", dur=" + variantMax + ")");
     }
 
-    // ── Metadata stamp for loot-dropped variants ──
+    // ═══════════════════════════════════════════════════════════════════════════
+    //  Static helpers — quality from item ID (used by other classes)
+    // ═══════════════════════════════════════════════════════════════════════════
 
     /**
-     * Adds rqc_quality / rqc_base_id metadata to a variant item that was
-     * dropped from a loot table (which has no metadata yet).
-     * This ensures that all quality variant items in inventories have proper
-     * metadata for reverse lookup and display.
-     */
-    private void addMetadataToVariant(@Nonnull ItemStack itemStack,
-                                      @Nonnull ItemContainer container,
-                                      short slot,
-                                      @Nonnull String variantId) {
-        // Already has metadata? Nothing to do.
-        if (hasQualityMetadata(itemStack)) return;
-
-        try {
-            ItemQuality quality = ItemQuality.fromItemId(variantId);
-            String baseId = ItemQuality.extractBaseId(variantId);
-            if (quality == null || baseId.equals(variantId)) return;
-
-            BsonDocument metadata = itemStack.getMetadata();
-            BsonDocument newMeta = (metadata != null) ? metadata.clone() : new BsonDocument();
-            newMeta.put(METADATA_KEY, new BsonString(quality.name()));
-            newMeta.put(BASE_ID_KEY, new BsonString(baseId));
-            newMeta.put("rqc_source", new BsonString("loot"));
-
-            ItemStack stamped = new ItemStack(variantId, itemStack.getQuantity());
-            stamped = stamped.withMetadata(newMeta);
-
-            // Preserve durability
-            double srcMax = itemStack.getMaxDurability();
-            double tgtMax = stamped.getMaxDurability();
-            if (srcMax > 0 && tgtMax > 0) {
-                double ratio = itemStack.getDurability() / srcMax;
-                stamped = stamped.withMaxDurability(tgtMax).withDurability(tgtMax * ratio);
-            }
-
-            container.setItemStackForSlot(slot, stamped);
-        } catch (Exception e) {
-            // Silently fail — item still works fine without metadata
-        }
-    }
-
-    // ── Metadata helpers (static for use by other classes) ──
-
-    /**
-     * Checks if an ItemStack already has quality metadata.
-     */
-    public static boolean hasQualityMetadata(@Nonnull ItemStack itemStack) {
-        try {
-            BsonDocument metadata = itemStack.getMetadata();
-            if (metadata == null) return false;
-            return metadata.containsKey(METADATA_KEY);
-        } catch (Exception e) {
-            return false;
-        }
-    }
-
-    /**
-     * Gets the quality from an ItemStack's metadata.
-     * Returns null if no quality metadata is found.
-     */
-    @Nullable
-    public static ItemQuality getQualityFromMetadata(@Nonnull ItemStack itemStack) {
-        try {
-            BsonDocument metadata = itemStack.getMetadata();
-            if (metadata == null) return null;
-
-            org.bson.BsonValue value = metadata.get(METADATA_KEY);
-            if (value == null || !value.isString()) return null;
-
-            return ItemQuality.valueOf(value.asString().getValue());
-        } catch (Exception e) {
-            return null;
-        }
-    }
-
-    /**
-     * Gets quality from either metadata or item ID suffix (v1.x compat).
-     * Tries metadata first, falls back to ID parsing.
+     * Gets quality from an ItemStack by parsing its item ID.
+     * Returns null if the item has no quality suffix.
      */
     @Nullable
     public static ItemQuality getQualityFromItem(@Nonnull ItemStack itemStack) {
-        // Try metadata first (v2.0)
-        ItemQuality fromMeta = getQualityFromMetadata(itemStack);
-        if (fromMeta != null) return fromMeta;
-
-        // Fall back to ID suffix parsing (works for both v1.x and v2.0 variants)
         String itemId = itemStack.getItemId();
         if (itemId != null) {
             return ItemQuality.fromItemId(itemId);
         }
-
         return null;
     }
 
     /**
-     * Gets the base (original) item ID from an ItemStack.
-     * Checks metadata first (rqc_base_id), then parses variant separator,
-     * then v1.x suffix, and falls back to the raw item ID.
+     * Gets the base (original) item ID from an ItemStack by stripping
+     * the quality suffix from the item ID.
      */
     @Nonnull
     public static String getBaseItemId(@Nonnull ItemStack itemStack) {
         String itemId = itemStack.getItemId();
         if (itemId == null) return "";
-
-        // Check metadata for stored base ID (most reliable)
-        try {
-            BsonDocument metadata = itemStack.getMetadata();
-            if (metadata != null && metadata.containsKey(BASE_ID_KEY)) {
-                org.bson.BsonValue val = metadata.get(BASE_ID_KEY);
-                if (val != null && val.isString()) {
-                    return val.asString().getValue();
-                }
-            }
-        } catch (Exception ignored) {}
-
-        // Fall back to suffix parsing (handles both v1.x and v2.0 variants)
         return ItemQuality.extractBaseId(itemId);
     }
 }

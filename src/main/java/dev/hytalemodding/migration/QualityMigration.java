@@ -8,11 +8,8 @@ import com.hypixel.hytale.server.core.inventory.Inventory;
 import com.hypixel.hytale.server.core.inventory.ItemStack;
 import com.hypixel.hytale.server.core.inventory.container.ItemContainer;
 import dev.hytalemodding.quality.ItemQuality;
-import dev.hytalemodding.quality.QualityAssigner;
 import dev.hytalemodding.quality.QualityRegistry;
 import dev.hytalemodding.quality.QualityTierMapper;
-import org.bson.BsonDocument;
-import org.bson.BsonString;
 
 import javax.annotation.Nonnull;
 import java.util.*;
@@ -21,16 +18,15 @@ import java.util.*;
  * Handles migration from v1.x quality items to v2.0 format.
  *
  * v1.x stored quality by changing the item ID (e.g. "Weapon_Sword_Copper_Legendary").
- * v2.0 uses quality variant items with correct qualityIndex for client visuals.
+ * v2.0 uses quality variant items with correct qualityIndex for client visuals
+ * (e.g. "Weapon_Sword_Copper__rqc_Legendary").
  *
  * On player join, scans inventory for v1.x items and:
  * 1. Extracts quality tier from item ID suffix
- * 2. Swaps to quality variant ID (e.g. "Weapon_Sword_Copper__rqc_Legendary")
- * 3. Stores quality as metadata ("rqc_quality" = "LEGENDARY")
- * 4. Stores base ID as metadata ("rqc_base_id" = "Weapon_Sword_Copper")
- * 5. Preserves durability ratio
+ * 2. Swaps to quality variant ID
+ * 3. Preserves durability ratio
  *
- * Also upgrades v2.0-metadata-only items (from before variant system) to variants.
+ * No metadata is used — quality is determined entirely by the item ID.
  */
 public final class QualityMigration {
 
@@ -64,7 +60,6 @@ public final class QualityMigration {
         UUID uuid = player.getUuid();
         if (migratedPlayers.contains(uuid)) return;
 
-
         int migrated = migratePlayer(player);
         migratedPlayers.add(uuid);
 
@@ -73,16 +68,15 @@ public final class QualityMigration {
 
             try {
                 player.sendMessage(Message.raw("[RQC] Migrated " + migrated
-                        + " quality item(s) from v1.x to v2.0 metadata format.").color("#55ff55"));
+                        + " quality item(s) from v1.x to v2.0 format.").color("#55ff55"));
             } catch (Exception ignored) {
             }
         }
-
     }
 
     /**
      * Scans all of a player's inventory sections and migrates v1.x quality items.
-     * v1.x items have quality in their ID suffix → revert to base ID + add metadata.
+     * v1.x items have quality in their ID suffix → swap to proper variant ID.
      *
      * @return number of items migrated
      */
@@ -116,7 +110,7 @@ public final class QualityMigration {
     }
 
     /**
-     * Migrates v1.x quality items and upgrades v2.0 metadata-only items to variants.
+     * Migrates v1.x quality items (ID suffix like _Legendary) to proper variant items.
      */
     private int migrateContainer(String sectionName, ItemContainer container) {
         if (container == null) return 0;
@@ -132,58 +126,24 @@ public final class QualityMigration {
                 String itemId = item.getItemId();
                 if (itemId == null) continue;
 
-                boolean hasMeta = QualityAssigner.hasQualityMetadata(item);
-                boolean isVariant = tierMapper.isVariant(itemId);
+                // Skip items that are already proper quality variants
+                if (tierMapper.isVariant(itemId)) continue;
 
-                // Skip items that are already quality variants with metadata
-                if (isVariant && hasMeta) {
-                    continue;
-                }
-
-                // ── Case 1: v1.x suffixed ID → migrate to variant ──
+                // Check for v1.x suffixed ID (e.g. "Weapon_Sword_Copper_Legendary")
                 ItemQuality quality = ItemQuality.fromItemId(itemId);
-                if (quality != null) {
-                    String baseId = ItemQuality.extractBaseId(itemId);
-                    String targetId = tierMapper.isInitialized()
-                            ? tierMapper.getVariantId(baseId, quality) : baseId;
+                if (quality == null) continue;
 
-                    ItemStack migratedItem = new ItemStack(targetId, item.getQuantity());
+                String baseId = ItemQuality.extractBaseId(itemId);
+                String targetId = tierMapper.isInitialized()
+                        ? tierMapper.getVariantId(baseId, quality) : baseId;
 
-                    BsonDocument metadata = item.getMetadata();
-                    BsonDocument newMetadata = (metadata != null) ? metadata.clone() : new BsonDocument();
-                    newMetadata.put(QualityAssigner.METADATA_KEY, new BsonString(quality.name()));
-                    newMetadata.put(QualityAssigner.BASE_ID_KEY, new BsonString(baseId));
-                    newMetadata.put("rqc_migrated", new BsonString("v1"));
-                    migratedItem = migratedItem.withMetadata(newMetadata);
+                ItemStack migratedItem = new ItemStack(targetId, item.getQuantity());
+                migratedItem = preserveDurability(item, migratedItem);
 
-                    migratedItem = preserveDurability(item, migratedItem);
+                container.setItemStackForSlot(slot, migratedItem);
+                migrated++;
+                totalReverted++;
 
-                    container.setItemStackForSlot(slot, migratedItem);
-                    migrated++;
-                    totalReverted++;
-                    continue;
-                }
-
-                // ── Case 2: v2.0 metadata-only (no variant) → upgrade to variant ──
-                if (hasMeta && !isVariant && tierMapper.isInitialized()) {
-                    ItemQuality metaQuality = QualityAssigner.getQualityFromMetadata(item);
-                    if (metaQuality != null && metaQuality != ItemQuality.COMMON) {
-                        String baseId = QualityAssigner.getBaseItemId(item);
-                        String targetId = tierMapper.getVariantId(baseId, metaQuality);
-
-                        ItemStack upgraded = new ItemStack(targetId, item.getQuantity());
-                        BsonDocument metadata = item.getMetadata();
-                        BsonDocument newMetadata = (metadata != null) ? metadata.clone() : new BsonDocument();
-                        newMetadata.put(QualityAssigner.BASE_ID_KEY, new BsonString(baseId));
-                        upgraded = upgraded.withMetadata(newMetadata);
-
-                        upgraded = preserveDurability(item, upgraded);
-
-                        container.setItemStackForSlot(slot, upgraded);
-                        migrated++;
-                        continue;
-                    }
-                }
             } catch (Exception e) {
                 System.out.println(LOG_PREFIX + "  [" + sectionName + "] slot " + slot
                         + " error: " + e.getClass().getSimpleName() + " - " + e.getMessage());

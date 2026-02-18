@@ -1,10 +1,16 @@
 # Changelog
 
+## v2.0.2 — Crafting & Durability Fix
+
+### 🔧 Fixed
+- **Crafted items now show correct rarity immediately** — Update 3 moved crafting to a new `PlayerCraftEvent` that no longer triggers `LivingEntityInventoryChangeEvent`; added a dedicated `PlayerCraftEvent` handler that scans the player's inventory post-craft and assigns quality to the output items
+- **Durability no longer doubled on crafted items** — the durability multiplier was being applied twice (once baked into the variant Item asset, then again at runtime in `QualityAssigner`); removed the redundant runtime application so items match the creative menu values
+
 ## v2.0.1 — Compatibility Update
 
 ### 🔧 Fixed
 - Updated `ServerVersion` to `2026.02.17-255364b8e` for Hytale Update 3 compatibility
-- Adde watering can to the base ignore list
+- Added watering can to the base ignore list
 
 ## v2.0.0 — Full Rewrite
 

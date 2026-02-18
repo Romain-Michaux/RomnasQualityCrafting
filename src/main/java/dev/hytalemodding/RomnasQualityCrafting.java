@@ -5,6 +5,7 @@ import com.hypixel.hytale.server.core.plugin.JavaPlugin;
 import com.hypixel.hytale.server.core.plugin.JavaPluginInit;
 import dev.hytalemodding.config.QualityConfig;
 import dev.hytalemodding.migration.QualityMigration;
+import dev.hytalemodding.quality.CraftQualitySystem;
 import dev.hytalemodding.quality.LootDropModifier;
 import dev.hytalemodding.quality.QualityAssigner;
 import dev.hytalemodding.quality.QualityItemFactory;
@@ -27,12 +28,13 @@ import java.nio.file.attribute.BasicFileAttributes;
  * Quality is assigned randomly on craft/loot with configurable weights.
  *
  * Architecture (v2.0 — quality variants):
- *   - Quality stored as BsonDocument metadata on ItemStack ("rqc_quality")
+ *   - Quality determined entirely by item ID (variant naming convention)
  *   - Item ID swapped to a quality variant for correct client visuals (colors, tooltips)
  *   - Variant items cloned from base items with correct Hytale qualityIndex
  *   - All stat multipliers (damage, armor, tools, durability) baked into variants
  *   - Durability multiplier applied on item acquisition
- *   - Migration from v1.x (ID suffix) and v2.0 (metadata-only) to variant system
+ *   - No metadata (BsonDocument) used — keeps items salvageable
+ *   - Migration from v1.x (ID suffix) to variant system
  *
  * Just install the JAR and go.
  */
@@ -44,6 +46,7 @@ public class RomnasQualityCrafting extends JavaPlugin {
     private QualityConfig config;
     private QualityRegistry registry;
     private QualityAssigner assigner;
+    private CraftQualitySystem craftSystem;
     private QualityTierMapper tierMapper;
     private QualityMigration migration;
     private LootDropModifier lootDropModifier;
@@ -78,7 +81,11 @@ public class RomnasQualityCrafting extends JavaPlugin {
         // ── 5. Set up quality assignment via inventory change events ──
         assigner = new QualityAssigner(registry, config, tierMapper);
         assigner.registerEvents(this.getEventRegistry());
-        System.out.println(LOG_PREFIX + "Quality assignment events registered.");
+
+        // ── 5b. Set up ECS crafting handler (CraftRecipeEvent.Post) ──
+        craftSystem = new CraftQualitySystem(registry, config, tierMapper);
+        this.getEntityStoreRegistry().registerSystem(craftSystem);
+        System.out.println(LOG_PREFIX + "Quality assignment events registered (inventory change + ECS craft).");
 
         // ── 6. Set up v1.x → v2.0 migration on player join ──
         migration = new QualityMigration(registry, tierMapper);
