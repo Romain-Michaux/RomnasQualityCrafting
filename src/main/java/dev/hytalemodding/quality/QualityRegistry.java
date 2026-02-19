@@ -43,7 +43,6 @@ public final class QualityRegistry {
         }
 
         totalScanned = allItems.size();
-        System.out.println(LOG_PREFIX + "Scanning " + totalScanned + " loaded items for quality eligibility...");
 
         for (Map.Entry<String, Item> entry : allItems.entrySet()) {
             String itemId = entry.getKey();
@@ -62,9 +61,6 @@ public final class QualityRegistry {
         }
 
         long elapsed = System.currentTimeMillis() - startTime;
-        System.out.println(LOG_PREFIX + "Scan complete in " + elapsed + "ms.");
-        System.out.println(LOG_PREFIX + "  Total scanned: " + totalScanned);
-        System.out.println(LOG_PREFIX + "  Eligible items: " + totalEligible);
     }
 
     // ── Query methods ──

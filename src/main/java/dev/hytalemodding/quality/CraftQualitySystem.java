@@ -54,17 +54,15 @@ public final class CraftQualitySystem
         this.registry = registry;
         this.config = config;
         this.tierMapper = tierMapper;
-        System.out.println(LOG_PREFIX + "Constructor called. Event type: " + CraftRecipeEvent.Post.class.getName());
     }
 
     @Override
     public void onSystemRegistered() {
-        System.out.println(LOG_PREFIX + ">>> SYSTEM REGISTERED in ECS! Listening for " + CraftRecipeEvent.Post.class.getSimpleName());
+        // System registered in ECS
     }
 
     @Override
     protected boolean shouldProcessEvent(@Nonnull CraftRecipeEvent.Post event) {
-        System.out.println(LOG_PREFIX + ">>> shouldProcessEvent called! recipe=" + event.getCraftedRecipe());
         return true;
     }
 
@@ -74,59 +72,47 @@ public final class CraftQualitySystem
                        @Nonnull Store<EntityStore> store,
                        @Nonnull CommandBuffer<EntityStore> commandBuffer,
                        @Nonnull CraftRecipeEvent.Post event) {
-        System.out.println(LOG_PREFIX + ">>> CraftRecipeEvent.Post FIRED! index=" + index);
 
         // ── Resolve the crafting Player from the ECS entity ──
         Player player;
         try {
             player = archetypeChunk.getComponent(index, Player.getComponentType());
         } catch (Exception e) {
-            System.out.println(LOG_PREFIX + "Could not get Player component: " + e.getClass().getSimpleName() + " - " + e.getMessage());
             return;
         }
         if (player == null) {
-            System.out.println(LOG_PREFIX + "Player component is null for index " + index);
             return;
         }
-        System.out.println(LOG_PREFIX + "Player: " + player.getDisplayName());
 
         // ── Extract recipe output info ──
         CraftingRecipe recipe = event.getCraftedRecipe();
         if (recipe == null) {
-            System.out.println(LOG_PREFIX + "Recipe is null");
             return;
         }
 
         MaterialQuantity primaryOutput = recipe.getPrimaryOutput();
         if (primaryOutput == null) {
-            System.out.println(LOG_PREFIX + "Primary output is null");
             return;
         }
 
         String outputItemId = primaryOutput.getItemId();
         if (outputItemId == null || outputItemId.isEmpty()) {
-            System.out.println(LOG_PREFIX + "Output item ID is null/empty");
             return;
         }
-        System.out.println(LOG_PREFIX + "Crafted: " + outputItemId);
 
         // Skip if the output item is not eligible for quality
         if (!registry.isEligible(outputItemId)) {
-            System.out.println(LOG_PREFIX + "Item not eligible: " + outputItemId);
             return;
         }
 
         int craftCount = event.getQuantity();
         int outputPerCraft = primaryOutput.getQuantity();
         int totalExpected = craftCount * Math.max(outputPerCraft, 1);
-        System.out.println(LOG_PREFIX + "Eligible craft: " + outputItemId + " x" + totalExpected);
 
         // Assign quality synchronously — we're on the game thread
         try {
             assignQualityToCraftedItems(player, outputItemId, totalExpected);
-        } catch (Exception e) {
-            System.out.println(LOG_PREFIX + "Craft scan failed: "
-                    + e.getClass().getSimpleName() + " - " + e.getMessage());
+        } catch (Exception ignored) {
         }
     }
 
@@ -146,11 +132,8 @@ public final class CraftQualitySystem
                                               int totalExpected) {
         Inventory inventory = player.getInventory();
         if (inventory == null) {
-            System.out.println(LOG_PREFIX + "Player inventory is null!");
             return;
         }
-
-        System.out.println(LOG_PREFIX + "Scanning inventory for " + totalExpected + "x " + outputItemId);
         int remaining = totalExpected;
         remaining = assignQualityInContainer(inventory.getHotbar(), outputItemId, remaining, "hotbar");
         if (remaining > 0) {
@@ -175,8 +158,6 @@ public final class CraftQualitySystem
 
         short capacity = container.getCapacity();
         int remaining = maxCount;
-
-        System.out.println(LOG_PREFIX + "Scanning " + containerName + " (capacity=" + capacity + ")");
 
         for (short slot = 0; slot < capacity && remaining > 0; slot++) {
             try {
@@ -203,13 +184,9 @@ public final class CraftQualitySystem
                 }
 
                 container.setItemStackForSlot(slot, modified);
-                System.out.println(LOG_PREFIX + "CRAFT-ASSIGNED " + baseItemId
-                        + " -> " + targetId + " (" + quality + ", dur=" + variantMax + ")");
                 remaining--;
 
-            } catch (Exception e) {
-                System.out.println(LOG_PREFIX + "Craft assign failed slot " + slot + ": "
-                        + e.getClass().getSimpleName() + " - " + e.getMessage());
+            } catch (Exception ignored) {
             }
         }
 

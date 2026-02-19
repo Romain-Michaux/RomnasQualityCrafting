@@ -86,7 +86,6 @@ public final class QualityMigration {
         try {
             Inventory inventory = player.getInventory();
             if (inventory == null) {
-                System.out.println(LOG_PREFIX + "  Player inventory is null!");
                 return 0;
             }
 
@@ -144,9 +143,7 @@ public final class QualityMigration {
                 migrated++;
                 totalReverted++;
 
-            } catch (Exception e) {
-                System.out.println(LOG_PREFIX + "  [" + sectionName + "] slot " + slot
-                        + " error: " + e.getClass().getSimpleName() + " - " + e.getMessage());
+            } catch (Exception ignored) {
             }
         }
 
@@ -184,7 +181,6 @@ public final class QualityMigration {
      */
     @SuppressWarnings("removal")
     public void forceMigrate(@Nonnull Player player) {
-        System.out.println(LOG_PREFIX + "Force migration triggered for " + player.getDisplayName());
         int migrated = migratePlayer(player);
         totalMigrated += migrated;
 
@@ -196,7 +192,5 @@ public final class QualityMigration {
             }
         } catch (Exception ignored) {
         }
-
-        System.out.println(LOG_PREFIX + "Force migration done: " + migrated + " items migrated");
     }
 }

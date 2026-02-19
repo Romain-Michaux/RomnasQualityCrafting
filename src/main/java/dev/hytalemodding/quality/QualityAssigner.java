@@ -73,10 +73,6 @@ public final class QualityAssigner {
         LivingEntity entity = event.getEntity();
         ItemContainer container = event.getItemContainer();
 
-        System.out.println(LOG_PREFIX + ">>> InventoryChange: entity=" + entity.getClass().getSimpleName()
-                + " tx=" + transaction.getClass().getSimpleName()
-                + " container=" + container.getClass().getSimpleName());
-
         if (transaction instanceof SlotTransaction slotTx) {
             // Covers SlotTransaction AND ItemStackSlotTransaction (subclass)
             handleSlotTransaction(slotTx, container);
@@ -91,8 +87,6 @@ public final class QualityAssigner {
             handleListTransaction(listTx, container);
         } else {
             // Unknown transaction type — try scanning all slots
-            System.out.println(LOG_PREFIX + "Unknown tx type: " + transaction.getClass().getName()
-                    + " — falling back to full container scan");
             scanContainerForUnqualifiedItems(container);
         }
     }
@@ -172,7 +166,7 @@ public final class QualityAssigner {
                 }
             }
         } catch (Exception e) {
-            System.out.println(LOG_PREFIX + "ListTransaction reflection failed: " + e.getMessage());
+            // ListTransaction reflection failed - skip silently
         }
     }
 
@@ -189,7 +183,7 @@ public final class QualityAssigner {
                 tryAssignQuality(item, container, slot);
             }
         } catch (Exception e) {
-            System.out.println(LOG_PREFIX + "Container scan failed: " + e.getMessage());
+            // Container scan failed - skip silently
         }
     }
 
@@ -218,9 +212,6 @@ public final class QualityAssigner {
 
         if (!isV1Item && !isEligibleBase) return;
 
-        System.out.println(LOG_PREFIX + "tryAssign: " + itemId + " slot=" + slot
-                + " v1=" + isV1Item + " eligible=" + isEligibleBase);
-
         try {
             if (isV1Item) {
                 migrateV1Item(itemStack, container, slot, itemId);
@@ -228,8 +219,7 @@ public final class QualityAssigner {
                 assignNewQuality(itemStack, container, slot, itemId);
             }
         } catch (Exception e) {
-            System.out.println(LOG_PREFIX + "FAILED slot " + slot + ": "
-                    + e.getClass().getSimpleName() + " - " + e.getMessage());
+            // Assignment failed - skip silently
         }
     }
 
@@ -257,7 +247,6 @@ public final class QualityAssigner {
         }
 
         container.setItemStackForSlot(slot, migrated);
-        System.out.println(LOG_PREFIX + "MIGRATED " + itemId + " -> " + targetId);
     }
 
     /**
@@ -283,8 +272,6 @@ public final class QualityAssigner {
         }
 
         container.setItemStackForSlot(slot, modified);
-        System.out.println(LOG_PREFIX + "ASSIGNED " + itemId + " -> " + targetId
-                + " (" + quality + ", dur=" + variantMax + ")");
     }
 
     // ═══════════════════════════════════════════════════════════════════════════

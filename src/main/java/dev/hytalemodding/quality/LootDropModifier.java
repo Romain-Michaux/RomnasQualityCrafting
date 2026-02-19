@@ -53,30 +53,17 @@ public final class LootDropModifier {
      */
     public void modifyDropLists() {
         if (!config.isLootQualityEnabled()) {
-            System.out.println(LOG_PREFIX + "Loot quality is DISABLED in config. Skipping drop list modification.");
             return;
         }
 
         long startTime = System.currentTimeMillis();
-        System.out.println(LOG_PREFIX + "Modifying drop lists for quality variants...");
-
-        // Log loot weights for visibility
-        System.out.println(LOG_PREFIX + "  Loot weights: Poor=" + config.getLootWeightPoor()
-                + " Common=" + config.getLootWeightCommon()
-                + " Uncommon=" + config.getLootWeightUncommon()
-                + " Rare=" + config.getLootWeightRare()
-                + " Epic=" + config.getLootWeightEpic()
-                + " Legendary=" + config.getLootWeightLegendary());
 
         try {
             // Access all ItemDropList assets
             Map<String, ItemDropList> dropListMap = getDropListMap();
             if (dropListMap == null || dropListMap.isEmpty()) {
-                System.out.println(LOG_PREFIX + "No ItemDropList assets found. Skipping.");
                 return;
             }
-
-            System.out.println(LOG_PREFIX + "  Found " + dropListMap.size() + " ItemDropList assets to scan.");
 
             for (Map.Entry<String, ItemDropList> entry : dropListMap.entrySet()) {
                 String dropListId = entry.getKey();
@@ -100,9 +87,6 @@ public final class LootDropModifier {
         }
 
         long elapsed = System.currentTimeMillis() - startTime;
-        System.out.println(LOG_PREFIX + "Drop list modification complete in " + elapsed + "ms.");
-        System.out.println(LOG_PREFIX + "  Drop lists modified: " + dropListsModified);
-        System.out.println(LOG_PREFIX + "  Individual drops replaced with quality choices: " + dropsReplaced);
     }
 
     // ── Container tree traversal ──

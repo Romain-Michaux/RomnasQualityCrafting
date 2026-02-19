@@ -57,12 +57,8 @@ public final class QualityTierMapper {
      * our tiers to them. Must be called after assets are loaded.
      */
     public void initialize() {
-        System.out.println(LOG_PREFIX + "Discovering Hytale quality tiers...");
-
         discoverHytaleTiers();
         initialized = true;
-
-        System.out.println(LOG_PREFIX + "Quality tier mapping complete (" + qualityToIndex.size() + " tiers mapped).");
     }
 
     /**
@@ -77,7 +73,6 @@ public final class QualityTierMapper {
             return;
         }
 
-        System.out.println(LOG_PREFIX + "Creating quality variants for " + registry.getTotalEligible() + " eligible items...");
         long startTime = System.currentTimeMillis();
 
         Map<String, Item> itemMap = getItemAssetMap();
@@ -153,22 +148,15 @@ public final class QualityTierMapper {
 
                 } catch (Exception e) {
                     failed++;
-                    if (failed <= 6) {
-                        System.out.println(LOG_PREFIX + "  Failed to create variant " + variantId
-                                + ": " + e.getClass().getSimpleName() + " - " + e.getMessage());
-                    }
                 }
             }
-        }
-        if (failed > 6) {
-            System.out.println(LOG_PREFIX + "  ... " + (failed - 6) + " more failures suppressed");
         }
 
         variantsCreated = created;
         long elapsed = System.currentTimeMillis() - startTime;
-        System.out.println(LOG_PREFIX + "Created " + created + " quality variants in " + elapsed + "ms");
-        System.out.println(LOG_PREFIX + "  (6 tiers × " + eligibleIds.size()
-                + " items = " + (6 * eligibleIds.size()) + " expected)");
+        if (failed > 0) {
+            System.out.println(LOG_PREFIX + "WARNING: " + failed + " variant(s) failed to create");
+        }
 
         // Register all pending cloned interactions in their asset stores
         registerPendingInteractions();
@@ -195,7 +183,6 @@ public final class QualityTierMapper {
         try {
             Map<String, CraftingRecipe> recipeMap = CraftingRecipe.getAssetMap().getAssetMap();
             if (recipeMap == null || recipeMap.isEmpty()) {
-                System.out.println(LOG_PREFIX + "No recipes found in asset store, skipping recipe cloning");
                 return;
             }
 
@@ -214,12 +201,8 @@ public final class QualityTierMapper {
             }
 
             if (baseToRecipes.isEmpty()) {
-                System.out.println(LOG_PREFIX + "No recipes reference eligible items, skipping recipe cloning");
                 return;
             }
-
-            System.out.println(LOG_PREFIX + "Found " + baseToRecipes.size()
-                    + " base items with recipes to clone for variants");
 
             List<CraftingRecipe> pendingRecipes = new ArrayList<>();
             int clonedCount = 0;
@@ -277,8 +260,6 @@ public final class QualityTierMapper {
             // Batch-register all cloned recipes
             if (!pendingRecipes.isEmpty()) {
                 CraftingRecipe.getAssetStore().loadAssets("RomnasQualityCrafting", pendingRecipes);
-                System.out.println(LOG_PREFIX + "Registered " + clonedCount
-                        + " cloned recipes for quality variants");
             }
         } catch (Exception e) {
             System.out.println(LOG_PREFIX + "WARNING: Failed to clone recipes for variants: " + e.getMessage());
@@ -367,8 +348,6 @@ public final class QualityTierMapper {
                 return;
             }
 
-            System.out.println(LOG_PREFIX + "Found " + qualityMap.size() + " Hytale quality tiers:");
-
             // Collect all tiers with their info
             List<HytaleTierInfo> tiers = new ArrayList<>();
 
@@ -399,9 +378,6 @@ public final class QualityTierMapper {
                         textColorStr = "(" + (c.red & 0xFF) + "," + (c.green & 0xFF) + "," + (c.blue & 0xFF) + ")";
                     }
                 } catch (Exception ignored) {}
-
-                System.out.println(LOG_PREFIX + "  [" + index + "] " + id
-                        + " (qualityValue=" + qualityValue + ", color=" + textColorStr + ")");
 
                 tiers.add(new HytaleTierInfo(id, index, qualityValue));
             }
@@ -489,7 +465,6 @@ public final class QualityTierMapper {
     }
 
     private void setFallbackMapping() {
-        System.out.println(LOG_PREFIX + "Using fallback quality index mapping (0-5)");
         for (ItemQuality q : ItemQuality.values()) {
             qualityToIndex.put(q, q.ordinal());
             qualityToHytaleId.put(q, q.name().toLowerCase(Locale.ROOT));
@@ -991,22 +966,15 @@ public final class QualityTierMapper {
      */
     private void registerPendingInteractions() {
         if (pendingInteractions.isEmpty() && pendingRootInteractions.isEmpty()) {
-            System.out.println(LOG_PREFIX + "No weapon damage interactions to register");
             return;
         }
-
-        System.out.println(LOG_PREFIX + "Registering " + pendingInteractions.size()
-                + " cloned Interactions and " + pendingRootInteractions.size()
-                + " cloned RootInteractions for weapon damage scaling...");
 
         // Register cloned sub-Interactions first (DamageEntityInteraction etc.)
         if (!pendingInteractions.isEmpty()) {
             try {
                 Interaction.getAssetStore().loadAssets("RomnasQualityCrafting", pendingInteractions);
-                System.out.println(LOG_PREFIX + "  Registered " + pendingInteractions.size() + " Interactions");
             } catch (Exception e) {
-                System.out.println(LOG_PREFIX + "  ERROR registering Interactions: " + e.getMessage());
-                e.printStackTrace();
+                System.out.println(LOG_PREFIX + "ERROR registering Interactions: " + e.getMessage());
             }
         }
 
@@ -1014,20 +982,15 @@ public final class QualityTierMapper {
         if (!pendingRootInteractions.isEmpty()) {
             try {
                 RootInteraction.getAssetStore().loadAssets("RomnasQualityCrafting", pendingRootInteractions);
-                System.out.println(LOG_PREFIX + "  Registered " + pendingRootInteractions.size() + " RootInteractions");
 
                 // Rebuild each RootInteraction's operations (they were cleared during cloning)
                 for (RootInteraction ri : pendingRootInteractions) {
                     try {
                         ri.build();
-                    } catch (Exception e) {
-                        System.out.println(LOG_PREFIX + "  WARNING: Failed to build RootInteraction "
-                                + ri.getId() + ": " + e.getMessage());
-                    }
+                    } catch (Exception ignored) {}
                 }
             } catch (Exception e) {
-                System.out.println(LOG_PREFIX + "  ERROR registering RootInteractions: " + e.getMessage());
-                e.printStackTrace();
+                System.out.println(LOG_PREFIX + "ERROR registering RootInteractions: " + e.getMessage());
             }
         }
 

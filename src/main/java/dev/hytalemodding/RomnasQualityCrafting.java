@@ -67,7 +67,6 @@ public class RomnasQualityCrafting extends JavaPlugin {
 
         // ── 1. Load configuration ──
         config = loadConfig();
-        System.out.println(LOG_PREFIX + "Configuration loaded.");
 
         // ── 2. Save config to disk (creates file if missing) ──
         saveConfig();
@@ -85,12 +84,10 @@ public class RomnasQualityCrafting extends JavaPlugin {
         // ── 5b. Set up ECS crafting handler (CraftRecipeEvent.Post) ──
         craftSystem = new CraftQualitySystem(registry, config, tierMapper);
         this.getEntityStoreRegistry().registerSystem(craftSystem);
-        System.out.println(LOG_PREFIX + "Quality assignment events registered (inventory change + ECS craft).");
 
         // ── 6. Set up v1.x → v2.0 migration on player join ──
         migration = new QualityMigration(registry, tierMapper);
         migration.registerEvents(this.getEventRegistry());
-        System.out.println(LOG_PREFIX + "Migration handler registered.");
 
         // ── 7. Defer item scanning until assets are fully loaded ──
         this.getEventRegistry().register(
@@ -98,10 +95,9 @@ public class RomnasQualityCrafting extends JavaPlugin {
             LoadAssetEvent.class,
             this::onAssetsLoaded
         );
-        System.out.println(LOG_PREFIX + "Waiting for assets to load before scanning items...");
 
         long elapsed = System.currentTimeMillis() - startTime;
-        System.out.println(LOG_PREFIX + "=== RomnasQualityCrafting v2.0 setup() done in " + elapsed + "ms ===");
+        System.out.println(LOG_PREFIX + "Setup complete (" + elapsed + "ms)");
     }
 
     /**
@@ -110,16 +106,12 @@ public class RomnasQualityCrafting extends JavaPlugin {
      * No items are injected — we only build a lookup table of eligible IDs.
      */
     private void onAssetsLoaded(LoadAssetEvent event) {
-        System.out.println(LOG_PREFIX + "Assets loaded — scanning eligible items...");
         long startTime = System.currentTimeMillis();
 
         // Initialize the ignore list before scanning
         QualityItemFactory.initIgnoreList(config);
 
         registry.scanEligibleItems();
-
-        System.out.println(LOG_PREFIX + "  Eligible items: " + registry.getTotalEligible()
-                + " (of " + registry.getTotalScanned() + " scanned)");
 
         // Initialize quality tier mapping (discover Hytale's built-in quality tiers)
         tierMapper.initialize();
@@ -132,10 +124,9 @@ public class RomnasQualityCrafting extends JavaPlugin {
         lootDropModifier.modifyDropLists();
 
         long elapsed = System.currentTimeMillis() - startTime;
-        System.out.println(LOG_PREFIX + "=== Item scan + variant creation complete in " + elapsed + "ms ===");
-        System.out.println(LOG_PREFIX + "  Quality variants created: " + tierMapper.getVariantsCreated());
-        System.out.println(LOG_PREFIX + "  Loot drop lists modified: " + lootDropModifier.getDropListsModified()
-                + " (" + lootDropModifier.getDropsReplaced() + " drops replaced)");
+        System.out.println(LOG_PREFIX + "Loaded: " + registry.getTotalEligible() + " items, "
+                + tierMapper.getVariantsCreated() + " variants, "
+                + lootDropModifier.getDropListsModified() + " loot tables (" + elapsed + "ms)");
     }
 
     @Override
@@ -212,8 +203,7 @@ public class RomnasQualityCrafting extends JavaPlugin {
                 return;
             }
 
-            System.out.println(LOG_PREFIX + "Found old v1.x generated folder: " + oldGenerated);
-            System.out.println(LOG_PREFIX + "Deleting to prevent conflicts with v2.0 in-memory variants...");
+
 
             // Count files for logging
             long[] count = {0};
@@ -232,8 +222,7 @@ public class RomnasQualityCrafting extends JavaPlugin {
                 }
             });
 
-            System.out.println(LOG_PREFIX + "Deleted old RQCGeneratedFiles folder (" + count[0] + " files removed).");
-            System.out.println(LOG_PREFIX + "v2.0 now generates quality variants in memory — no disk files needed.");
+            System.out.println(LOG_PREFIX + "Cleaned up v1.x files (" + count[0] + " removed)");
 
         } catch (Exception e) {
             System.out.println(LOG_PREFIX + "Warning: Failed to clean up old generated files: "
