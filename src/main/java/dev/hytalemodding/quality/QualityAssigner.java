@@ -13,6 +13,8 @@ import com.hypixel.hytale.server.core.inventory.transaction.ListTransaction;
 import com.hypixel.hytale.server.core.inventory.transaction.Transaction;
 import dev.hytalemodding.config.QualityConfig;
 
+import org.bson.BsonDocument;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.lang.reflect.Field;
@@ -204,8 +206,19 @@ public final class QualityAssigner {
         // Already a quality variant — nothing to do
         if (tierMapper.isVariant(itemId)) return;
 
+        // Runtime ignore-list check — catches state variants (e.g.
+        // Tool_Watering_Can_State_Filled_Water) that share a prefix with
+        // an ignored base item but may not have been in the asset map at
+        // scan time.
+        if (QualityItemFactory.isIgnored(itemId)) return;
+
         // v1.x item (has quality suffix like _Legendary) — migrate to variant
-        boolean isV1Item = ItemQuality.fromItemId(itemId) != null;
+        // Only if the extracted base ID is actually an eligible item
+        boolean isV1Item = false;
+        if (ItemQuality.fromItemId(itemId) != null) {
+            String candidateBase = ItemQuality.extractBaseId(itemId);
+            isV1Item = registry.isEligible(candidateBase);
+        }
 
         // Eligible base item — assign random quality
         boolean isEligibleBase = !isV1Item && registry.isEligible(itemId);
@@ -225,6 +238,7 @@ public final class QualityAssigner {
 
     /**
      * Migrates a v1.x item (quality suffix in ID) to a proper variant.
+     * Preserves all metadata (e.g. enchantments from other mods) during migration.
      */
     private void migrateV1Item(@Nonnull ItemStack item,
                                 @Nonnull ItemContainer container,
@@ -237,7 +251,9 @@ public final class QualityAssigner {
         String targetId = tierMapper.isInitialized()
                 ? tierMapper.getVariantId(baseId, v1Quality) : baseId;
 
-        ItemStack migrated = new ItemStack(targetId, item.getQuantity());
+        // Preserve metadata from the original item (enchantments, etc.)
+        BsonDocument originalMetadata = item.getMetadata();
+        ItemStack migrated = new ItemStack(targetId, item.getQuantity(), originalMetadata);
 
         double srcMax = item.getMaxDurability();
         double tgtMax = migrated.getMaxDurability();
@@ -251,6 +267,7 @@ public final class QualityAssigner {
 
     /**
      * Assigns a random quality to an eligible base item.
+     * Preserves all metadata (e.g. enchantments from other mods) during assignment.
      */
     private void assignNewQuality(@Nonnull ItemStack item,
                                    @Nonnull ItemContainer container,
@@ -261,7 +278,9 @@ public final class QualityAssigner {
         String targetId = tierMapper.isInitialized()
                 ? tierMapper.getVariantId(itemId, quality) : itemId;
 
-        ItemStack modified = new ItemStack(targetId, item.getQuantity());
+        // Preserve metadata from the original item (enchantments, etc.)
+        BsonDocument originalMetadata = item.getMetadata();
+        ItemStack modified = new ItemStack(targetId, item.getQuantity(), originalMetadata);
 
         // Durability is already baked into the variant Item asset by
         // QualityTierMapper.applyDurabilityMultiplier(). Just set current

@@ -49,6 +49,10 @@ public final class QualityTierMapper {
     // Map from variant ID → quality for reverse lookup
     private final Map<String, ItemQuality> variantToQuality = new HashMap<>();
 
+    // Mapping from our quality enum → Hytale quality tier's ItemEntityConfig
+    // (contains particleSystemId for ground drop glow per rarity)
+    private final Map<ItemQuality, Object> qualityToItemEntityConfig = new EnumMap<>(ItemQuality.class);
+
     private boolean initialized = false;
     private int variantsCreated = 0;
 
@@ -58,6 +62,7 @@ public final class QualityTierMapper {
      */
     public void initialize() {
         discoverHytaleTiers();
+        collectQualityItemEntityConfigs();
         initialized = true;
     }
 
@@ -131,6 +136,10 @@ public final class QualityTierMapper {
                     // Weapons: scale stat modifier amounts (damage) so the
                     // tooltip and combat reflect quality tier
                     applyWeaponMultiplier(variant, quality, config);
+
+                    // Ground drop glow: set the variant's itemEntityConfig
+                    // so the correct particle system plays when dropped
+                    applyDropGlow(variant, baseItem, quality);
 
                     // Clear the cached packet so it regenerates with new stats
                     try {
@@ -318,6 +327,12 @@ public final class QualityTierMapper {
     public boolean isInitialized() { return initialized; }
     public int getVariantsCreated() { return variantsCreated; }
 
+    /** Returns an unmodifiable view of the variant-ID → base-ID map. */
+    @Nonnull
+    public Map<String, String> getVariantToBaseMap() {
+        return Collections.unmodifiableMap(variantToBase);
+    }
+
     // ── Private helpers ──
 
     /**
@@ -468,6 +483,102 @@ public final class QualityTierMapper {
         for (ItemQuality q : ItemQuality.values()) {
             qualityToIndex.put(q, q.ordinal());
             qualityToHytaleId.put(q, q.name().toLowerCase(Locale.ROOT));
+        }
+    }
+
+    /**
+     * After tier mapping is complete, looks up the ItemEntityConfig from each
+     * Hytale quality tier and stores it for later use during variant creation.
+     * The ItemEntityConfig contains the particleSystemId (e.g. "Drop_Legendary")
+     * that controls the ground drop glow effect per rarity.
+     */
+    private void collectQualityItemEntityConfigs() {
+        try {
+            Class<?> hqClass = com.hypixel.hytale.server.core.asset.type.item.config.ItemQuality.class;
+            Method getAssetMapMethod = hqClass.getMethod("getAssetMap");
+            Object assetMapObj = getAssetMapMethod.invoke(null);
+            if (assetMapObj == null) return;
+
+            Method getMapMethod = assetMapObj.getClass().getMethod("getAssetMap");
+            @SuppressWarnings("unchecked")
+            Map<String, ?> qualityMap = (Map<String, ?>) getMapMethod.invoke(assetMapObj);
+            if (qualityMap == null || qualityMap.isEmpty()) return;
+
+            for (ItemQuality ourTier : ItemQuality.values()) {
+                String hytaleId = qualityToHytaleId.get(ourTier);
+                if (hytaleId == null) continue;
+
+                Object qualityObj = qualityMap.get(hytaleId);
+                if (qualityObj == null) continue;
+
+                try {
+                    Method getIec = qualityObj.getClass().getMethod("getItemEntityConfig");
+                    Object iec = getIec.invoke(qualityObj);
+                    if (iec != null) {
+                        qualityToItemEntityConfig.put(ourTier, iec);
+                    }
+                } catch (Exception ignored) {}
+            }
+
+            System.out.println(LOG_PREFIX + "Collected ItemEntityConfig for "
+                    + qualityToItemEntityConfig.size() + " quality tiers (drop glow)");
+
+        } catch (Exception e) {
+            System.out.println(LOG_PREFIX + "WARNING: Could not collect quality ItemEntityConfigs: " + e.getMessage());
+        }
+    }
+
+    /**
+     * Sets the variant's itemEntityConfig so dropped items on the ground show
+     * the correct glow/particle effect for their quality tier.
+     *
+     * The particleSystemId field (e.g. "Drop_Common", "Drop_Legendary") on
+     * ItemEntityConfig controls which particle system the client renders when
+     * the item entity is on the ground. Without this, all variants inherit the
+     * base item's original glow regardless of quality.
+     *
+     * Strategy: clone the base item's existing itemEntityConfig (to preserve
+     * custom physics/pickup values), then override the particleSystemId with the
+     * value from the matching Hytale quality tier.
+     */
+    private void applyDropGlow(Item variant, Item baseItem, ItemQuality quality) {
+        try {
+            Object tierIec = qualityToItemEntityConfig.get(quality);
+
+            // Get the particle system ID for this quality tier
+            String tierParticleSystemId = null;
+            if (tierIec != null) {
+                try {
+                    tierParticleSystemId = (String) getFieldValue(tierIec, "particleSystemId");
+                } catch (Exception ignored) {}
+            }
+
+            Object baseIec = getFieldValue(baseItem, "itemEntityConfig");
+
+            if (baseIec != null) {
+                // Clone the base item's config to preserve physics/pickup/ttl values
+                Object clonedIec = cloneObjectShallow(baseIec);
+
+                // Override particleSystemId to match quality tier's glow
+                setFieldValue(clonedIec, "particleSystemId", tierParticleSystemId);
+
+                // Also clone showItemParticles from tier config if available
+                if (tierIec != null) {
+                    try {
+                        boolean showParticles = (boolean) getFieldValue(tierIec, "showItemParticles");
+                        setFieldValue(clonedIec, "showItemParticles", showParticles);
+                    } catch (Exception ignored) {}
+                }
+
+                setFieldValue(variant, "itemEntityConfig", clonedIec);
+            } else if (tierIec != null) {
+                // Base item has no config but quality tier does — use tier's config directly
+                Object clonedIec = cloneObjectShallow(tierIec);
+                setFieldValue(variant, "itemEntityConfig", clonedIec);
+            }
+            // If neither exists, leave the variant with no itemEntityConfig (no glow)
+        } catch (Exception e) {
+            // Non-critical — variant will just use inherited glow
         }
     }
 

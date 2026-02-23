@@ -11,6 +11,8 @@ import dev.hytalemodding.quality.ItemQuality;
 import dev.hytalemodding.quality.QualityRegistry;
 import dev.hytalemodding.quality.QualityTierMapper;
 
+import org.bson.BsonDocument;
+
 import javax.annotation.Nonnull;
 import java.util.*;
 
@@ -133,10 +135,17 @@ public final class QualityMigration {
                 if (quality == null) continue;
 
                 String baseId = ItemQuality.extractBaseId(itemId);
+
+                // Only migrate if the base ID is actually an eligible item
+                // (avoids false positives like "Furniture_Dungeon_Chest_Epic")
+                if (!registry.isEligible(baseId)) continue;
+
                 String targetId = tierMapper.isInitialized()
                         ? tierMapper.getVariantId(baseId, quality) : baseId;
 
-                ItemStack migratedItem = new ItemStack(targetId, item.getQuantity());
+                // Preserve metadata from the original item (enchantments, etc.)
+                BsonDocument originalMetadata = item.getMetadata();
+                ItemStack migratedItem = new ItemStack(targetId, item.getQuantity(), originalMetadata);
                 migratedItem = preserveDurability(item, migratedItem);
 
                 container.setItemStackForSlot(slot, migratedItem);

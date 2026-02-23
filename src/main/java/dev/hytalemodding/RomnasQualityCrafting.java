@@ -7,6 +7,7 @@ import dev.hytalemodding.config.QualityConfig;
 import dev.hytalemodding.migration.QualityMigration;
 import dev.hytalemodding.quality.CraftQualitySystem;
 import dev.hytalemodding.quality.LootDropModifier;
+import dev.hytalemodding.compat.SimpleEnchantmentsBridge;
 import dev.hytalemodding.quality.QualityAssigner;
 import dev.hytalemodding.quality.QualityItemFactory;
 import dev.hytalemodding.quality.QualityRegistry;
@@ -122,6 +123,10 @@ public class RomnasQualityCrafting extends JavaPlugin {
         // Modify loot drop tables so eligible items drop as quality variants
         lootDropModifier = new LootDropModifier(config, tierMapper, registry);
         lootDropModifier.modifyDropLists();
+
+        // Register quality variants with SimpleEnchantments (if installed)
+        // so they can be enchanted just like their base items.
+        SimpleEnchantmentsBridge.registerVariants(tierMapper);
 
         long elapsed = System.currentTimeMillis() - startTime;
         System.out.println(LOG_PREFIX + "Loaded: " + registry.getTotalEligible() + " items, "

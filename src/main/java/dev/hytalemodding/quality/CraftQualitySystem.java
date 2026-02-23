@@ -15,6 +15,8 @@ import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 import com.hypixel.hytale.component.system.EntityEventSystem;
 import dev.hytalemodding.config.QualityConfig;
 
+import org.bson.BsonDocument;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -170,13 +172,18 @@ public final class CraftQualitySystem
                 // Skip if already a variant (already processed by QualityAssigner)
                 if (tierMapper.isVariant(itemId)) continue;
 
+                // Runtime ignore-list check (state variants, etc.)
+                if (QualityItemFactory.isIgnored(itemId)) continue;
+
                 // This is a freshly crafted base item — assign quality
                 ItemQuality quality = ItemQuality.random(config);
 
                 String targetId = tierMapper.isInitialized()
                         ? tierMapper.getVariantId(baseItemId, quality) : baseItemId;
 
-                ItemStack modified = new ItemStack(targetId, item.getQuantity());
+                // Preserve metadata from the original item (enchantments, etc.)
+                BsonDocument originalMetadata = item.getMetadata();
+                ItemStack modified = new ItemStack(targetId, item.getQuantity(), originalMetadata);
 
                 double variantMax = modified.getMaxDurability();
                 if (variantMax > 0) {
