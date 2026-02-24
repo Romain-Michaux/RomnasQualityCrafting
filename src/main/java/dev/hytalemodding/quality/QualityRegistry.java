@@ -67,7 +67,12 @@ public final class QualityRegistry {
 
     /** Returns true if this item ID is eligible for quality assignment. */
     public boolean isEligible(@Nonnull String itemId) {
-        return eligibleItemIds.contains(itemId);
+        if (!eligibleItemIds.contains(itemId)) return false;
+        // Belt-and-suspenders: re-check the ignore list at runtime in case
+        // the eligible set was populated before the ignore list was fully
+        // initialized (e.g. stale server config missing new defaults).
+        if (QualityItemFactory.isIgnored(itemId)) return false;
+        return true;
     }
 
     /** Returns the cached Item object for the given ID, or null. */

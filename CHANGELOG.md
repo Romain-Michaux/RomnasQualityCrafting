@@ -3,7 +3,12 @@
 ## v2.0.6 — Watering Can State Fix
 
 ### 🔧 Fixed
-- **Watering can gets quality on fill** — filling a watering can changed its ID from `Tool_Watering_Can` to `Tool_Watering_Can_State_Filled_Water`, which bypassed the startup ignore-list scan; added a runtime `isIgnored()` prefix check in both `QualityAssigner` and `CraftQualitySystem` so all state variants matching an ignored prefix (e.g. `Tool_Watering_Can_State_Filled_Water`, `Tool_Watering_Can_State_Filled_Fertilizer`) are correctly skipped
+- **Watering can gets quality on fill** — Hytale prefixes state-variant item IDs with `*` (e.g. `*Tool_Watering_Can_State_Filled_Water`); the `startsWith("Tool_Watering_Can")` ignore-list check failed because the actual ID started with `*`. `isIgnored()` now strips the leading `*` before prefix matching
+- **Stale server config losing new ignore defaults** — `QualityItemFactory.initIgnoreList()` now merges hardcoded defaults with config values instead of replacing, so newly added default prefixes are always active even on servers with older config files
+- **Belt-and-suspenders ignore check** — `QualityRegistry.isEligible()` now re-checks the ignore list at runtime, preventing any ignored item from being treated as eligible regardless of how it entered the set
+
+### 🔨 Changed
+- **Removed confusing `isEligibleForQuality` overload** — the single-parameter `isEligibleForQuality(Item)` was public and skipped the ignore list, making it easy to accidentally bypass; renamed to `private isTypeEligible(Item)` so only the full check `isEligibleForQuality(String, Item)` is exposed (credit: QuickBASIC)
 
 ---
 

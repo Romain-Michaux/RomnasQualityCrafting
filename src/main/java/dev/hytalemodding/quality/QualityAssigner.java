@@ -207,9 +207,8 @@ public final class QualityAssigner {
         if (tierMapper.isVariant(itemId)) return;
 
         // Runtime ignore-list check — catches state variants (e.g.
-        // Tool_Watering_Can_State_Filled_Water) that share a prefix with
-        // an ignored base item but may not have been in the asset map at
-        // scan time.
+        // *Tool_Watering_Can_State_Filled_Water) that share a prefix with
+        // an ignored base item. Strips Hytale's '*' prefix before matching.
         if (QualityItemFactory.isIgnored(itemId)) return;
 
         // v1.x item (has quality suffix like _Legendary) — migrate to variant
