@@ -1,5 +1,12 @@
 # Changelog
 
+## v2.0.7 — Recipe Cloning Fix
+
+### 🔧 Fixed
+- **Duplicate recipes for non-quality items** — `cloneRecipesForVariants()` was cloning every recipe that referenced an eligible item as input, not just salvage recipes; this created 2,000+ spurious recipe clones for unrelated outputs (e.g. `ZC_Composter`, armor recoloring, ore processing). Now only recipes whose ID starts with `Salvage_` are cloned, so quality variants work on salvage benches without polluting other workstations
+
+---
+
 ## v2.0.6 — Watering Can State Fix
 
 ### 🔧 Fixed

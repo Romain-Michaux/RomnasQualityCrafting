@@ -195,11 +195,20 @@ public final class QualityTierMapper {
                 return;
             }
 
-            // Build a map of baseItemId → list of recipes that use it as input
+            // Build a map of baseItemId → list of SALVAGE recipes that use it as input.
+            // We only clone salvage recipes (ID starts with "Salvage_") so that quality
+            // variants work on salvage benches. Crafting recipes that happen to use an
+            // eligible item as one of their ingredients should NOT be cloned — doing so
+            // creates duplicate recipes for unrelated outputs (e.g. ZC_Composter,
+            // armor recoloring recipes, ore processing, etc.).
             Map<String, List<CraftingRecipe>> baseToRecipes = new HashMap<>();
             for (CraftingRecipe recipe : recipeMap.values()) {
                 MaterialQuantity[] inputs = recipe.getInput();
                 if (inputs == null || inputs.length == 0) continue;
+
+                // Only clone salvage recipes — skip all other recipe types
+                String recipeId = recipe.getId();
+                if (recipeId == null || !recipeId.startsWith("Salvage_")) continue;
 
                 for (MaterialQuantity input : inputs) {
                     String inputItemId = input.getItemId();
@@ -258,9 +267,7 @@ public final class QualityTierMapper {
                             pendingRecipes.add(cloned);
                             clonedCount++;
 
-
                         } catch (Exception e) {
-
                         }
                     }
                 }
