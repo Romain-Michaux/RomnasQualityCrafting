@@ -1,8 +1,11 @@
 package dev.hytalemodding.quality;
 
-import com.hypixel.hytale.server.core.entity.LivingEntity;
-import com.hypixel.hytale.event.EventRegistry;
-import com.hypixel.hytale.server.core.event.events.entity.LivingEntityInventoryChangeEvent;
+import com.hypixel.hytale.component.ArchetypeChunk;
+import com.hypixel.hytale.component.CommandBuffer;
+import com.hypixel.hytale.component.Store;
+import com.hypixel.hytale.component.query.Query;
+import com.hypixel.hytale.component.system.EntityEventSystem;
+import com.hypixel.hytale.server.core.inventory.InventoryChangeEvent;
 import com.hypixel.hytale.server.core.inventory.ItemStack;
 import com.hypixel.hytale.server.core.inventory.container.ItemContainer;
 import com.hypixel.hytale.server.core.inventory.transaction.ItemStackSlotTransaction;
@@ -11,6 +14,7 @@ import com.hypixel.hytale.server.core.inventory.transaction.MoveTransaction;
 import com.hypixel.hytale.server.core.inventory.transaction.SlotTransaction;
 import com.hypixel.hytale.server.core.inventory.transaction.ListTransaction;
 import com.hypixel.hytale.server.core.inventory.transaction.Transaction;
+import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 import dev.hytalemodding.config.QualityConfig;
 
 import org.bson.BsonDocument;
@@ -32,11 +36,17 @@ import java.util.List;
  * - No metadata (BsonDocument) is used — quality can be read back from the item ID.
  *
  * Event handling:
- * - This class uses LivingEntityInventoryChangeEvent to catch all item
+ * - This class uses InventoryChangeEvent (ECS) to catch all item
  *   acquisition sources (crafting, loot pickup, trades, etc.).
  * - Slot modifications are done synchronously on the game thread.
+ *
+ * Registration (in plugin setup):
+ * <pre>
+ *   this.getEntityStoreRegistry().registerSystem(new QualityAssigner(...));
+ * </pre>
  */
-public final class QualityAssigner {
+public final class QualityAssigner
+        extends EntityEventSystem<EntityStore, InventoryChangeEvent> {
 
     private static final String LOG_PREFIX = "[RQC] Assigner: ";
 
@@ -47,32 +57,35 @@ public final class QualityAssigner {
     public QualityAssigner(@Nonnull QualityRegistry registry,
                            @Nonnull QualityConfig config,
                            @Nonnull QualityTierMapper tierMapper) {
+        super(InventoryChangeEvent.class);
         this.registry = registry;
         this.config = config;
         this.tierMapper = tierMapper;
     }
 
-    /**
-     * Registers the inventory change event handler with the event registry.
-     * This single handler covers all item acquisition sources (crafting, loot,
-     * trades, etc.) by modifying slots synchronously on the game thread.
-     */
-    public void registerEvents(@Nonnull EventRegistry eventRegistry) {
-        eventRegistry.registerGlobal(
-            LivingEntityInventoryChangeEvent.class,
-            this::onInventoryChange
-        );
+    @Override
+    public void onSystemRegistered() {
+        // System registered in ECS
+    }
+
+    @Override
+    public Query<EntityStore> getQuery() {
+        return Query.any();
     }
 
     // ═══════════════════════════════════════════════════════════════════════════
-    //  LivingEntityInventoryChangeEvent handler — all item acquisition sources
+    //  InventoryChangeEvent handler — all item acquisition sources
     // ═══════════════════════════════════════════════════════════════════════════
 
-    private void onInventoryChange(@Nonnull LivingEntityInventoryChangeEvent event) {
+    @Override
+    public void handle(int index,
+                       @Nonnull ArchetypeChunk<EntityStore> archetypeChunk,
+                       @Nonnull Store<EntityStore> store,
+                       @Nonnull CommandBuffer<EntityStore> commandBuffer,
+                       @Nonnull InventoryChangeEvent event) {
         Transaction transaction = event.getTransaction();
         if (!transaction.succeeded()) return;
 
-        LivingEntity entity = event.getEntity();
         ItemContainer container = event.getItemContainer();
 
         if (transaction instanceof SlotTransaction slotTx) {

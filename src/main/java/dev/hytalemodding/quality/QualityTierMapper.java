@@ -1,6 +1,5 @@
 package dev.hytalemodding.quality;
 
-import com.hypixel.hytale.protocol.Color;
 import com.hypixel.hytale.server.core.asset.type.item.config.CraftingRecipe;
 import com.hypixel.hytale.server.core.asset.type.item.config.Item;
 import com.hypixel.hytale.server.core.inventory.MaterialQuantity;
@@ -342,9 +341,25 @@ public final class QualityTierMapper {
 
     // ── Private helpers ──
 
+    // ── Hardcoded base-game quality tier IDs ──
+    // These are the exact Hytale quality asset IDs from the vanilla game.
+    // We look them up by exact ID instead of fuzzy name matching, so that
+    // other mods adding custom quality tiers (e.g. "mythic") do not shift
+    // or corrupt our mapping.
+    private static final String[][] HARDCODED_QUALITY_IDS = {
+        // { our enum name, exact Hytale quality asset ID }
+        { "POOR",      "poor"      },
+        { "COMMON",    "common"    },
+        { "UNCOMMON",  "uncommon"  },
+        { "RARE",      "rare"      },
+        { "EPIC",      "epic"      },
+        { "LEGENDARY", "legendary" },
+    };
+
     /**
-     * Discovers Hytale's built-in quality tiers by enumerating the ItemQuality asset map.
-     * Maps our tiers to Hytale tiers by name matching or by quality value ordering.
+     * Discovers Hytale's built-in quality tiers by looking up the exact
+     * hardcoded base-game quality IDs in the asset map. Only the 6 vanilla
+     * tiers are mapped; any tiers added by other mods are safely ignored.
      */
     private void discoverHytaleTiers() {
         try {
@@ -359,7 +374,7 @@ public final class QualityTierMapper {
                 return;
             }
 
-            // Get the underlying map
+            // Get the underlying map for existence checks
             Method getMapMethod = assetMapObj.getClass().getMethod("getAssetMap");
             @SuppressWarnings("unchecked")
             Map<String, ?> qualityMap = (Map<String, ?>) getMapMethod.invoke(assetMapObj);
@@ -370,46 +385,39 @@ public final class QualityTierMapper {
                 return;
             }
 
-            // Collect all tiers with their info
-            List<HytaleTierInfo> tiers = new ArrayList<>();
-
-            // Get the getIndex method for looking up indices
+            // Get the getIndex method for looking up runtime indices
             Method getIndexMethod = assetMapObj.getClass().getMethod("getIndex", Object.class);
 
-            for (Map.Entry<String, ?> entry : qualityMap.entrySet()) {
-                String id = entry.getKey();
-                Object qualityObj = entry.getValue();
+            int mapped = 0;
 
-                int index = -1;
+            for (String[] entry : HARDCODED_QUALITY_IDS) {
+                ItemQuality ourTier = ItemQuality.valueOf(entry[0]);
+                String hytaleId = entry[1];
+
+                if (!qualityMap.containsKey(hytaleId)) {
+                    System.out.println(LOG_PREFIX + "WARNING: Base-game quality '" + hytaleId
+                            + "' not found in asset map, using fallback index " + ourTier.ordinal());
+                    qualityToIndex.put(ourTier, ourTier.ordinal());
+                    qualityToHytaleId.put(ourTier, hytaleId);
+                    continue;
+                }
+
+                int index;
                 try {
-                    index = (int) getIndexMethod.invoke(assetMapObj, id);
-                } catch (Exception ignored) {}
+                    index = (int) getIndexMethod.invoke(assetMapObj, hytaleId);
+                } catch (Exception e) {
+                    System.out.println(LOG_PREFIX + "WARNING: Could not get index for '" + hytaleId
+                            + "', using fallback index " + ourTier.ordinal());
+                    index = ourTier.ordinal();
+                }
 
-                int qualityValue = -1;
-                try {
-                    Method getQualityValue = qualityObj.getClass().getMethod("getQualityValue");
-                    qualityValue = (int) getQualityValue.invoke(qualityObj);
-                } catch (Exception ignored) {}
-
-                String textColorStr = "?";
-                try {
-                    Method getTextColor = qualityObj.getClass().getMethod("getTextColor");
-                    Object color = getTextColor.invoke(qualityObj);
-                    if (color != null) {
-                        Color c = (Color) color;
-                        textColorStr = "(" + (c.red & 0xFF) + "," + (c.green & 0xFF) + "," + (c.blue & 0xFF) + ")";
-                    }
-                } catch (Exception ignored) {}
-
-                tiers.add(new HytaleTierInfo(id, index, qualityValue));
+                qualityToIndex.put(ourTier, index);
+                qualityToHytaleId.put(ourTier, hytaleId);
+                mapped++;
             }
 
-            // Sort by qualityValue (ascending)
-            tiers.sort(Comparator.comparingInt(t -> t.qualityValue));
-
-            // Map our tiers to Hytale tiers by matching names first,
-            // then by quality value ordering
-            mapByNameOrOrder(tiers);
+            System.out.println(LOG_PREFIX + "Mapped " + mapped + "/" + HARDCODED_QUALITY_IDS.length
+                    + " base-game quality tiers (asset map has " + qualityMap.size() + " total)");
 
         } catch (Exception e) {
             System.out.println(LOG_PREFIX + "ERROR discovering quality tiers: "
@@ -419,77 +427,11 @@ public final class QualityTierMapper {
         }
     }
 
-    private void mapByNameOrOrder(List<HytaleTierInfo> sortedTiers) {
-        // Try name matching first (case-insensitive)
-        Map<String, HytaleTierInfo> byName = new HashMap<>();
-        for (HytaleTierInfo tier : sortedTiers) {
-            byName.put(tier.id.toLowerCase(Locale.ROOT), tier);
-        }
-
-        // Try to match each of our tiers by common names
-        String[][] nameMatches = {
-            {"POOR",      "poor", "junk", "trash", "broken"},
-            {"COMMON",    "common", "normal", "standard", "basic", "default"},
-            {"UNCOMMON",  "uncommon", "fine", "improved"},
-            {"RARE",      "rare", "superior"},
-            {"EPIC",      "epic", "exceptional", "magnificent"},
-            {"LEGENDARY", "legendary", "mythic", "divine", "relic"},
-        };
-
-        Set<HytaleTierInfo> used = new HashSet<>();
-
-        for (String[] nameMatch : nameMatches) {
-            ItemQuality ourTier = ItemQuality.valueOf(nameMatch[0]);
-            boolean found = false;
-
-            for (int i = 1; i < nameMatch.length; i++) {
-                HytaleTierInfo match = byName.get(nameMatch[i]);
-                if (match != null && !used.contains(match)) {
-                    qualityToIndex.put(ourTier, match.index);
-                    qualityToHytaleId.put(ourTier, match.id);
-                    used.add(match);
-                    found = true;
-                    break;
-                }
-            }
-
-            if (!found) {
-                // Fall back to ordering: distribute across available tiers
-                // We have 6 tiers, Hytale has ~12. Space them out.
-            }
-        }
-
-        // For any unmapped tiers, distribute by quality value
-        List<HytaleTierInfo> unused = new ArrayList<>();
-        for (HytaleTierInfo tier : sortedTiers) {
-            if (!used.contains(tier)) unused.add(tier);
-        }
-
-        for (ItemQuality ourTier : ItemQuality.values()) {
-            if (qualityToIndex.containsKey(ourTier)) continue;
-
-            if (!unused.isEmpty()) {
-                // Pick the one whose qualityValue is closest to our tier's ordinal
-                int targetOrdinal = ourTier.ordinal();
-                // Map 0..5 onto 0..(unused.size-1)
-                int pickIdx = Math.min(targetOrdinal * unused.size() / 6, unused.size() - 1);
-                HytaleTierInfo pick = unused.get(pickIdx);
-                qualityToIndex.put(ourTier, pick.index);
-                qualityToHytaleId.put(ourTier, pick.id);
-                used.add(pick);
-                unused.remove(pickIdx);
-            } else {
-                // Last resort: use the ordinal as index
-                qualityToIndex.put(ourTier, ourTier.ordinal());
-                qualityToHytaleId.put(ourTier, ourTier.name().toLowerCase(Locale.ROOT));
-            }
-        }
-    }
-
     private void setFallbackMapping() {
-        for (ItemQuality q : ItemQuality.values()) {
-            qualityToIndex.put(q, q.ordinal());
-            qualityToHytaleId.put(q, q.name().toLowerCase(Locale.ROOT));
+        for (String[] entry : HARDCODED_QUALITY_IDS) {
+            ItemQuality ourTier = ItemQuality.valueOf(entry[0]);
+            qualityToIndex.put(ourTier, ourTier.ordinal());
+            qualityToHytaleId.put(ourTier, entry[1]);
         }
     }
 
@@ -1436,6 +1378,4 @@ public final class QualityTierMapper {
         }
         return null;
     }
-
-    private record HytaleTierInfo(String id, int index, int qualityValue) {}
 }

@@ -1,5 +1,18 @@
 # Changelog
 
+## v2.0.8 — Hytale March Update Compatibility
+
+### 🔧 Fixed
+- **Crash on startup with Hytale 2026.03.26** — `LivingEntityInventoryChangeEvent` was removed from the server; migrated `QualityAssigner` from a global event handler to an ECS `EntityEventSystem<EntityStore, InventoryChangeEvent>`, matching the new inventory event API
+- **NullPointerException on shutdown after failed setup** — `shutdown()` now null-checks `migration` before accessing it, so a setup failure no longer causes a secondary crash
+
+### 🔨 Changed
+- **QualityAssigner is now an ECS system** — registered via `getEntityStoreRegistry().registerSystem()` instead of `getEventRegistry().registerGlobal()`; uses `Query.any()` to receive events from all entity archetypes
+- **Updated `ServerVersion`** — `2026.02.19-1a311a592` → `2026.03.26-89796e57b`
+- **Expanded ignore list** — added `Tool_Fertilizer` and `Template_` to the default ignored item prefixes
+
+---
+
 ## v2.0.7 — Recipe Cloning Fix
 
 ### 🔧 Fixed

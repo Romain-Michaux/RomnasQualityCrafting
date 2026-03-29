@@ -78,9 +78,9 @@ public class RomnasQualityCrafting extends JavaPlugin {
         // ── 4. Create tier mapper (maps our quality tiers to Hytale's built-in tiers) ──
         tierMapper = new QualityTierMapper();
 
-        // ── 5. Set up quality assignment via inventory change events ──
+        // ── 5. Set up quality assignment via inventory change events (ECS) ──
         assigner = new QualityAssigner(registry, config, tierMapper);
-        assigner.registerEvents(this.getEventRegistry());
+        this.getEntityStoreRegistry().registerSystem(assigner);
 
         // ── 5b. Set up ECS crafting handler (CraftRecipeEvent.Post) ──
         craftSystem = new CraftQualitySystem(registry, config, tierMapper);
@@ -136,9 +136,13 @@ public class RomnasQualityCrafting extends JavaPlugin {
 
     @Override
     public void shutdown() {
-        System.out.println(LOG_PREFIX + "Shutting down. Migration stats: "
-                + migration.getTotalMigrated() + " migrated, "
-                + migration.getTotalReverted() + " reverted.");
+        if (migration != null) {
+            System.out.println(LOG_PREFIX + "Shutting down. Migration stats: "
+                    + migration.getTotalMigrated() + " migrated, "
+                    + migration.getTotalReverted() + " reverted.");
+        } else {
+            System.out.println(LOG_PREFIX + "Shutting down.");
+        }
     }
 
     // ── Config helpers ──

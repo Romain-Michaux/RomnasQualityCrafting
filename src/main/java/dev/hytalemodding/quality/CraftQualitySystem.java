@@ -31,7 +31,7 @@ import javax.annotation.Nullable;
  * Quality is determined entirely by item ID — no metadata is used.
  * Slot modifications are synchronous (runs on the game thread).
  *
- * Note: In practice, the {@link QualityAssigner} via LivingEntityInventoryChangeEvent
+ * Note: In practice, the {@link QualityAssigner} via InventoryChangeEvent
  * handles crafting as well. This system serves as a secondary path in case the
  * ECS event fires before the inventory change event for certain recipes.
  *

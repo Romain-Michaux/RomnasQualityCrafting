@@ -25,8 +25,12 @@ public final class QualityItemFactory {
             "Weapon_Arrow",
             "Weapon_Dart",
             "Weapon_Spellbook",
+            "Weapon_Grenade_Frag",
             "Tool_Feedbag",
-            "Tool_Watering_Can"
+            "Tool_Watering_Can",
+            "Tool_Shears_Basic",
+            "Tool_Fertilizer",
+            "Template_"
     };
 
     /** Cached merged ignore set (built once from config + defaults). */
